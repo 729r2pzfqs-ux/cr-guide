@@ -29,6 +29,7 @@ def main():
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5861928596436289" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chemical Resistance Guide | {total}+ Chemicals | Free Material Compatibility Tool</title>
