@@ -28,6 +28,13 @@
         .rating-C { background: #f59e0b; color: white; }
         .rating-D { background: #ef4444; color: white; }
         .rating-NR { background: #e5e7eb; color: #9ca3af; }
+    
+        /* Keep Google Auto Ads out of the compatibility table: auto ads will
+           otherwise drop a placement between two material rows. */
+        #compat-table-zone .google-auto-placed,
+        #compat-table-zone ins.adsbygoogle,
+        #chemTable .google-auto-placed,
+        #chemTable ins.adsbygoogle { display: none !important; }
     </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is ECTFE/ETFE used for?", "acceptedAnswer": {"@type": "Answer", "text": "ECTFE (Ethylene Chlorotrifluoroethylene, Halar) and ETFE (Ethylene Tetrafluoroethylene, Tefzel) are fluoropolymers used as chemical-resistant linings for tanks, vessels, and piping. They combine excellent chemical resistance with better mechanical properties than PTFE."}}, {"@type": "Question", "name": "How does ECTFE/ETFE chemical resistance compare to PTFE?", "acceptedAnswer": {"@type": "Answer", "text": "ECTFE and ETFE have excellent chemical resistance — nearly comparable to PTFE for most common chemicals. They resist strong acids (including HF and HCl), alkalis, and halogens. They have slightly narrower resistance than PTFE for some aggressive chemicals but offer better mechanical strength."}}, {"@type": "Question", "name": "What chemicals attack ECTFE/ETFE?", "acceptedAnswer": {"@type": "Answer", "text": "ECTFE/ETFE have limited resistance to hot amines, some organic nitrogen compounds, and fuming sulfuric acid at elevated temperatures. Ketones and esters may cause swelling at elevated temperatures, unlike PTFE."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"ECTFE/ETFE Chemical Resistance Chart","description":"ECTFE and ETFE are high-performance fluoropolymers with excellent chemical resistance, transparency, and mechanical strength.","url":"https://chemicalresistance.org/materials/ectfe-etfe/"}</script>
@@ -157,7 +164,7 @@
                 Showing <span id="resultCount" class="font-semibold text-gray-700">0</span> chemicals
             </div>
             <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                <div class="overflow-x-auto">
+                <div id="compat-table-zone" class="overflow-x-auto">
                     <table class="w-full min-w-[600px]">
                         <thead>
                             <tr class="bg-gray-50 text-left text-sm">

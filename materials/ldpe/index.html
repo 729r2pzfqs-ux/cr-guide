@@ -28,6 +28,13 @@
         .rating-C { background: #f59e0b; color: white; }
         .rating-D { background: #ef4444; color: white; }
         .rating-NR { background: #e5e7eb; color: #9ca3af; }
+    
+        /* Keep Google Auto Ads out of the compatibility table: auto ads will
+           otherwise drop a placement between two material rows. */
+        #compat-table-zone .google-auto-placed,
+        #compat-table-zone ins.adsbygoogle,
+        #chemTable .google-auto-placed,
+        #chemTable ins.adsbygoogle { display: none !important; }
     </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How does LDPE compare to HDPE for chemical resistance?", "acceptedAnswer": {"@type": "Answer", "text": "LDPE and HDPE have similar chemical resistance profiles, but HDPE is generally stronger and more resistant at elevated temperatures. LDPE is more flexible and used for squeeze bottles, films, and flexible containers. For demanding chemical service, HDPE is typically preferred."}}, {"@type": "Question", "name": "What chemicals is LDPE resistant to?", "acceptedAnswer": {"@type": "Answer", "text": "LDPE shows good resistance to dilute inorganic acids, alkalis, alcohols, and aqueous salt solutions. It rates A for many common aqueous chemicals but has lower temperature resistance than HDPE (typically limited to ~60°C)."}}, {"@type": "Question", "name": "What chemicals attack LDPE?", "acceptedAnswer": {"@type": "Answer", "text": "LDPE is not recommended for aromatic hydrocarbons, chlorinated solvents, concentrated oxidizing acids, and organic solvents at elevated temperatures. At 50°C, more chemicals cause degradation compared to ambient conditions."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"LDPE Chemical Resistance Chart","description":"LDPE is a flexible, translucent thermoplastic with good chemical resistance. Widely used for squeeze bottles, tubing, and flexible containers.","url":"https://chemicalresistance.org/materials/ldpe/"}</script>
@@ -157,7 +164,7 @@
                 Showing <span id="resultCount" class="font-semibold text-gray-700">0</span> chemicals
             </div>
             <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                <div class="overflow-x-auto">
+                <div id="compat-table-zone" class="overflow-x-auto">
                     <table class="w-full min-w-[600px]">
                         <thead>
                             <tr class="bg-gray-50 text-left text-sm">

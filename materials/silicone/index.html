@@ -28,6 +28,13 @@
         .rating-C { background: #f59e0b; color: white; }
         .rating-D { background: #ef4444; color: white; }
         .rating-NR { background: #e5e7eb; color: #9ca3af; }
+    
+        /* Keep Google Auto Ads out of the compatibility table: auto ads will
+           otherwise drop a placement between two material rows. */
+        #compat-table-zone .google-auto-placed,
+        #compat-table-zone ins.adsbygoogle,
+        #chemTable .google-auto-placed,
+        #chemTable ins.adsbygoogle { display: none !important; }
     </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What chemicals is Silicone rubber resistant to?", "acceptedAnswer": {"@type": "Answer", "text": "Silicone rubber (polysiloxane) shows excellent resistance to hot air, ozone, UV radiation, steam, and many dilute acids and alkalis. Its temperature range (-60°C to +200°C) makes it unique among elastomers for extreme temperature applications."}}, {"@type": "Question", "name": "What chemicals attack Silicone rubber?", "acceptedAnswer": {"@type": "Answer", "text": "Silicone is not recommended for fuels, mineral oils, concentrated acids, aromatic hydrocarbons, and steam at very high pressures. For fuel resistance, NBR or Viton are more appropriate choices."}}, {"@type": "Question", "name": "Is Silicone suitable for food and pharmaceutical contact?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Silicone is widely used for FDA-compliant seals, tubing, and gaskets in food processing and pharmaceutical applications. Its chemical inertness and temperature stability make it preferred for these regulated applications. Always verify specific grades for regulatory compliance."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Silicone Chemical Resistance Chart","description":"Silicone rubber offers the widest temperature range of any elastomer (-60°C to 230°C) with good chemical resistance to many fluids and excellent biocompatibility.","url":"https://chemicalresistance.org/materials/silicone/"}</script>
@@ -157,7 +164,7 @@
                 Showing <span id="resultCount" class="font-semibold text-gray-700">0</span> chemicals
             </div>
             <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                <div class="overflow-x-auto">
+                <div id="compat-table-zone" class="overflow-x-auto">
                     <table class="w-full min-w-[600px]">
                         <thead>
                             <tr class="bg-gray-50 text-left text-sm">

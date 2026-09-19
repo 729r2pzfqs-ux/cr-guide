@@ -28,6 +28,13 @@
         .rating-C { background: #f59e0b; color: white; }
         .rating-D { background: #ef4444; color: white; }
         .rating-NR { background: #e5e7eb; color: #9ca3af; }
+    
+        /* Keep Google Auto Ads out of the compatibility table: auto ads will
+           otherwise drop a placement between two material rows. */
+        #compat-table-zone .google-auto-placed,
+        #compat-table-zone ins.adsbygoogle,
+        #chemTable .google-auto-placed,
+        #chemTable ins.adsbygoogle { display: none !important; }
     </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is PMP (TPX) used for?", "acceptedAnswer": {"@type": "Answer", "text": "PMP (Polymethylpentene, TPX) is used in laboratory equipment — graduated cylinders, beakers, funnels, and filtration apparatus — where transparency and chemical resistance are both needed. It is autoclavable (up to 121°C) and has a chemical resistance profile similar to HDPE."}}, {"@type": "Question", "name": "What chemicals is PMP resistant to?", "acceptedAnswer": {"@type": "Answer", "text": "PMP shows good resistance to most dilute inorganic acids, alkalis, alcohols, and aqueous solutions. Its chemical resistance is broadly similar to HDPE, making it suitable for common laboratory chemicals and physiological fluids."}}, {"@type": "Question", "name": "What chemicals attack PMP?", "acceptedAnswer": {"@type": "Answer", "text": "PMP is not recommended for aromatic hydrocarbons, chlorinated solvents, strong oxidizing agents, and concentrated acids at elevated temperatures. Like HDPE, organic solvents can cause swelling and degradation."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"PMP Chemical Resistance Chart","description":"PMP (TPX) is a transparent, lightweight thermoplastic with excellent chemical resistance. It can be autoclaved and offers the lowest density of any commercial plastic.","url":"https://chemicalresistance.org/materials/pmp/"}</script>
@@ -157,7 +164,7 @@
                 Showing <span id="resultCount" class="font-semibold text-gray-700">0</span> chemicals
             </div>
             <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                <div class="overflow-x-auto">
+                <div id="compat-table-zone" class="overflow-x-auto">
                     <table class="w-full min-w-[600px]">
                         <thead>
                             <tr class="bg-gray-50 text-left text-sm">

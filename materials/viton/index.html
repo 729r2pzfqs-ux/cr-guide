@@ -28,6 +28,13 @@
         .rating-C { background: #f59e0b; color: white; }
         .rating-D { background: #ef4444; color: white; }
         .rating-NR { background: #e5e7eb; color: #9ca3af; }
+    
+        /* Keep Google Auto Ads out of the compatibility table: auto ads will
+           otherwise drop a placement between two material rows. */
+        #compat-table-zone .google-auto-placed,
+        #compat-table-zone ins.adsbygoogle,
+        #chemTable .google-auto-placed,
+        #chemTable ins.adsbygoogle { display: none !important; }
     </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What chemicals is Viton (FKM) resistant to?", "acceptedAnswer": {"@type": "Answer", "text": "Viton (Fluoroelastomer FKM/FPM) shows excellent resistance to petroleum fuels, mineral oils, aromatic hydrocarbons (toluene, xylene), and most concentrated acids. It is the top elastomer choice for fuel and oil handling at elevated temperatures (up to ~200°C)."}}, {"@type": "Question", "name": "What chemicals attack Viton (FKM)?", "acceptedAnswer": {"@type": "Answer", "text": "Viton is not recommended for ketones (acetone, MEK), esters, ethers, amines, and anhydrous acids. It also has limited resistance to steam and hot water compared to EPDM."}}, {"@type": "Question", "name": "Is Viton better than NBR for fuel resistance?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Viton (FKM) generally offers better fuel resistance than NBR (Nitrile), especially at elevated temperatures and with aromatic fuel blends. NBR is typically more economical for standard fuel and oil applications at ambient temperature."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Viton (FKM) Chemical Resistance Chart","description":"Viton is a premium fluoroelastomer offering the broadest chemical resistance of any elastomer. Excellent for aggressive chemicals, fuels, and high temperatures.","url":"https://chemicalresistance.org/materials/viton/"}</script>
@@ -157,7 +164,7 @@
                 Showing <span id="resultCount" class="font-semibold text-gray-700">0</span> chemicals
             </div>
             <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                <div class="overflow-x-auto">
+                <div id="compat-table-zone" class="overflow-x-auto">
                     <table class="w-full min-w-[600px]">
                         <thead>
                             <tr class="bg-gray-50 text-left text-sm">

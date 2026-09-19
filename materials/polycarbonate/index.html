@@ -28,6 +28,13 @@
         .rating-C { background: #f59e0b; color: white; }
         .rating-D { background: #ef4444; color: white; }
         .rating-NR { background: #e5e7eb; color: #9ca3af; }
+    
+        /* Keep Google Auto Ads out of the compatibility table: auto ads will
+           otherwise drop a placement between two material rows. */
+        #compat-table-zone .google-auto-placed,
+        #compat-table-zone ins.adsbygoogle,
+        #chemTable .google-auto-placed,
+        #chemTable ins.adsbygoogle { display: none !important; }
     </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What chemicals is Polycarbonate resistant to?", "acceptedAnswer": {"@type": "Answer", "text": "Polycarbonate (PC) shows good resistance to dilute inorganic acids, aliphatic hydrocarbons, and mineral oils. It is widely used for transparent sight glasses, safety equipment, and containers where visibility is needed in mild chemical environments."}}, {"@type": "Question", "name": "What chemicals attack Polycarbonate?", "acceptedAnswer": {"@type": "Answer", "text": "Polycarbonate is attacked by alkalis (even dilute NaOH), ketones (acetone), aromatic hydrocarbons, chlorinated solvents, and many esters. It is also susceptible to stress cracking when in contact with certain chemicals under mechanical stress (environmental stress cracking)."}}, {"@type": "Question", "name": "Is Polycarbonate suitable for chemical storage?", "acceptedAnswer": {"@type": "Answer", "text": "Polycarbonate is generally limited to mild chemical environments at ambient temperature. Its main advantage over other plastics is optical clarity. For aggressive chemical service, PP, HDPE, or PTFE are far more suitable. Never use PC with solvents, ketones, or alkalis."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Polycarbonate Chemical Resistance Chart","description":"Polycarbonate is a transparent, impact-resistant thermoplastic. While not suited for aggressive chemicals, it excels in applications requiring clarity and toughness.","url":"https://chemicalresistance.org/materials/polycarbonate/"}</script>
@@ -157,7 +164,7 @@
                 Showing <span id="resultCount" class="font-semibold text-gray-700">0</span> chemicals
             </div>
             <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                <div class="overflow-x-auto">
+                <div id="compat-table-zone" class="overflow-x-auto">
                     <table class="w-full min-w-[600px]">
                         <thead>
                             <tr class="bg-gray-50 text-left text-sm">
