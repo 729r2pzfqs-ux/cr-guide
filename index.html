@@ -67,11 +67,11 @@
         /* Keep Google Auto Ads out of the compatibility table. Auto ads injects
            its placements as .google-auto-placed wrappers (or a bare <ins>) and
            will drop one between two material rows, splitting the core content.
-           Suppress anything it places inside the table zone; the manual units
-           immediately above and below the table carry the inventory instead. */
+           Any ad element inside the table zone is therefore auto-placed, and is
+           suppressed here. This rule is what actually enforces the exclusion. */
         #compat-table-zone { break-inside: avoid; page-break-inside: avoid; }
         #compat-table-zone .google-auto-placed,
-        #compat-table-zone ins.adsbygoogle:not(.manual-ad),
+        #compat-table-zone ins.adsbygoogle,
         #ratingsTable .google-auto-placed,
         #ratingsTable ins.adsbygoogle { display: none !important; }
 
@@ -368,14 +368,6 @@
                     </div>
                 </div>
 
-                <!-- Manual ad above the table. Giving auto ads a placement right
-                     next to the table makes it far less likely to invent one
-                     mid-table; the CSS above is what actually enforces that. -->
-                <div class="px-4 pt-4">
-                    <ins class="adsbygoogle manual-ad" style="display:block" data-ad-client="ca-pub-5861928596436289" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                </div>
-
                 <!-- Ratings Table -->
                 <div id="compat-table-zone" class="overflow-x-auto">
                     <table class="w-full" aria-label="Chemical resistance ratings by material">
@@ -391,12 +383,6 @@
                             <tr><td colspan="4" class="py-8 text-center text-gray-500">Loading chemical data...</td></tr>
                         </tbody>
                     </table>
-                </div>
-
-                <!-- Manual ad below the table -->
-                <div class="px-4 pb-4">
-                    <ins class="adsbygoogle manual-ad" style="display:block" data-ad-client="ca-pub-5861928596436289" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                 </div>
 
                 <!-- Legend -->
