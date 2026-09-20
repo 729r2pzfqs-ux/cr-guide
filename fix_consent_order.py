@@ -48,6 +48,8 @@ TAG_PATTERNS = {
     # (in the current published pages) also calls gtag js/config
     "inline": r'<script>\s*window\.dataLayer\s*=\s*window\.dataLayer\s*\|\|\s*\[\];'
               r'(?:(?!</script>).)*?</script>',
+    "adcollapse_style": r'<style>ins\.adsbygoogle\[data-ad-status="unfilled"\](?:(?!</style>).)*</style>',
+    "adcollapse_script": r'<script>\(function\(\)\{{1,2}var S="data-blank-ad"(?:(?!</script>).)*</script>',
     # the standalone config script this tool emits, so re-runs are no-ops
     "config": r'<script>\s*gtag\(\s*[\'"]js[\'"]\s*,\s*new Date\(\)\s*\)\s*;\s*'
               r'gtag\(\s*[\'"]config[\'"]\s*,\s*[\'"]' + re.escape(GA_ID)

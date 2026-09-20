@@ -294,6 +294,8 @@ def create_comparison_pages():
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LTK6VVHYDW"></script>
 <script>gtag("js",new Date());gtag("config","G-LTK6VVHYDW");</script>
 <script src="https://analytics.ahrefs.com/analytics.js" data-key="xrS32xSgQE4Xp1oL20j7uQ" async></script>
+<style>ins.adsbygoogle[data-ad-status="unfilled"],.google-auto-placed:has(>ins.adsbygoogle[data-ad-status="unfilled"]),[data-blank-ad]{{display:none!important}}</style>
+<script>(function(){{var S="data-blank-ad",k=new WeakMap();function b(i){{return !i.querySelector("iframe")&&!i.textContent.trim()}}function s(){{document.querySelectorAll("ins.adsbygoogle").forEach(function(i){{var w=i.closest(".google-auto-placed")||i;if(!b(i)){{k.set(i,0);w.removeAttribute(S);return}}if(i.getAttribute("data-adsbygoogle-status")!=="done")return;if(!w.hasAttribute(S)&&i.getBoundingClientRect().height<=0)return;var n=(k.get(i)||0)+1;k.set(i,n);if(n>=2)w.setAttribute(S,"")}})}}var c=0,t=setInterval(function(){{s();if(++c>=12)clearInterval(t)}},1500)}})()</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
@@ -553,6 +555,8 @@ def create_comparison_pages():
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LTK6VVHYDW"></script>
 <script>gtag("js",new Date());gtag("config","G-LTK6VVHYDW");</script>
 <script src="https://analytics.ahrefs.com/analytics.js" data-key="xrS32xSgQE4Xp1oL20j7uQ" async></script>
+<style>ins.adsbygoogle[data-ad-status="unfilled"],.google-auto-placed:has(>ins.adsbygoogle[data-ad-status="unfilled"]),[data-blank-ad]{display:none!important}</style>
+<script>(function(){var S="data-blank-ad",k=new WeakMap();function b(i){return !i.querySelector("iframe")&&!i.textContent.trim()}function s(){document.querySelectorAll("ins.adsbygoogle").forEach(function(i){var w=i.closest(".google-auto-placed")||i;if(!b(i)){k.set(i,0);w.removeAttribute(S);return}if(i.getAttribute("data-adsbygoogle-status")!=="done")return;if(!w.hasAttribute(S)&&i.getBoundingClientRect().height<=0)return;var n=(k.get(i)||0)+1;k.set(i,n);if(n>=2)w.setAttribute(S,"")})}var c=0,t=setInterval(function(){s();if(++c>=12)clearInterval(t)},1500)})()</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Material Comparison Tool | Chemical Resistance Side-by-Side</title>
@@ -639,6 +643,8 @@ def create_chart_pages():
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LTK6VVHYDW"></script>
 <script>gtag("js",new Date());gtag("config","G-LTK6VVHYDW");</script>
 <script src="https://analytics.ahrefs.com/analytics.js" data-key="xrS32xSgQE4Xp1oL20j7uQ" async></script>
+<style>ins.adsbygoogle[data-ad-status="unfilled"],.google-auto-placed:has(>ins.adsbygoogle[data-ad-status="unfilled"]),[data-blank-ad]{{display:none!important}}</style>
+<script>(function(){{var S="data-blank-ad",k=new WeakMap();function b(i){{return !i.querySelector("iframe")&&!i.textContent.trim()}}function s(){{document.querySelectorAll("ins.adsbygoogle").forEach(function(i){{var w=i.closest(".google-auto-placed")||i;if(!b(i)){{k.set(i,0);w.removeAttribute(S);return}}if(i.getAttribute("data-adsbygoogle-status")!=="done")return;if(!w.hasAttribute(S)&&i.getBoundingClientRect().height<=0)return;var n=(k.get(i)||0)+1;k.set(i,n);if(n>=2)w.setAttribute(S,"")}})}}var c=0,t=setInterval(function(){{s();if(++c>=12)clearInterval(t)}},1500)}})()</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
@@ -872,6 +878,8 @@ def create_chart_pages():
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LTK6VVHYDW"></script>
 <script>gtag("js",new Date());gtag("config","G-LTK6VVHYDW");</script>
 <script src="https://analytics.ahrefs.com/analytics.js" data-key="xrS32xSgQE4Xp1oL20j7uQ" async></script>
+<style>ins.adsbygoogle[data-ad-status="unfilled"],.google-auto-placed:has(>ins.adsbygoogle[data-ad-status="unfilled"]),[data-blank-ad]{display:none!important}</style>
+<script>(function(){var S="data-blank-ad",k=new WeakMap();function b(i){return !i.querySelector("iframe")&&!i.textContent.trim()}function s(){document.querySelectorAll("ins.adsbygoogle").forEach(function(i){var w=i.closest(".google-auto-placed")||i;if(!b(i)){k.set(i,0);w.removeAttribute(S);return}if(i.getAttribute("data-adsbygoogle-status")!=="done")return;if(!w.hasAttribute(S)&&i.getBoundingClientRect().height<=0)return;var n=(k.get(i)||0)+1;k.set(i,n);if(n>=2)w.setAttribute(S,"")})}var c=0,t=setInterval(function(){s();if(++c>=12)clearInterval(t)},1500)})()</script>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chemical Compatibility Charts — Printable Resistance Ratings</title>
 <meta name="description" content="Printable chemical compatibility charts for PTFE, 316 Stainless Steel, HDPE, and NBR. Color-coded resistance ratings for 900+ chemicals.">

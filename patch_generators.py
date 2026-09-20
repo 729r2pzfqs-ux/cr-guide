@@ -29,6 +29,8 @@ TAG_PATTERNS = {
     "ads": r'<script async src="https://pagead2\.googlesyndication\.com/pagead/js/adsbygoogle\.js\?client=ca-pub-5861928596436289" crossorigin="anonymous"></script>',
     "gtag": r'<script async src="https://www\.googletagmanager\.com/gtag/js\?id=G-LTK6VVHYDW"></script>',
     "ahrefs": r'<script src="https://analytics\.ahrefs\.com/analytics\.js" data-key="xrS32xSgQE4Xp1oL20j7uQ" async></script>',
+    "adcollapse_style": r'<style>ins\.adsbygoogle\[data-ad-status="unfilled"\](?:(?!</style>).)*</style>',
+    "adcollapse_script": r'<script>\(function\(\)\{{1,2}var S="data-blank-ad"(?:(?!</script>).)*</script>',
     # already-canonical output, so re-running is a no-op
     "consent": (
         r'<script>\s*window\.dataLayer\s*=\s*window\.dataLayer\s*\|\|\s*\[\];\s*'

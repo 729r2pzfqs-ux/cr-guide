@@ -68,16 +68,56 @@ AHREFS = (
     f'<script src="https://analytics.ahrefs.com/analytics.js" data-key="{AHREFS_KEY}" async></script>'
 )
 
+# --- blank auto-ad collapse ----------------------------------------------
+# Google Auto Ads reserves a slot's height before it knows whether an ad will
+# render. When nothing renders it is supposed to set data-ad-status="unfilled"
+# and collapse the slot itself, but observed live on this site it often leaves
+# data-ad-status unset: the <ins> reaches data-adsbygoogle-status="done" with
+# an empty aswift host inside and keeps its reserved height. On mobile that is
+# a blank band of 375px per slot.
+#
+# Suppressing by DOM position does not work - chasing auto ads out of one
+# container just moves it to the next one up - so this collapses by STATE
+# instead: a slot Google has finished with that rendered nothing.
+#
+# The CSS only handles the case Google labels for us. It deliberately does NOT
+# hide slots by class alone: a blanket rule on .google-auto-placed would remove
+# every auto ad on the site, filled ones included.
+AD_COLLAPSE_STYLE = (
+    '<style>ins.adsbygoogle[data-ad-status="unfilled"],'
+    '.google-auto-placed:has(>ins.adsbygoogle[data-ad-status="unfilled"]),'
+    '[data-blank-ad]{display:none!important}</style>'
+)
+
+# The sweep handles the unlabelled case. It runs only AFTER a slot reports
+# "done", and requires the slot to still be empty on two consecutive passes, so
+# it can never hide a slot that is mid-render - hiding one early would zero its
+# width and cost the impression. A slot that later gains content is un-hidden.
+AD_COLLAPSE_SCRIPT = (
+    '<script>(function(){var S="data-blank-ad",k=new WeakMap();'
+    'function b(i){return !i.querySelector("iframe")&&!i.textContent.trim()}'
+    'function s(){document.querySelectorAll("ins.adsbygoogle").forEach(function(i){'
+    'var w=i.closest(".google-auto-placed")||i;'
+    'if(!b(i)){k.set(i,0);w.removeAttribute(S);return}'
+    'if(i.getAttribute("data-adsbygoogle-status")!=="done")return;'
+    'if(!w.hasAttribute(S)&&i.getBoundingClientRect().height<=0)return;'
+    'var n=(k.get(i)||0)+1;k.set(i,n);if(n>=2)w.setAttribute(S,"")})}'
+    'var c=0,t=setInterval(function(){s();if(++c>=12)clearInterval(t)},1500)})()</script>'
+)
+
 # --- assembled blocks -----------------------------------------------------
-#: consent -> AdSense -> gtag loader + config -> Ahrefs
-HEAD = "\n".join([CONSENT, ADS, GTAG_LOADER, GTAG_CONFIG, AHREFS])
+#: consent -> AdSense -> gtag loader + config -> Ahrefs -> blank-ad collapse
+HEAD = "\n".join([CONSENT, ADS, GTAG_LOADER, GTAG_CONFIG, AHREFS,
+                  AD_COLLAPSE_STYLE, AD_COLLAPSE_SCRIPT])
 
 #: same, minus Ahrefs (redirect stubs and most generated pages)
-HEAD_NO_AHREFS = "\n".join([CONSENT, ADS, GTAG_LOADER, GTAG_CONFIG])
+HEAD_NO_AHREFS = "\n".join([CONSENT, ADS, GTAG_LOADER, GTAG_CONFIG,
+                            AD_COLLAPSE_STYLE, AD_COLLAPSE_SCRIPT])
 
 #: AdSense-only pages (privacy.html / terms.html) still need the denied
 #: baseline, they just have no GA property attached.
-HEAD_NO_GTAG = "\n".join([CONSENT, ADS, AHREFS])
+HEAD_NO_GTAG = "\n".join([CONSENT, ADS, AHREFS,
+                          AD_COLLAPSE_STYLE, AD_COLLAPSE_SCRIPT])
 
 
 def block(indent="", ahrefs=True, gtag=True, escape_braces=False):
@@ -93,6 +133,7 @@ def block(indent="", ahrefs=True, gtag=True, escape_braces=False):
         parts += [GTAG_LOADER, GTAG_CONFIG]
     if ahrefs:
         parts.append(AHREFS)
+    parts += [AD_COLLAPSE_STYLE, AD_COLLAPSE_SCRIPT]
     text = "\n".join(indent + p for p in parts)
     if escape_braces:
         text = text.replace("{", "{{").replace("}", "}}")
@@ -136,4 +177,5 @@ PRETTY = """    <!-- Consent Mode v2 defaults, set before any Google tag so AdSe
         gtag('js', new Date());
         gtag('config', 'G-LTK6VVHYDW');
     </script>
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="xrS32xSgQE4Xp1oL20j7uQ" async></script>"""
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="xrS32xSgQE4Xp1oL20j7uQ" async></script>
+""" + "    " + AD_COLLAPSE_STYLE + "\n    " + AD_COLLAPSE_SCRIPT
