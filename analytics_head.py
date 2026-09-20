@@ -30,8 +30,10 @@ AHREFS_KEY = "xrS32xSgQE4Xp1oL20j7uQ"
 #: EEA + UK + Switzerland + the remaining EFTA/EEA states. These are the
 #: regions where consent is required before storage, so they get the denied
 #: baseline; everywhere else falls through to the granted default below.
+#: ISO 3166-1 alpha-2 codes - that is what Google matches 'region' against.
+#: Greece is GR, not the EU/Eurostat abbreviation EL, which matches nothing.
 CONSENT_REGIONS = [
-    "BE", "BG", "CZ", "DK", "DE", "EE", "IE", "EL", "ES", "FR", "HR", "IT",
+    "BE", "BG", "CZ", "DK", "DE", "EE", "IE", "GR", "ES", "FR", "HR", "IT",
     "CY", "LV", "LT", "LU", "HU", "MT", "NL", "AT", "PL", "PT", "RO", "SI",
     "SK", "FI", "SE", "GB", "CH", "IS", "LI", "NO",
 ]
@@ -112,7 +114,7 @@ PRETTY = """    <!-- Consent Mode v2 defaults, set before any Google tag so AdSe
             'ad_personalization': 'denied',
             'wait_for_update': 500,
             'region': [
-                'BE', 'BG', 'CZ', 'DK', 'DE', 'EE', 'IE', 'EL', 'ES', 'FR', 'HR', 'IT',
+                'BE', 'BG', 'CZ', 'DK', 'DE', 'EE', 'IE', 'GR', 'ES', 'FR', 'HR', 'IT',
                 'CY', 'LV', 'LT', 'LU', 'HU', 'MT', 'NL', 'AT', 'PL', 'PT', 'RO', 'SI',
                 'SK', 'FI', 'SE', 'GB', 'CH', 'IS', 'LI', 'NO'
             ]
