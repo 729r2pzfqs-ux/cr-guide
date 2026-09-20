@@ -83,10 +83,22 @@ AHREFS = (
 # The CSS only handles the case Google labels for us. It deliberately does NOT
 # hide slots by class alone: a blanket rule on .google-auto-placed would remove
 # every auto ad on the site, filled ones included.
+#
+# The second rule protects the box that holds a compatibility table. The
+# homepage scopes this to #results, but material and pair pages have no such
+# wrapper: their ratings legend is a SIBLING of #compat-table-zone, so an ad
+# placed between the table and the legend sat outside the only rule those pages
+# carried. Measured on a live pair page that was a 662px band, exactly the shape
+# reported. :has(> #compat-table-zone) selects whatever element holds the table
+# on any page type, without needing a new id on 69k files.
 AD_COLLAPSE_STYLE = (
     '<style>ins.adsbygoogle[data-ad-status="unfilled"],'
     '.google-auto-placed:has(>ins.adsbygoogle[data-ad-status="unfilled"]),'
-    '[data-blank-ad]{display:none!important}</style>'
+    '[data-blank-ad],'
+    ':has(>#compat-table-zone) .google-auto-placed,'
+    ':has(>#compat-table-zone) ins.adsbygoogle,'
+    ':has(>#compat-table-zone) iframe[id^="aswift"]'
+    '{display:none!important}</style>'
 )
 
 # The sweep handles the unlabelled case. It runs only AFTER a slot reports
@@ -102,13 +114,16 @@ AD_COLLAPSE_STYLE = (
 # still backs off after a few idle passes so nothing polls forever.
 AD_COLLAPSE_SCRIPT = (
     '<script>(function(){var S="data-blank-ad",k=new WeakMap(),t=null,c=0;'
-    'function b(i){return !i.querySelector("iframe")&&!i.textContent.trim()}'
-    'function s(){document.querySelectorAll("ins.adsbygoogle").forEach(function(i){'
-    'var w=i.closest(".google-auto-placed")||i;'
-    'if(!b(i)){k.set(i,0);w.removeAttribute(S);return}'
-    'if(i.getAttribute("data-adsbygoogle-status")!=="done")return;'
-    'if(!w.hasAttribute(S)&&i.getBoundingClientRect().height<=0)return;'
-    'var n=(k.get(i)||0)+1;k.set(i,n);if(n>=2)w.setAttribute(S,"")})}'
+    'function b(e){return !e.querySelector("iframe")&&!e.textContent.trim()}'
+    'function s(){document.querySelectorAll("ins.adsbygoogle,.google-auto-placed")'
+    '.forEach(function(e){'
+    'var ins=e.tagName==="INS";'
+    'if(ins&&e.closest(".google-auto-placed"))return;'
+    'var p=ins?e:(e.querySelector("ins.adsbygoogle")||e);'
+    'if(!b(e)){k.set(e,0);e.removeAttribute(S);return}'
+    'if(p.tagName==="INS"&&p.getAttribute("data-adsbygoogle-status")!=="done")return;'
+    'if(!e.hasAttribute(S)&&e.getBoundingClientRect().height<=0)return;'
+    'var n=(k.get(e)||0)+1;k.set(e,n);if(n>=2)e.setAttribute(S,"")})}'
     'function arm(){if(t)return;c=0;'
     't=setInterval(function(){s();if(++c>=8){clearInterval(t);t=null}},1500)}'
     'arm();'
