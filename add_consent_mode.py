@@ -2,14 +2,13 @@
 """
 Add Google Consent Mode v2 defaults ahead of the gtag config call.
 
-Why region-scoped
------------------
-The site's consent banner is Google's Privacy & messaging (Funding Choices)
-GDPR message, which is shown to EEA/UK/CH visitors only. A global "denied"
-default would therefore put every visitor into denied state while the banner -
-the only thing that can grant consent - never appears outside those regions,
-leaving GA on cookieless pings for most of the traffic. Scoping the default to
-the regions where the banner actually runs keeps the rest collecting normally.
+Scope
+-----
+The default is global (not region-scoped), matching the pattern already
+deployed on threadspec and coldcaseindex. Note that Google's Privacy &
+messaging GDPR banner renders in the EEA/UK/CH only, so visitors outside
+those regions stay at "denied" unless something else calls
+gtag('consent','update',...) - GA reports cookieless pings for them.
 
 Consent defaults must be pushed before gtag('js')/gtag('config'), so the block
 is inserted directly after the gtag() function definition.
@@ -28,13 +27,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 
-# EEA (EU 27 + IS/LI/NO) plus the UK and Switzerland - where the GDPR message runs.
-REGIONS = [
-    "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR",
-    "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK",
-    "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH",
-]
-
 GTAG_LOADER = '<script async src="https://www.googletagmanager.com/gtag/js?id=G-LTK6VVHYDW"></script>'
 ADS_LOADER = ('<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
               '?client=ca-pub-5861928596436289" crossorigin="anonymous"></script>')
@@ -48,23 +40,20 @@ MIN_CONSENT = (
     + '"ad_storage":"denied",'
     + '"ad_user_data":"denied",'
     + '"ad_personalization":"denied",'
-    + '"wait_for_update":500,'
-    + '"region":[' + ",".join(f'"{r}"' for r in REGIONS) + ']});'
+    + '"wait_for_update":500});'
 )
 
 # --- pretty variant (index.html) -----------------------------------------
 PRETTY_ANCHOR = "        function gtag(){dataLayer.push(arguments);}\n"
 PRETTY_CONSENT = PRETTY_ANCHOR + (
-    "        // Consent Mode v2 defaults. Scoped to the regions where Google's\n"
-    "        // Privacy & messaging GDPR banner actually runs - a global denied\n"
-    "        // default would strand every other visitor with nothing to grant it.\n"
+    "        // Consent Mode v2 defaults, set before gtag js/config so the\n"
+    "        // Privacy & messaging banner has a baseline to update from.\n"
     "        gtag('consent', 'default', {\n"
     "            'analytics_storage': 'denied',\n"
     "            'ad_storage': 'denied',\n"
     "            'ad_user_data': 'denied',\n"
     "            'ad_personalization': 'denied',\n"
-    "            'wait_for_update': 500,\n"
-    "            'region': [" + ", ".join(f"'{r}'" for r in REGIONS) + "]\n"
+    "            'wait_for_update': 500\n"
     "        });\n"
 )
 

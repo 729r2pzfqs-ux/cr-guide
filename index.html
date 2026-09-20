@@ -10,16 +10,14 @@
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        // Consent Mode v2 defaults. Scoped to the regions where Google's
-        // Privacy & messaging GDPR banner actually runs - a global denied
-        // default would strand every other visitor with nothing to grant it.
+        // Consent Mode v2 defaults, set before gtag js/config so the
+        // Privacy & messaging banner has a baseline to update from.
         gtag('consent', 'default', {
             'analytics_storage': 'denied',
             'ad_storage': 'denied',
             'ad_user_data': 'denied',
             'ad_personalization': 'denied',
-            'wait_for_update': 500,
-            'region': ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB', 'CH']
+            'wait_for_update': 500
         });
         gtag('js', new Date());
         gtag('config', 'G-LTK6VVHYDW');
