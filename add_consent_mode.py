@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
 """
+SUPERSEDED by fix_consent_order.py - do not run this.
+
+It inserted the consent defaults *inside* the existing gtag bootstrap, which
+left them after the gtag loader tag in the head. The required order is now
+consent defaults -> AdSense -> gtag loader + config -> Ahrefs, produced by
+analytics_head.py and applied by fix_consent_order.py (pages) and
+patch_generators.py (generators). Kept only as a record of the earlier pass;
+it is inert against the current tree because every page already has a consent
+call and it skips those.
+
 Add Google Consent Mode v2 defaults ahead of the gtag config call.
 
 Scope

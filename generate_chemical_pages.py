@@ -104,14 +104,11 @@ def generate_chemical_page(chem_data):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag("consent","default",{{"analytics_storage":"denied","ad_storage":"denied","ad_user_data":"denied","ad_personalization":"denied","wait_for_update":500}});</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5861928596436289" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LTK6VVHYDW"></script>
+    <script>gtag("js",new Date());gtag("config","G-LTK6VVHYDW");</script>
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="xrS32xSgQE4Xp1oL20j7uQ" async></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){{dataLayer.push(arguments);}}
-        gtag('js', new Date());
-        gtag('config', 'G-LTK6VVHYDW');
-    </script>
     <title>{name} Chemical Resistance | Compatible Materials</title>
     <meta name="description" content="Which materials are resistant to {name}{' (CAS ' + cas + ')' if cas else ''}? A-D compatibility ratings for 24 materials at 20°C and 50°C.">
     <link rel="icon" href="../favicon.ico" type="image/x-icon">

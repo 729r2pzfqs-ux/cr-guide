@@ -76,9 +76,11 @@ def generate_page(chemical, material_code, material_slug, material_name):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag("consent","default",{{"analytics_storage":"denied","ad_storage":"denied","ad_user_data":"denied","ad_personalization":"denied","wait_for_update":500}});</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5861928596436289" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LTK6VVHYDW"></script>
+    <script>gtag("js",new Date());gtag("config","G-LTK6VVHYDW");</script>
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="xrS32xSgQE4Xp1oL20j7uQ" async></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','G-LTK6VVHYDW');</script>
     <title>{chem_name} Resistance of {material_name} | Chemical Compatibility</title>
     <meta name="description" content="Can {material_name} resist {chem_name}? Rating: {r20[1]} at 20°C, {r50[1]} at 50°C. Storage compatibility guide.">
     <link rel="icon" href="../../favicon.ico">

@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- AdSense first: it injects the Privacy & messaging consent banner,
-     which needs to reach gtag's consent update within wait_for_update. -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5861928596436289" crossorigin="anonymous"></script>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LTK6VVHYDW"></script>
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="xrS32xSgQE4Xp1oL20j7uQ" async></script>
+    <!-- Consent Mode v2 defaults: denied baseline, set before any Google tag
+         so AdSense's CMP has something to update via gtag('consent','update'). -->
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        // Consent Mode v2 defaults, set before gtag js/config so the
-        // Privacy & messaging banner has a baseline to update from.
         gtag('consent', 'default', {
             'analytics_storage': 'denied',
             'ad_storage': 'denied',
@@ -19,9 +13,16 @@
             'ad_personalization': 'denied',
             'wait_for_update': 500
         });
+    </script>
+    <!-- AdSense next: adsbygoogle.js is what injects the consent banner. -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5861928596436289" crossorigin="anonymous"></script>
+    <!-- Google Analytics: loader, then config. dataLayer/gtag already exist. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LTK6VVHYDW"></script>
+    <script>
         gtag('js', new Date());
         gtag('config', 'G-LTK6VVHYDW');
     </script>
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="xrS32xSgQE4Xp1oL20j7uQ" async></script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

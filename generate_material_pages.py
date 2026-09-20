@@ -74,14 +74,11 @@ def generate_material_page(material_code, material_info, chemicals):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag("consent","default",{{"analytics_storage":"denied","ad_storage":"denied","ad_user_data":"denied","ad_personalization":"denied","wait_for_update":500}});</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5861928596436289" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LTK6VVHYDW"></script>
+    <script>gtag("js",new Date());gtag("config","G-LTK6VVHYDW");</script>
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="xrS32xSgQE4Xp1oL20j7uQ" async></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){{dataLayer.push(arguments);}}
-        gtag('js', new Date());
-        gtag('config', 'G-LTK6VVHYDW');
-    </script>
     <title>{material_info['name']} Chemical Resistance Chart | {len(compatible)}+ Chemicals Tested</title>
     <meta name="description" content="Complete {material_info['name']} chemical resistance chart. Find which chemicals are compatible at 20°C and 50°C. Free searchable database.">
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
