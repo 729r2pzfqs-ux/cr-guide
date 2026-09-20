@@ -93,8 +93,15 @@ AD_COLLAPSE_STYLE = (
 # "done", and requires the slot to still be empty on two consecutive passes, so
 # it can never hide a slot that is mid-render - hiding one early would zero its
 # width and cost the impression. A slot that later gains content is un-hidden.
+#
+# It must keep working for the whole page lifetime, not just a window after
+# load: auto ads inserts most of its slots lazily as the reader scrolls, so a
+# sweep that stopped after a fixed number of passes would miss exactly the
+# slots a mobile reader scrolls into. A MutationObserver re-arms the interval
+# whenever nodes are added, and scrolling re-arms it too; the interval itself
+# still backs off after a few idle passes so nothing polls forever.
 AD_COLLAPSE_SCRIPT = (
-    '<script>(function(){var S="data-blank-ad",k=new WeakMap();'
+    '<script>(function(){var S="data-blank-ad",k=new WeakMap(),t=null,c=0;'
     'function b(i){return !i.querySelector("iframe")&&!i.textContent.trim()}'
     'function s(){document.querySelectorAll("ins.adsbygoogle").forEach(function(i){'
     'var w=i.closest(".google-auto-placed")||i;'
@@ -102,7 +109,14 @@ AD_COLLAPSE_SCRIPT = (
     'if(i.getAttribute("data-adsbygoogle-status")!=="done")return;'
     'if(!w.hasAttribute(S)&&i.getBoundingClientRect().height<=0)return;'
     'var n=(k.get(i)||0)+1;k.set(i,n);if(n>=2)w.setAttribute(S,"")})}'
-    'var c=0,t=setInterval(function(){s();if(++c>=12)clearInterval(t)},1500)})()</script>'
+    'function arm(){if(t)return;c=0;'
+    't=setInterval(function(){s();if(++c>=8){clearInterval(t);t=null}},1500)}'
+    'arm();'
+    'try{new MutationObserver(function(m){for(var j=0;j<m.length;j++)'
+    'if(m[j].addedNodes.length){arm();return}})'
+    '.observe(document.documentElement,{childList:true,subtree:true})}catch(e){}'
+    'addEventListener("scroll",arm,{passive:true});'
+    'addEventListener("load",arm)})()</script>'
 )
 
 # --- assembled blocks -----------------------------------------------------
