@@ -55,21 +55,30 @@ def main():
         .rating-NR {{ background: #d1d5db; color: #6b7280; }}
         .search-highlight {{ background: #fef08a; }}
 
-        /* Keep Google Auto Ads out of the results card. Auto ads injects its
-           placements as .google-auto-placed wrappers (or a bare <ins>), and it
-           puts them in two places here: between two material rows, and as a
-           SIBLING between the recommendation banner and the table. An unfilled
-           slot there still reserves its height, which left a near-full-screen
-           gap on mobile. Scoping to the card covers both, because every ad
-           element inside it is auto-placed: the card holds no ad unit of its
-           own. Ads elsewhere on the page are untouched. */
-        #results-card {{ break-inside: avoid; page-break-inside: avoid; }}
-        #results-card .google-auto-placed,
-        #results-card ins.adsbygoogle,
-        #compat-table-zone .google-auto-placed,
-        #compat-table-zone ins.adsbygoogle,
-        #ratingsTable .google-auto-placed,
-        #ratingsTable ins.adsbygoogle {{ display: none !important; }}
+        /* Keep Google Auto Ads out of the results section.
+
+           Auto ads takes every slot it can find in here. Observed live, on
+           mobile: between two material rows; as a sibling between the
+           recommendation banner and the table; and as a 375px tall
+           .google-auto-placed div sitting as a SIBLING OF THE CARD, inside the
+           section wrapper. An unfilled or short-filled slot still reserves its
+           height, so each one reads as a blank band in the core content.
+
+           Earlier versions of this rule were scoped to the table zone, then to
+           the card, and each time auto ads simply placed one level further out.
+           Scoping to the whole #results section covers every slot inside it:
+           the section carries no ad unit of its own, so any ad element in it is
+           auto-placed by definition. Ads outside #results are untouched.
+
+           .google-anno is deliberately NOT suppressed - those are inline
+           annotation links wrapping existing copy, so hiding them would hide
+           real text rather than an ad. */
+        #results-card,
+        #compat-table-zone {{ break-inside: avoid; page-break-inside: avoid; }}
+        #results .google-auto-placed,
+        #results ins.adsbygoogle,
+        #results iframe[id^="aswift"],
+        #results [data-google-query-id] {{ display: none !important; }}
         #compat-table-zone table {{ border-collapse: collapse; border-spacing: 0; }}
     </style>
 </head>
