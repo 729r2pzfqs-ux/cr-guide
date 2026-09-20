@@ -4,7 +4,9 @@ Canonical analytics head block for chemicalresistance.org.
 
 Required order (GDPR / Consent Mode v2)
 ---------------------------------------
-    1. consent defaults   - denied baseline, pushed before anything can read it
+    1. consent defaults   - pushed before anything can read them: a denied
+                            baseline scoped to CONSENT_REGIONS, then a granted
+                            fallback for every other region
     2. AdSense loader     - adsbygoogle.js delivers the CMP at runtime, so it
                             has to be requested early to spend as little of the
                             wait_for_update window as possible
@@ -25,15 +27,34 @@ ADS_CLIENT = "ca-pub-5861928596436289"
 AHREFS_KEY = "xrS32xSgQE4Xp1oL20j7uQ"
 
 # --- individual tags, compact form ---------------------------------------
+#: EEA + UK + Switzerland + the remaining EFTA/EEA states. These are the
+#: regions where consent is required before storage, so they get the denied
+#: baseline; everywhere else falls through to the granted default below.
+CONSENT_REGIONS = [
+    "BE", "BG", "CZ", "DK", "DE", "EE", "IE", "EL", "ES", "FR", "HR", "IT",
+    "CY", "LV", "LT", "LU", "HU", "MT", "NL", "AT", "PL", "PT", "RO", "SI",
+    "SK", "FI", "SE", "GB", "CH", "IS", "LI", "NO",
+]
+_REGION_JSON = "[" + ",".join(f'"{c}"' for c in CONSENT_REGIONS) + "]"
+
 CONSENT = (
     '<script>window.dataLayer=window.dataLayer||[];'
     'function gtag(){dataLayer.push(arguments);}'
+    # 1. denied baseline, scoped to the regions that require consent
     'gtag("consent","default",{'
     '"analytics_storage":"denied",'
     '"ad_storage":"denied",'
     '"ad_user_data":"denied",'
     '"ad_personalization":"denied",'
-    '"wait_for_update":500});</script>'
+    '"wait_for_update":500,'
+    f'"region":{_REGION_JSON}}});'
+    # 2. granted fallback for every other region. A region-scoped default
+    #    wins over an unscoped one, so this does not loosen the block above.
+    'gtag("consent","default",{'
+    '"analytics_storage":"granted",'
+    '"ad_storage":"granted",'
+    '"ad_user_data":"granted",'
+    '"ad_personalization":"granted"});</script>'
 )
 ADS = (
     '<script async src="https://pagead2.googlesyndication.com/pagead/js/'
@@ -77,17 +98,32 @@ def block(indent="", ahrefs=True, gtag=True, escape_braces=False):
 
 
 #: Expanded, commented variant for the hand-maintained index.html.
-PRETTY = """    <!-- Consent Mode v2 defaults: denied baseline, set before any Google tag
-         so AdSense's CMP has something to update via gtag('consent','update'). -->
+PRETTY = """    <!-- Consent Mode v2 defaults, set before any Google tag so AdSense's CMP
+         has something to update via gtag('consent','update'). Denied in the
+         regions that require consent, granted everywhere else. -->
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
+        // 1. Denied baseline for the regions that require consent.
         gtag('consent', 'default', {
             'analytics_storage': 'denied',
             'ad_storage': 'denied',
             'ad_user_data': 'denied',
             'ad_personalization': 'denied',
-            'wait_for_update': 500
+            'wait_for_update': 500,
+            'region': [
+                'BE', 'BG', 'CZ', 'DK', 'DE', 'EE', 'IE', 'EL', 'ES', 'FR', 'HR', 'IT',
+                'CY', 'LV', 'LT', 'LU', 'HU', 'MT', 'NL', 'AT', 'PL', 'PT', 'RO', 'SI',
+                'SK', 'FI', 'SE', 'GB', 'CH', 'IS', 'LI', 'NO'
+            ]
+        });
+        // 2. Granted fallback everywhere else. A region-scoped default wins
+        //    over an unscoped one, so this does not loosen the block above.
+        gtag('consent', 'default', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted'
         });
     </script>
     <!-- AdSense next: adsbygoogle.js is what injects the consent banner. -->

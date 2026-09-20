@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Consent Mode v2 defaults: denied baseline, set before any Google tag
-         so AdSense's CMP has something to update via gtag('consent','update'). -->
+    <!-- Consent Mode v2 defaults, set before any Google tag so AdSense's CMP
+         has something to update via gtag('consent','update'). Denied in the
+         regions that require consent, granted everywhere else. -->
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
+        // 1. Denied baseline for the regions that require consent.
         gtag('consent', 'default', {
             'analytics_storage': 'denied',
             'ad_storage': 'denied',
             'ad_user_data': 'denied',
             'ad_personalization': 'denied',
-            'wait_for_update': 500
+            'wait_for_update': 500,
+            'region': [
+                'BE', 'BG', 'CZ', 'DK', 'DE', 'EE', 'IE', 'EL', 'ES', 'FR', 'HR', 'IT',
+                'CY', 'LV', 'LT', 'LU', 'HU', 'MT', 'NL', 'AT', 'PL', 'PT', 'RO', 'SI',
+                'SK', 'FI', 'SE', 'GB', 'CH', 'IS', 'LI', 'NO'
+            ]
+        });
+        // 2. Granted fallback everywhere else. A region-scoped default wins
+        //    over an unscoped one, so this does not loosen the block above.
+        gtag('consent', 'default', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted'
         });
     </script>
     <!-- AdSense next: adsbygoogle.js is what injects the consent banner. -->
