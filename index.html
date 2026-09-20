@@ -92,12 +92,19 @@
         #ratingsTable tr:hover { background-color: #f0fdf4; }
         .search-highlight { background: #fef08a; }
 
-        /* Keep Google Auto Ads out of the compatibility table. Auto ads injects
-           its placements as .google-auto-placed wrappers (or a bare <ins>) and
-           will drop one between two material rows, splitting the core content.
-           Any ad element inside the table zone is therefore auto-placed, and is
-           suppressed here. This rule is what actually enforces the exclusion. */
-        #compat-table-zone { break-inside: avoid; page-break-inside: avoid; }
+        /* Keep Google Auto Ads out of the results card. Auto ads injects its
+           placements as .google-auto-placed wrappers (or a bare <ins>), and it
+           puts them in two places here: between two material rows, and - the
+           case this rule exists for - as a SIBLING between the recommendation
+           banner and the table. An unfilled slot there still reserves its
+           height, which left a near-full-screen gap on mobile.
+
+           Scoping to the card covers both, because every ad element inside it
+           is auto-placed: the card holds no ad unit of its own. Ads elsewhere
+           on the page are untouched. */
+        #results-card { break-inside: avoid; page-break-inside: avoid; }
+        #results-card .google-auto-placed,
+        #results-card ins.adsbygoogle,
         #compat-table-zone .google-auto-placed,
         #compat-table-zone ins.adsbygoogle,
         #ratingsTable .google-auto-placed,
@@ -355,7 +362,7 @@
     <!-- Results Section -->
     <section id="results" class="px-4 py-8">
         <div class="max-w-7xl mx-auto">
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
+            <div id="results-card" class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
                 <!-- Chemical Info Header -->
                 <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
                     <div class="flex items-start justify-between">

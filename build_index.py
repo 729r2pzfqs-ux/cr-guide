@@ -54,6 +54,23 @@ def main():
         .rating-D {{ background: #ef4444; color: white; }}
         .rating-NR {{ background: #d1d5db; color: #6b7280; }}
         .search-highlight {{ background: #fef08a; }}
+
+        /* Keep Google Auto Ads out of the results card. Auto ads injects its
+           placements as .google-auto-placed wrappers (or a bare <ins>), and it
+           puts them in two places here: between two material rows, and as a
+           SIBLING between the recommendation banner and the table. An unfilled
+           slot there still reserves its height, which left a near-full-screen
+           gap on mobile. Scoping to the card covers both, because every ad
+           element inside it is auto-placed: the card holds no ad unit of its
+           own. Ads elsewhere on the page are untouched. */
+        #results-card {{ break-inside: avoid; page-break-inside: avoid; }}
+        #results-card .google-auto-placed,
+        #results-card ins.adsbygoogle,
+        #compat-table-zone .google-auto-placed,
+        #compat-table-zone ins.adsbygoogle,
+        #ratingsTable .google-auto-placed,
+        #ratingsTable ins.adsbygoogle {{ display: none !important; }}
+        #compat-table-zone table {{ border-collapse: collapse; border-spacing: 0; }}
     </style>
 </head>
 <body class="text-gray-700 min-h-screen">
@@ -115,7 +132,7 @@ def main():
     <!-- Results Section -->
     <section id="results" class="px-4 py-6 hidden">
         <div class="max-w-7xl mx-auto">
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div id="results-card" class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                 <!-- Chemical Info Header -->
                 <div class="p-6 border-b border-gray-100 bg-gray-50">
                     <div class="flex items-start justify-between">
@@ -144,7 +161,7 @@ def main():
                 </div>
 
                 <!-- Ratings Table -->
-                <div class="overflow-x-auto">
+                <div id="compat-table-zone" class="overflow-x-auto">
                     <table class="w-full">
                         <thead>
                             <tr class="bg-gray-50 text-left text-sm">
