@@ -24,6 +24,7 @@ python3 build_chemical_pages.py     # chemical pages, pair pages, chemicals inde
 python3 build_material_tables.py    # tables inside the material pages
 python3 build_chart_tables.py       # static rows in chart and comparison pages
 python3 fix_internal_links.py       # run twice if it reports changes
+python3 noindex_french.py           # keeps French out of the index, see below
 python3 build_sitemap.py            # always last
 ```
 
@@ -36,12 +37,15 @@ scripts again after `fix_cross_language.py`.
 | Pages | Robots | Sitemap |
 |---|---|---|
 | Chemical pages en, de, es (193 each) | indexable | yes |
-| Material pages en, de, es, fr | indexable | yes |
-| Charts, compare, tools en, de, es, fr | indexable | yes |
+| Material pages en, de, es | indexable | yes |
+| Charts, compare, tools en, de, es | indexable | yes |
 | Pair pages en, de, es with a rating | `googlebot: noindex,follow` | no |
 | Pair pages without a rating | `robots: noindex,follow` | no |
-| Everything fr (chemical, pair), pt, zh | `robots: noindex,follow` | no |
+| Everything fr, pt, zh | `robots: noindex,follow`, no hreflang pointing at it | no |
 | Redirect stubs | `robots: noindex,follow`, no ad or analytics tags | no |
+
+French was taken out of the index on 2026-09-28 (`noindex_french.py`), so only
+English, German and Spanish are indexed.
 
 The pair-page policy is one constant, `PAIR_ROBOTS` in `build_chemical_pages.py`.
 
