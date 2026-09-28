@@ -5,6 +5,12 @@ Rewrites title tags, meta descriptions, FAQ schema, and adds structured data
 to maximize click-through rate from Google search impressions.
 """
 
+raise SystemExit(
+    "ctr_optimize.py is RETIRED and must not be run. It rewrites published pages from stale\n"
+    "data or by patching HTML in place, and would undo the September 2026 rebuild.\n"
+    "Use build_chemical_pages.py (titles and descriptions come from the data). See BUILD.md."
+)
+
 import json
 import os
 import re

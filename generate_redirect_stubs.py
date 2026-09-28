@@ -30,6 +30,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from translate_to_english import translate_chemical_name
+from redirect_stub import stub
 
 MATS = {'acetal-pom', 'aluminium', 'ectfe-etfe', 'epdm', 'fep', 'hdpe', 'ldpe',
         'nbr', 'nylon-pa', 'petg', 'pmp', 'polycarbonate', 'polystyrene',
@@ -41,6 +42,13 @@ SLUG_ALIASES = {
     'gasoline': 'gasoline-petrol',
     'tetrahydrofuran-thf': 'thf',
     'white-spirit': 'turpentine-substitute',
+    # pages that duplicated another page of the same source chemical
+    'ammonia': 'ammonium-hydroxide',
+    'chlorine-bleach-solution': 'sodium-hypochlorite',
+    'labarraque-solution-sodium-hypochlorite': 'sodium-hypochlorite',
+    'formaldehyde-solution': 'formaldehyde',
+    'n-heptane': 'heptane',
+    'n-hexane': 'hexane',
 }
 
 # One-off legacy pages with no same-named directory to fall back on
@@ -53,17 +61,7 @@ MISC_TARGETS = {
     'charts/ss316-compatibility-chart/index.html': '/materials/ss316/',
 }
 
-STUB = '''<html><head>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag("consent","default",{{"analytics_storage":"denied","ad_storage":"denied","ad_user_data":"denied","ad_personalization":"denied","wait_for_update":500,"region":["BE","BG","CZ","DK","DE","EE","IE","GR","ES","FR","HR","IT","CY","LV","LT","LU","HU","MT","NL","AT","PL","PT","RO","SI","SK","FI","SE","GB","CH","IS","LI","NO"]}});gtag("consent","default",{{"analytics_storage":"granted","ad_storage":"granted","ad_user_data":"granted","ad_personalization":"granted"}});</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5861928596436289" crossorigin="anonymous"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-LTK6VVHYDW"></script>
-<script>gtag("js",new Date());gtag("config","G-LTK6VVHYDW");</script>
-<style>ins.adsbygoogle[data-ad-status="unfilled"],.google-auto-placed:has(>ins.adsbygoogle[data-ad-status="unfilled"]),[data-blank-ad],:has(>#compat-table-zone) .google-auto-placed,:has(>#compat-table-zone) ins.adsbygoogle,:has(>#compat-table-zone) iframe[id^="aswift"]{{display:none!important}}</style>
-<script>(function(){{var S="data-blank-ad",k=new WeakMap(),t=null,c=0;function b(e){{return !e.querySelector("iframe")&&!e.textContent.trim()}}function s(){{document.querySelectorAll("ins.adsbygoogle,.google-auto-placed").forEach(function(e){{var ins=e.tagName==="INS";if(ins&&e.closest(".google-auto-placed"))return;var p=ins?e:(e.querySelector("ins.adsbygoogle")||e);if(!b(e)){{k.set(e,0);e.removeAttribute(S);return}}if(p.tagName==="INS"&&p.getAttribute("data-adsbygoogle-status")!=="done")return;if(!e.hasAttribute(S)&&e.getBoundingClientRect().height<=0)return;var n=(k.get(e)||0)+1;k.set(e,n);if(n>=2)e.setAttribute(S,"")}})}}function arm(){{if(t)return;c=0;t=setInterval(function(){{s();if(++c>=8){{clearInterval(t);t=null}}}},1500)}}arm();try{{new MutationObserver(function(m){{for(var j=0;j<m.length;j++)if(m[j].addedNodes.length){{arm();return}}}}).observe(document.documentElement,{{childList:true,subtree:true}})}}catch(e){{}}addEventListener("scroll",arm,{{passive:true}});addEventListener("load",arm)}})()</script><meta http-equiv="refresh" content="0;url=https://chemicalresistance.org{target}"><link rel="canonical" href="https://chemicalresistance.org{target}">
-    <meta name="robots" content="noindex,follow"></head><body><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{{"token": "cba547e85ee54e0f9cdc27e68405eead"}}'></script>
-</body></html>'''
-
-
+# Stubs carry no ad or analytics tags, see redirect_stub.py.
 def slugify(name):
     return re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
 
@@ -192,7 +190,7 @@ def main():
             continue
         os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
         with open(path, 'w', encoding='utf-8') as f:
-            f.write(STUB.format(target=target))
+            f.write(stub(target))
         written += 1
 
     print(f'wrote {written} redirect stubs, skipped {skipped} live paths')

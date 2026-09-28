@@ -1,23 +1,31 @@
 # chemicalresistance.org
 
 ## About
-ChemicalResistance.org is a free chemical resistance reference tool. It provides compatibility data for 1,600+ chemicals against 24 materials including HDPE, PTFE, Viton, Stainless Steel, and more.
+ChemicalResistance.org is a free chemical resistance reference. It republishes the chemical resistance list of Bürkle GmbH: ratings for 835 chemicals against 24 materials (plastics, fluoropolymers, elastomers, stainless steel, aluminium) at 20 °C and 50 °C, by concentration.
 
-## Features
-- Chemical resistance chart with 1,600+ chemicals and 24 materials
-- SDS (Safety Data Sheet) decoder tool
-- Chemical storage compatibility guide
-- Available in English, Spanish, German, French, and Portuguese
+## How to read the data
+- Ratings: A very good resistance, B good, C limited, D not resistant.
+- Ratings depend on concentration. Each chemical page lists every concentration in the source.
+- Values marked "est." are estimates in the source, not test results.
+- For metals, "L" marks a risk of pitting or stress-corrosion cracking.
+- Values that were corrected against other published sources, or that other sources dispute, are listed on the page with references.
 
 ## Content
-- ~1,600 individual chemical pages with full material compatibility data
-- 24 material-specific pages showing all chemical resistances
-- Chemical storage compatibility recommendations
-- SDS decoder for safety data sheet interpretation
+- 193 chemical pages, each with the full table for that chemical
+- 24 material pages listing every chemical rated for the material
+- Comparison charts by material group
+- Chemical storage compatibility guide
+- SDS (Safety Data Sheet) decoder
+- Available in English, German and Spanish
 
 ## URLs
 - Homepage: https://chemicalresistance.org/
-- Chemicals index: https://chemicalresistance.org/chemicals/
-- SDS Decoder: https://chemicalresistance.org/sds-decoder/
-- Storage Guide: https://chemicalresistance.org/storage-compatibility/
+- Chemicals: https://chemicalresistance.org/chemicals/
+- Materials: https://chemicalresistance.org/materials/
+- Charts: https://chemicalresistance.org/charts/
+- Storage guide: https://chemicalresistance.org/storage-compatibility/
+- SDS decoder: https://chemicalresistance.org/sds-decoder/
 - About: https://chemicalresistance.org/about/
+
+## Contact
+info@chemicalresistance.org

@@ -8,6 +8,12 @@ fix_cross_language.py afterwards; it is idempotent and has a --check mode that
 reports what is still untranslated.
 """
 
+raise SystemExit(
+    "generate_zh_pages.py is RETIRED and must not be run. It rewrites published pages from stale\n"
+    "data or by patching HTML in place, and would undo the September 2026 rebuild.\n"
+    "Use build_chemical_pages.py, which writes all six languages from the data. See BUILD.md."
+)
+
 import os
 import re
 import shutil

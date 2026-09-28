@@ -2,6 +2,10 @@
 """
 Build index.html with embedded chemical data.
 """
+raise SystemExit(
+    "build_index.py is RETIRED and must not be run. It regenerates an older front page\n"
+    "(990 chemicals, 12 materials, data inlined). Edit index.html directly. See BUILD.md."
+)
 import json
 from pathlib import Path
 

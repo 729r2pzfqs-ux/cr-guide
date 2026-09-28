@@ -22,6 +22,12 @@ three are rewritten together. Replacements are also applied to the generator
 scripts in this directory so a regeneration does not reintroduce the long text.
 """
 
+raise SystemExit(
+    "fix_meta_descriptions.py is RETIRED and must not be run. It rewrites published pages from stale\n"
+    "data or by patching HTML in place, and would undo the September 2026 rebuild.\n"
+    "Use build_chemical_pages.py (titles and descriptions come from the data). See BUILD.md."
+)
+
 import html
 import os
 import re

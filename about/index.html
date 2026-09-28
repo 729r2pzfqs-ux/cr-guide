@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About ChemicalResistance.org | Free Chemical Compatibility Database</title>
-    <meta name="description" content="Free chemical resistance data for engineers and safety professionals. Data sourced from Bürkle GmbH. 1,650+ chemicals and 24 materials rated A-D.">
+    <meta name="description" content="Free chemical resistance data for engineers and safety professionals. Data sourced from Bürkle GmbH. 830+ chemicals and 24 materials rated A-D.">
     <link rel="canonical" href="https://chemicalresistance.org/about/">
     <link rel="alternate" hreflang="x-default" href="https://chemicalresistance.org/about/">
     <link rel="alternate" hreflang="en" href="https://chemicalresistance.org/about/">
@@ -31,7 +31,7 @@
     
     <link rel="stylesheet" href="/css/tailwind.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@1.48.0/dist/umd/lucide.min.js"></script>
     
     <style>
         * { font-family: 'Inter', sans-serif; }
@@ -40,14 +40,14 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "About ChemicalResistance.org", "description": "Learn about our chemical compatibility database, data sources, rating system, and methodology.", "url": "https://chemicalresistance.org/about/", "dateModified": "2026-03-27"}</script>
 
     <meta property="og:title" content="About ChemicalResistance.org | Free Chemical Compatibility Database">
-    <meta property="og:description" content="Free chemical resistance data for engineers and safety professionals. Data sourced from Bürkle GmbH. 1,650+ chemicals and 24 materials rated A-D.">
+    <meta property="og:description" content="Free chemical resistance data for engineers and safety professionals. Data sourced from Bürkle GmbH. 830+ chemicals and 24 materials rated A-D.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://chemicalresistance.org/about/">
     <meta property="og:image" content="https://chemicalresistance.org/og-image.png">
     <meta property="og:site_name" content="ChemicalResistance.org">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="About ChemicalResistance.org | Free Chemical Compatibility Database">
-    <meta name="twitter:description" content="Free chemical resistance data for engineers and safety professionals. Data sourced from Bürkle GmbH. 1,650+ chemicals and 24 materials rated A-D.">
+    <meta name="twitter:description" content="Free chemical resistance data for engineers and safety professionals. Data sourced from Bürkle GmbH. 830+ chemicals and 24 materials rated A-D.">
     <meta name="twitter:image" content="https://chemicalresistance.org/og-image.png">
 </head>
 <body class="text-gray-700 min-h-screen">
@@ -124,7 +124,7 @@
                 </p>
                 <p class="text-gray-600 leading-relaxed">
                     <strong>ChemicalResistance.org</strong> was created to change that. We've built a fast, 
-                    searchable database covering <strong>1,650+ chemicals</strong> and <strong>24 materials</strong> — 
+                    searchable database covering <strong>830+ chemicals</strong> and <strong>24 materials</strong> — 
                     completely free, with no registration required.
                 </p>
             </div>
@@ -162,7 +162,7 @@
                 <div class="bg-white rounded-xl border border-gray-200 p-6">
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
-                            <h3 class="font-semibold text-gray-900 mb-3">1,650+ Chemicals</h3>
+                            <h3 class="font-semibold text-gray-900 mb-3">830+ Chemicals</h3>
                             <ul class="text-sm text-gray-600 space-y-1">
                                 <li>• Acids (sulfuric, hydrochloric, nitric, etc.)</li>
                                 <li>• Bases (sodium hydroxide, ammonia, etc.)</li>
@@ -205,6 +205,64 @@
                         visit <a href="https://buerkle.de" class="underline">buerkle.de</a> for their original materials.
                     </p>
                 </div>
+            </div>
+
+            <!-- How the data is handled -->
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">How the Data Is Handled</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Every rating on this site is read directly from the Bürkle spreadsheet. The spreadsheet has
+                    1,651 rows. 661 of them are synonyms that point at another row and carry no ratings of their
+                    own, so the site counts 990 rows with data, covering 835 chemicals.
+                </p>
+                <ul class="text-gray-600 leading-relaxed space-y-2 mb-4 list-disc pl-5">
+                    <li><strong>Concentration.</strong> Many chemicals are listed at several concentrations, and the
+                        rating often changes between them. Each chemical page shows every concentration in the
+                        source. A rating is never shown without the concentration it belongs to.</li>
+                    <li><strong>Estimates.</strong> About a quarter of the values are marked in the source as
+                        estimates rather than test results. They are labelled "est." and are given as one value
+                        without a temperature.</li>
+                    <li><strong>Pitting.</strong> For stainless steel and aluminium the source flags a risk of
+                        pitting or stress-corrosion cracking. The flag is shown as "L" or "pitting risk".</li>
+                    <li><strong>No data.</strong> A missing rating means the combination was not tested. It does
+                        not mean the material is resistant.</li>
+                    <li><strong>Names.</strong> The source is in German. English, Spanish and other names are
+                        translations, and the German source name is shown next to them.</li>
+                </ul>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Checks against other sources</h3>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    In September 2026 the 20 °C ratings of 27 common chemicals were compared with other published
+                    charts: 389 chemical and material combinations. Most agreed within one grade. Where at least
+                    two independent sources rate a material clearly worse than the Bürkle list does, the value is
+                    either corrected or marked as disputed, and the page gives the reason and the references. The
+                    rest of the data has not been checked this way.
+                </p>
+                <!-- corrections:start -->
+<ul class="text-sm text-gray-600 space-y-2 list-disc pl-5">
+<li><a href="/chemicals/acetone/" class="text-emerald-600 underline">Acetone</a>, concentration not stated, HDPE: source value 1/1 kept, disputed. Published charts disagree: two rate acetone D or not recommended for continuous use on HDPE, while the INEOS HDPE guide rates it satisfactory. <a href="https://www.astisensor.com/HDPE_Chemical_Compatibility_Resistance_Chart.pdf" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.professionalplastics.com/professionalplastics/HDPE-LDPEChemicalResistanceChart.pdf" rel="nofollow noopener" class="underline">[2]</a> <a href="https://documents.thermofisher.com/TFS-Assets/LCD/Specification-Sheets/D20480.pdf" rel="nofollow noopener" class="underline">[3]</a></li>
+<li><a href="/chemicals/dichloromethane/" class="text-emerald-600 underline">Dichloromethane</a>, concentration not stated, Aluminium: source value 1/0 kept, disputed. Two charts rate aluminium C and D for dichloromethane. <a href="https://www.cplabsafety.com/aluminum-chemical-compatibility-chart/" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf" rel="nofollow noopener" class="underline">[2]</a></li>
+<li><a href="/chemicals/dmf/" class="text-emerald-600 underline">Dimethylformamide (DMF)</a>, concentration not stated, Acetal (POM): source value 1/2 kept, disputed. Two charts that share one data set rate acetal D for dimethylformamide. <a href="https://www.cplabsafety.com/acetal-polyoxymethylene-chemical-compatibility-chart/" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf" rel="nofollow noopener" class="underline">[2]</a></li>
+<li><a href="/chemicals/ethanol/" class="text-emerald-600 underline">Ethanol</a>, 96 %, PVC Rigid: source value 1/3 kept, disputed. Two charts rate rigid PVC fair or limited for pure ethanol. <a href="https://www.cplabsafety.com/pvc-polyvinyl-chloride-chemical-compatibility-chart/" rel="nofollow noopener" class="underline">[1]</a></li>
+<li><a href="/chemicals/hydrofluoric-acid/" class="text-emerald-600 underline">Hydrofluoric Acid</a>, 4 %, NBR: source value (2) kept, disputed. The source value is an estimate. Charts for hydrofluoric acid of 20 % and above, and an O-ring handbook without a stated concentration, rate nitrile rubber unsuitable. <a href="https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.cambridgereactordesign.com/ammonite/pdf/Chemical-Compatability.pdf" rel="nofollow noopener" class="underline">[2]</a></li>
+<li><a href="/chemicals/methyl-isobutyl-ketone-mibk/" class="text-emerald-600 underline">Methyl Isobutyl Ketone (MIBK)</a>, concentration not stated, HDPE: source value 1/2 kept, disputed. One chart rates methyl isobutyl ketone D on HDPE and the Nalgene table rates it fair. <a href="https://www.astisensor.com/HDPE_Chemical_Compatibility_Resistance_Chart.pdf" rel="nofollow noopener" class="underline">[1]</a> <a href="https://documents.thermofisher.com/TFS-Assets/LCD/Specification-Sheets/D20480.pdf" rel="nofollow noopener" class="underline">[2]</a></li>
+<li><a href="/chemicals/butanone-mek/" class="text-emerald-600 underline">Methyl Ethyl Ketone (MEK)</a>, concentration not stated, HDPE: source value 1/3 kept, disputed. The INEOS HDPE guide rates methyl ethyl ketone unsatisfactory and two charts rate it D or not recommended for continuous use; one chart rates it resistant. <a href="https://www.astisensor.com/HDPE_Chemical_Compatibility_Resistance_Chart.pdf" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.professionalplastics.com/professionalplastics/HDPE-LDPEChemicalResistanceChart.pdf" rel="nofollow noopener" class="underline">[2]</a> <a href="https://www.kingplastic.com/wp-content/uploads/2014/05/HDPE_CRCWB.pdf" rel="nofollow noopener" class="underline">[3]</a></li>
+<li><a href="/chemicals/sodium-hydroxide-caustic-soda/" class="text-emerald-600 underline">Sodium Hydroxide (Caustic Soda)</a>, 1 %, PVDF: corrected from 1/1 to 4/4. The resin manufacturer lists PVDF homopolymer as not recommended for sodium hydroxide at every concentration, and two further charts rate it D. The source rates it A to C, mostly as an estimate. <a href="https://page.arkema.com/rs/253-HSZ-754/images/kynar-pvdf-chemical-resistance-chart.pdf" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf" rel="nofollow noopener" class="underline">[2]</a> <a href="https://www.astisensor.com/KYNAR_PVDF_Chemical_Compatibility_Resistance_Chart.pdf" rel="nofollow noopener" class="underline">[3]</a></li>
+<li><a href="/chemicals/sodium-hydroxide-caustic-soda/" class="text-emerald-600 underline">Sodium Hydroxide (Caustic Soda)</a>, 30 %, PVDF: corrected from (2) to 4/4. The resin manufacturer lists PVDF homopolymer as not recommended for sodium hydroxide at every concentration, and two further charts rate it D. The source rates it A to C, mostly as an estimate. <a href="https://page.arkema.com/rs/253-HSZ-754/images/kynar-pvdf-chemical-resistance-chart.pdf" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf" rel="nofollow noopener" class="underline">[2]</a> <a href="https://www.astisensor.com/KYNAR_PVDF_Chemical_Compatibility_Resistance_Chart.pdf" rel="nofollow noopener" class="underline">[3]</a></li>
+<li><a href="/chemicals/sodium-hydroxide-caustic-soda/" class="text-emerald-600 underline">Sodium Hydroxide (Caustic Soda)</a>, 45 %, PVDF: corrected from (2) to 4/4. The resin manufacturer lists PVDF homopolymer as not recommended for sodium hydroxide at every concentration, and two further charts rate it D. The source rates it A to C, mostly as an estimate. <a href="https://page.arkema.com/rs/253-HSZ-754/images/kynar-pvdf-chemical-resistance-chart.pdf" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf" rel="nofollow noopener" class="underline">[2]</a> <a href="https://www.astisensor.com/KYNAR_PVDF_Chemical_Compatibility_Resistance_Chart.pdf" rel="nofollow noopener" class="underline">[3]</a></li>
+<li><a href="/chemicals/sodium-hydroxide-caustic-soda/" class="text-emerald-600 underline">Sodium Hydroxide (Caustic Soda)</a>, 50 %, PVDF: corrected from 3/3 to 4/4. The resin manufacturer lists PVDF homopolymer as not recommended for sodium hydroxide at every concentration, and two further charts rate it D. The source rates it A to C, mostly as an estimate. <a href="https://page.arkema.com/rs/253-HSZ-754/images/kynar-pvdf-chemical-resistance-chart.pdf" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf" rel="nofollow noopener" class="underline">[2]</a> <a href="https://www.astisensor.com/KYNAR_PVDF_Chemical_Compatibility_Resistance_Chart.pdf" rel="nofollow noopener" class="underline">[3]</a></li>
+<li><a href="/chemicals/sodium-hydroxide-caustic-soda/" class="text-emerald-600 underline">Sodium Hydroxide (Caustic Soda)</a>, 60 %, PVDF: corrected from (2) to 4/4. The resin manufacturer lists PVDF homopolymer as not recommended for sodium hydroxide at every concentration, and two further charts rate it D. The source rates it A to C, mostly as an estimate. <a href="https://page.arkema.com/rs/253-HSZ-754/images/kynar-pvdf-chemical-resistance-chart.pdf" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf" rel="nofollow noopener" class="underline">[2]</a> <a href="https://www.astisensor.com/KYNAR_PVDF_Chemical_Compatibility_Resistance_Chart.pdf" rel="nofollow noopener" class="underline">[3]</a></li>
+<li><a href="/chemicals/sodium-hydroxide-caustic-soda/" class="text-emerald-600 underline">Sodium Hydroxide (Caustic Soda)</a>, concentrated, PVDF: corrected from (2) to 4/4. The resin manufacturer lists PVDF homopolymer as not recommended for sodium hydroxide at every concentration, and two further charts rate it D. The source rates it A to C, mostly as an estimate. <a href="https://page.arkema.com/rs/253-HSZ-754/images/kynar-pvdf-chemical-resistance-chart.pdf" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf" rel="nofollow noopener" class="underline">[2]</a> <a href="https://www.astisensor.com/KYNAR_PVDF_Chemical_Compatibility_Resistance_Chart.pdf" rel="nofollow noopener" class="underline">[3]</a></li>
+<li><a href="/chemicals/seawater/" class="text-emerald-600 underline">Seawater (Salt Water)</a>, concentration not stated, SS 304: corrected from 1/3L to 3/3L. Stainless steel 304 pits in seawater. The Australian Stainless Steel Development Association limits it to fittings that are regularly washed with fresh water, and two charts rate it C. The source rates it A at 20 °C. <a href="https://www.assda.asn.au/blog/340-common-misconceptions-about-stainless-steel" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf" rel="nofollow noopener" class="underline">[2]</a> <a href="https://www.cplabsafety.com/stainless-steel-chemical-compatibility-chart/" rel="nofollow noopener" class="underline">[3]</a></li>
+<li><a href="/chemicals/seawater/" class="text-emerald-600 underline">Seawater (Salt Water)</a>, concentration not stated, SS 316: corrected from 1/2L to 2/2L. Stainless steel 316 is subject to crevice corrosion in seawater above about 10 to 15 °C. The source rates it A at 20 °C. <a href="https://www.assda.asn.au/blog/340-common-misconceptions-about-stainless-steel" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf" rel="nofollow noopener" class="underline">[2]</a></li>
+<li><a href="/chemicals/sulfuric-acid/" class="text-emerald-600 underline">Sulfuric Acid</a>, 20 %, SS 304: corrected from 2/3 to 4/4. The British Stainless Steel Association limits 304 to about 5 % sulfuric acid at room temperature; intermediate concentrations corrode it rapidly. The source rates it B. <a href="https://bssa.org.uk/bssa_articles/selection-of-stainless-steels-for-handling-sulphuric-acid-h2so4/" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.cplabsafety.com/stainless-steel-chemical-compatibility-chart/" rel="nofollow noopener" class="underline">[2]</a></li>
+<li><a href="/chemicals/sulfuric-acid/" class="text-emerald-600 underline">Sulfuric Acid</a>, 40 %, SS 304: corrected from 2/3 to 4/4. Neither 304 nor 316 resists sulfuric acid of intermediate concentration: the British Stainless Steel Association limits 304 to about 5 % and 316 to about 22 % at room temperature. The source rates both B. <a href="https://bssa.org.uk/bssa_articles/selection-of-stainless-steels-for-handling-sulphuric-acid-h2so4/" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.cplabsafety.com/stainless-steel-chemical-compatibility-chart/" rel="nofollow noopener" class="underline">[2]</a></li>
+<li><a href="/chemicals/sulfuric-acid/" class="text-emerald-600 underline">Sulfuric Acid</a>, 40 %, SS 316: corrected from 2/3 to 4/4. Neither 304 nor 316 resists sulfuric acid of intermediate concentration: the British Stainless Steel Association limits 304 to about 5 % and 316 to about 22 % at room temperature. The source rates both B. <a href="https://bssa.org.uk/bssa_articles/selection-of-stainless-steels-for-handling-sulphuric-acid-h2so4/" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.cplabsafety.com/stainless-steel-chemical-compatibility-chart/" rel="nofollow noopener" class="underline">[2]</a></li>
+<li><a href="/chemicals/sulfuric-acid/" class="text-emerald-600 underline">Sulfuric Acid</a>, 80 %, SS 304: corrected from 2/4 to 4/4. Neither 304 nor 316 resists sulfuric acid of intermediate concentration: the British Stainless Steel Association limits 304 to about 5 % and 316 to about 22 % at room temperature. The source rates both B. <a href="https://bssa.org.uk/bssa_articles/selection-of-stainless-steels-for-handling-sulphuric-acid-h2so4/" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.cplabsafety.com/stainless-steel-chemical-compatibility-chart/" rel="nofollow noopener" class="underline">[2]</a></li>
+<li><a href="/chemicals/sulfuric-acid/" class="text-emerald-600 underline">Sulfuric Acid</a>, 80 %, SS 316: corrected from 2/3 to 4/4. Neither 304 nor 316 resists sulfuric acid of intermediate concentration: the British Stainless Steel Association limits 304 to about 5 % and 316 to about 22 % at room temperature. The source rates both B. <a href="https://bssa.org.uk/bssa_articles/selection-of-stainless-steels-for-handling-sulphuric-acid-h2so4/" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.cplabsafety.com/stainless-steel-chemical-compatibility-chart/" rel="nofollow noopener" class="underline">[2]</a></li>
+<li><a href="/chemicals/hydrogen-peroxide/" class="text-emerald-600 underline">Hydrogen Peroxide</a>, 3 %, Acetal (POM): source value 1/0 kept, disputed. Two charts that share one data set rate acetal D for dilute hydrogen peroxide. The source itself rates acetal D from 30 %. <a href="https://www.cplabsafety.com/acetal-polyoxymethylene-chemical-compatibility-chart/" rel="nofollow noopener" class="underline">[1]</a> <a href="https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf" rel="nofollow noopener" class="underline">[2]</a></li>
+</ul>
+<p class="text-xs text-gray-500 mt-3">Source values use the scale 1 (very good) to 4 (not resistant).</p>
+                <!-- corrections:end -->
             </div>
 
             <!-- Rating System -->
@@ -265,7 +323,7 @@
             <div class="mb-12">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">Additional Tools</h2>
                 <div class="grid md:grid-cols-3 gap-4">
-                    <a href="../viscosity" class="bg-white rounded-xl border border-gray-200 p-5 hover:border-emerald-300 transition-colors block">
+                    <a href="/viscosity/" class="bg-white rounded-xl border border-gray-200 p-5 hover:border-emerald-300 transition-colors block">
                         <div class="w-9 h-9 rounded-lg bg-emerald-100 flex items-center justify-center mb-2"><svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.3 24.3 0 0 1 4.5 0m0 0v5.714a2.25 2.25 0 0 0 .659 1.591L19 14.5m-4.75-11.396c.251.023.501.05.75.082M5 14.5a9 9 0 0 0 14 0"/></svg></div>
                         <h3 class="font-semibold text-gray-900">Viscosity Lookup</h3>
                         <p class="text-sm text-gray-600">100+ liquids with mPa·s values for pump selection.</p>

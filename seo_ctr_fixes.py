@@ -6,6 +6,12 @@ SEO/CTR fixes for chemicalresistance.org
 3. Enrich JSON-LD on /materials/ pages
 """
 
+raise SystemExit(
+    "seo_ctr_fixes.py is RETIRED and must not be run. It rewrites published pages from stale\n"
+    "data or by patching HTML in place, and would undo the September 2026 rebuild.\n"
+    "Use build_chemical_pages.py. See BUILD.md."
+)
+
 import os
 import re
 

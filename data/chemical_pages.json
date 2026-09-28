@@ -1,0 +1,2146 @@
+{
+ "_comment": "Registry of the live chemical pages. \"source\" is the German name of the row group in the Buerkle spreadsheet that the page shows; it is set by hand so a page can never silently pick up the data of a similarly named chemical. \"redirect_to\" marks a slug that duplicated another page and is now a redirect stub.",
+ "pages": {
+  "acetaldehyde": {
+   "source": "Acetaldehyd",
+   "names": {
+    "en": "Acetaldehyde",
+    "de": "Acetaldehyd",
+    "es": "Acetaldehído",
+    "fr": "Acétaldéhyde",
+    "pt": "Acetaldeído",
+    "zh": "乙醛"
+   }
+  },
+  "acetic-acid": {
+   "source": "Essigsäure",
+   "names": {
+    "en": "Acetic Acid",
+    "de": "Essigsäure",
+    "es": "Ácido acético",
+    "fr": "Acide acétique",
+    "pt": "Ácido acético",
+    "zh": "乙酸"
+   }
+  },
+  "acetic-anhydride": {
+   "source": "Essigsäureanhydrid",
+   "names": {
+    "en": "Acetic Anhydride",
+    "de": "Essigsäureanhydrid",
+    "es": "Anhídrido acético",
+    "fr": "Anhydride acétique",
+    "pt": "Anidrido acético",
+    "zh": "乙酸酐"
+   }
+  },
+  "acetone": {
+   "source": "Aceton",
+   "names": {
+    "en": "Acetone",
+    "de": "Aceton",
+    "es": "Acetona",
+    "fr": "Acétone",
+    "pt": "Acetona",
+    "zh": "丙酮"
+   }
+  },
+  "acetonitrile": {
+   "source": "Acetonitril",
+   "names": {
+    "en": "Acetonitrile",
+    "de": "Acetonitril",
+    "es": "Acetonitrilo",
+    "fr": "Acétonitrile",
+    "pt": "Acetonitrila",
+    "zh": "乙腈"
+   }
+  },
+  "acetylene": {
+   "source": "Acetylen",
+   "names": {
+    "en": "Acetylene",
+    "de": "Acetylen",
+    "es": "Acetileno",
+    "fr": "Acétylène",
+    "pt": "Acetileno",
+    "zh": "乙炔"
+   }
+  },
+  "acrylonitrile": {
+   "source": "Acrylnitril",
+   "names": {
+    "en": "Acrylonitrile",
+    "de": "Acrylnitril",
+    "es": "Acrilonitrilo",
+    "fr": "Acrylonitrile",
+    "pt": "Acrilonitrila",
+    "zh": "丙烯腈"
+   }
+  },
+  "adipic-acid": {
+   "source": "Adipinsäure",
+   "names": {
+    "en": "Adipic Acid",
+    "de": "Adipinsäure",
+    "es": "Ácido adípico",
+    "fr": "Acide adipique",
+    "pt": "Ácido adípico",
+    "zh": "己二酸"
+   }
+  },
+  "alum-aluminum-sulfate": {
+   "source": "Kaliumaluminiumsulfat",
+   "names": {
+    "en": "Alum (Potassium Aluminum Sulfate)",
+    "de": "Alaun (Kaliumaluminiumsulfat)",
+    "es": "Alumbre (sulfato de aluminio y potasio)",
+    "fr": "Alun (sulfate d'aluminium et de potassium)",
+    "pt": "Alúmen (sulfato de alumínio e potássio)",
+    "zh": "明矾（硫酸铝钾）"
+   }
+  },
+  "aluminum-chloride": {
+   "source": "Aluminiumchlorid",
+   "names": {
+    "en": "Aluminum Chloride",
+    "de": "Aluminiumchlorid",
+    "es": "Cloruro de aluminio",
+    "fr": "Chlorure d'aluminium",
+    "pt": "Cloreto de alumínio",
+    "zh": "氯化铝"
+   }
+  },
+  "aluminum-oxide": {
+   "source": "Aluminiumoxid",
+   "names": {
+    "en": "Aluminum Oxide",
+    "de": "Aluminiumoxid",
+    "es": "Óxido de aluminio",
+    "fr": "Oxyde d'aluminium",
+    "pt": "Óxido de alumínio",
+    "zh": "氧化铝"
+   }
+  },
+  "aluminum-sulfate": {
+   "source": "Aluminiumsulfat",
+   "names": {
+    "en": "Aluminum Sulfate",
+    "de": "Aluminiumsulfat",
+    "es": "Sulfato de aluminio",
+    "fr": "Sulfate d'aluminium",
+    "pt": "Sulfato de alumínio",
+    "zh": "硫酸铝"
+   }
+  },
+  "ammonia": {
+   "redirect_to": "ammonium-hydroxide"
+  },
+  "ammonium-chloride": {
+   "source": "Ammoniumchlorid",
+   "names": {
+    "en": "Ammonium Chloride",
+    "de": "Ammoniumchlorid",
+    "es": "Cloruro de amonio",
+    "fr": "Chlorure d'ammonium",
+    "pt": "Cloreto de amônio",
+    "zh": "氯化铵"
+   }
+  },
+  "ammonium-hydroxide": {
+   "source": "Ammoniumhydroxid",
+   "names": {
+    "en": "Ammonium Hydroxide (Ammonia Solution)",
+    "de": "Ammoniumhydroxid (Ammoniakwasser)",
+    "es": "Hidróxido de amonio (amoníaco en solución)",
+    "fr": "Hydroxyde d'ammonium (ammoniaque)",
+    "pt": "Hidróxido de amônio (amônia em solução)",
+    "zh": "氢氧化铵（氨水）"
+   }
+  },
+  "ammonium-nitrate": {
+   "source": "Ammoniumnitrat",
+   "names": {
+    "en": "Ammonium Nitrate",
+    "de": "Ammoniumnitrat",
+    "es": "Nitrato de amonio",
+    "fr": "Nitrate d'ammonium",
+    "pt": "Nitrato de amônio",
+    "zh": "硝酸铵"
+   }
+  },
+  "ammonium-sulfate": {
+   "source": "Ammoniumsulfat",
+   "names": {
+    "en": "Ammonium Sulfate",
+    "de": "Ammoniumsulfat",
+    "es": "Sulfato de amonio",
+    "fr": "Sulfate d'ammonium",
+    "pt": "Sulfato de amônio",
+    "zh": "硫酸铵"
+   }
+  },
+  "aniline": {
+   "source": "Anilin",
+   "names": {
+    "en": "Aniline",
+    "de": "Anilin",
+    "es": "Anilina",
+    "fr": "Aniline",
+    "pt": "Anilina",
+    "zh": "苯胺"
+   }
+  },
+  "arsenic-acid": {
+   "source": "Arsensäure",
+   "names": {
+    "en": "Arsenic Acid",
+    "de": "Arsensäure",
+    "es": "Ácido arsénico",
+    "fr": "Acide arsénique",
+    "pt": "Ácido arsênico",
+    "zh": "砷酸"
+   }
+  },
+  "ascorbic-acid": {
+   "source": "Ascorbinsäure",
+   "names": {
+    "en": "Ascorbic Acid",
+    "de": "Ascorbinsäure",
+    "es": "Ácido ascórbico",
+    "fr": "Acide ascorbique",
+    "pt": "Ácido ascórbico",
+    "zh": "抗坏血酸"
+   }
+  },
+  "barium-chloride": {
+   "source": "Bariumchlorid",
+   "names": {
+    "en": "Barium Chloride",
+    "de": "Bariumchlorid",
+    "es": "Cloruro de bario",
+    "fr": "Chlorure de baryum",
+    "pt": "Cloreto de bário",
+    "zh": "氯化钡"
+   }
+  },
+  "barium-hydroxide": {
+   "source": "Bariumhydroxid",
+   "names": {
+    "en": "Barium Hydroxide",
+    "de": "Bariumhydroxid",
+    "es": "Hidróxido de bario",
+    "fr": "Hydroxyde de baryum",
+    "pt": "Hidróxido de bário",
+    "zh": "氢氧化钡"
+   }
+  },
+  "barium-sulfide": {
+   "source": "Bariumsulfid",
+   "names": {
+    "en": "Barium Sulfide",
+    "de": "Bariumsulfid",
+    "es": "Sulfuro de bario",
+    "fr": "Sulfure de baryum",
+    "pt": "Sulfeto de bário",
+    "zh": "硫化钡"
+   }
+  },
+  "beeswax": {
+   "source": "Bienenwachs",
+   "names": {
+    "en": "Beeswax",
+    "de": "Bienenwachs",
+    "es": "Cera de abeja",
+    "fr": "Cire d'abeille",
+    "pt": "Cera de abelha",
+    "zh": "蜂蜡"
+   }
+  },
+  "benzaldehyde": {
+   "source": "Benzaldehyd",
+   "names": {
+    "en": "Benzaldehyde",
+    "de": "Benzaldehyd",
+    "es": "Benzaldehído",
+    "fr": "Benzaldéhyde",
+    "pt": "Benzaldeído",
+    "zh": "苯甲醛"
+   }
+  },
+  "benzene": {
+   "source": "Benzol",
+   "names": {
+    "en": "Benzene",
+    "de": "Benzol",
+    "es": "Benceno",
+    "fr": "Benzène",
+    "pt": "Benzeno",
+    "zh": "苯"
+   }
+  },
+  "benzoic-acid": {
+   "source": "Benzoesäure",
+   "names": {
+    "en": "Benzoic Acid",
+    "de": "Benzoesäure",
+    "es": "Ácido benzoico",
+    "fr": "Acide benzoïque",
+    "pt": "Ácido benzoico",
+    "zh": "苯甲酸"
+   }
+  },
+  "benzyl-alcohol": {
+   "source": "Benzylalkohol",
+   "names": {
+    "en": "Benzyl Alcohol",
+    "de": "Benzylalkohol",
+    "es": "Alcohol bencílico",
+    "fr": "Alcool benzylique",
+    "pt": "Álcool benzílico",
+    "zh": "苯甲醇"
+   }
+  },
+  "boric-acid": {
+   "source": "Borsäure",
+   "names": {
+    "en": "Boric Acid",
+    "de": "Borsäure",
+    "es": "Ácido bórico",
+    "fr": "Acide borique",
+    "pt": "Ácido bórico",
+    "zh": "硼酸"
+   }
+  },
+  "bromine": {
+   "source": "Brom",
+   "names": {
+    "en": "Bromine",
+    "de": "Brom",
+    "es": "Bromo",
+    "fr": "Brome",
+    "pt": "Bromo",
+    "zh": "溴"
+   }
+  },
+  "butanol": {
+   "source": "Butanol",
+   "names": {
+    "en": "Butanol",
+    "de": "Butanol",
+    "es": "Butanol",
+    "fr": "Butanol",
+    "pt": "Butanol",
+    "zh": "丁醇"
+   }
+  },
+  "butanone-mek": {
+   "source": "Methylethylketon (MEK)",
+   "names": {
+    "en": "Methyl Ethyl Ketone (MEK)",
+    "de": "Butanon (MEK)",
+    "es": "Butanona (MEK)",
+    "fr": "Butanone (MEK)",
+    "pt": "Butanona (MEK)",
+    "zh": "甲乙酮 (MEK)"
+   }
+  },
+  "butyric-acid": {
+   "source": "Buttersäure",
+   "names": {
+    "en": "Butyric Acid",
+    "de": "Buttersäure",
+    "es": "Ácido butírico",
+    "fr": "Acide butyrique",
+    "pt": "Ácido butírico",
+    "zh": "丁酸"
+   }
+  },
+  "calcium-acetate": {
+   "source": "Calciumacetat",
+   "names": {
+    "en": "Calcium Acetate",
+    "de": "Calciumacetat",
+    "es": "Acetato de calcio",
+    "fr": "Acétate de calcium",
+    "pt": "Acetato de cálcio",
+    "zh": "乙酸钙"
+   }
+  },
+  "calcium-carbonate": {
+   "source": "Calciumcarbonat",
+   "names": {
+    "en": "Calcium Carbonate",
+    "de": "Calciumcarbonat",
+    "es": "Carbonato de calcio",
+    "fr": "Carbonate de calcium",
+    "pt": "Carbonato de cálcio",
+    "zh": "碳酸钙"
+   }
+  },
+  "calcium-chloride": {
+   "source": "Calciumchlorid",
+   "names": {
+    "en": "Calcium Chloride",
+    "de": "Calciumchlorid",
+    "es": "Cloruro de calcio",
+    "fr": "Chlorure de calcium",
+    "pt": "Cloreto de cálcio",
+    "zh": "氯化钙"
+   }
+  },
+  "calcium-hydroxide": {
+   "source": "Calciumhydroxid",
+   "names": {
+    "en": "Calcium Hydroxide",
+    "de": "Calciumhydroxid",
+    "es": "Hidróxido de calcio",
+    "fr": "Hydroxyde de calcium",
+    "pt": "Hidróxido de cálcio",
+    "zh": "氢氧化钙"
+   }
+  },
+  "calcium-hypochlorite": {
+   "source": "Calciumhypochlorit",
+   "names": {
+    "en": "Calcium Hypochlorite",
+    "de": "Calciumhypochlorit",
+    "es": "Hipoclorito de calcio",
+    "fr": "Hypochlorite de calcium",
+    "pt": "Hipoclorito de cálcio",
+    "zh": "次氯酸钙"
+   }
+  },
+  "calcium-nitrate": {
+   "source": "Calciumnitrat",
+   "names": {
+    "en": "Calcium Nitrate",
+    "de": "Calciumnitrat",
+    "es": "Nitrato de calcio",
+    "fr": "Nitrate de calcium",
+    "pt": "Nitrato de cálcio",
+    "zh": "硝酸钙"
+   }
+  },
+  "calcium-oxide": {
+   "source": "Calciumoxid",
+   "names": {
+    "en": "Calcium Oxide",
+    "de": "Calciumoxid",
+    "es": "Óxido de calcio",
+    "fr": "Oxyde de calcium",
+    "pt": "Óxido de cálcio",
+    "zh": "氧化钙"
+   }
+  },
+  "calcium-sulfate": {
+   "source": "Calciumsulfat",
+   "names": {
+    "en": "Calcium Sulfate",
+    "de": "Calciumsulfat",
+    "es": "Sulfato de calcio",
+    "fr": "Sulfate de calcium",
+    "pt": "Sulfato de cálcio",
+    "zh": "硫酸钙"
+   }
+  },
+  "calcium-sulfide": {
+   "source": "Calciumsulfid",
+   "names": {
+    "en": "Calcium Sulfide",
+    "de": "Calciumsulfid",
+    "es": "Sulfuro de calcio",
+    "fr": "Sulfure de calcium",
+    "pt": "Sulfeto de cálcio",
+    "zh": "硫化钙"
+   }
+  },
+  "carbon-disulfide": {
+   "source": "Schwefelkohlenstoff",
+   "names": {
+    "en": "Carbon Disulfide",
+    "de": "Schwefelkohlenstoff",
+    "es": "Disulfuro de carbono",
+    "fr": "Disulfure de carbone",
+    "pt": "Dissulfeto de carbono",
+    "zh": "二硫化碳"
+   }
+  },
+  "carbon-tetrachloride": {
+   "source": "Tetrachlorkohlenstoff (TETRA)",
+   "names": {
+    "en": "Carbon Tetrachloride",
+    "de": "Tetrachlorkohlenstoff",
+    "es": "Tetracloruro de carbono",
+    "fr": "Tétrachlorure de carbone",
+    "pt": "Tetracloreto de carbono",
+    "zh": "四氯化碳"
+   }
+  },
+  "castor-oil": {
+   "source": "Rizinusöl",
+   "names": {
+    "en": "Castor Oil",
+    "de": "Rizinusöl",
+    "es": "Aceite de ricino",
+    "fr": "Huile de ricin",
+    "pt": "Óleo de rícino",
+    "zh": "蓖麻油"
+   }
+  },
+  "chlorine": {
+   "source": "Chlor",
+   "names": {
+    "en": "Chlorine",
+    "de": "Chlor",
+    "es": "Cloro",
+    "fr": "Chlore",
+    "pt": "Cloro",
+    "zh": "氯"
+   }
+  },
+  "chlorine-bleach-solution": {
+   "redirect_to": "sodium-hypochlorite"
+  },
+  "chlorine-dioxide": {
+   "source": "Chlordioxid",
+   "names": {
+    "en": "Chlorine Dioxide",
+    "de": "Chlordioxid",
+    "es": "Dióxido de cloro",
+    "fr": "Dioxyde de chlore",
+    "pt": "Dióxido de cloro",
+    "zh": "二氧化氯"
+   }
+  },
+  "chlorine-gas": {
+   "source": "Chlorgas",
+   "names": {
+    "en": "Chlorine Gas",
+    "de": "Chlorgas",
+    "es": "Gas cloro",
+    "fr": "Gaz chlore",
+    "pt": "Gás cloro",
+    "zh": "氯气"
+   }
+  },
+  "chlorine-water": {
+   "source": "Chlorwasser",
+   "names": {
+    "en": "Chlorine Water",
+    "de": "Chlorwasser",
+    "es": "Agua clorada",
+    "fr": "Eau chlorée",
+    "pt": "Água clorada",
+    "zh": "氯水"
+   }
+  },
+  "chlorobenzene": {
+   "source": "Chlorbenzol",
+   "names": {
+    "en": "Chlorobenzene",
+    "de": "Chlorbenzol",
+    "es": "Clorobenceno",
+    "fr": "Chlorobenzène",
+    "pt": "Clorobenzeno",
+    "zh": "氯苯"
+   }
+  },
+  "chloroform": {
+   "source": "Chloroform",
+   "names": {
+    "en": "Chloroform",
+    "de": "Chloroform",
+    "es": "Cloroformo",
+    "fr": "Chloroforme",
+    "pt": "Clorofórmio",
+    "zh": "氯仿"
+   }
+  },
+  "chromic-acid": {
+   "source": "Chromsäure",
+   "names": {
+    "en": "Chromic Acid",
+    "de": "Chromsäure",
+    "es": "Ácido crómico",
+    "fr": "Acide chromique",
+    "pt": "Ácido crômico",
+    "zh": "铬酸"
+   }
+  },
+  "citric-acid": {
+   "source": "Zitronensäure",
+   "names": {
+    "en": "Citric Acid",
+    "de": "Zitronensäure",
+    "es": "Ácido cítrico",
+    "fr": "Acide citrique",
+    "pt": "Ácido cítrico",
+    "zh": "柠檬酸"
+   }
+  },
+  "cobalt-chloride": {
+   "source": "Cobalt-(II)-chlorid",
+   "names": {
+    "en": "Cobalt(II) Chloride",
+    "de": "Kobaltchlorid",
+    "es": "Cloruro de cobalto",
+    "fr": "Chlorure de cobalt",
+    "pt": "Cloreto de cobalto",
+    "zh": "氯化钴"
+   }
+  },
+  "copper-vitriol-copper-sulfate": {
+   "source": "Kupfervitriol",
+   "names": {
+    "en": "Copper Sulfate (Copper Vitriol)",
+    "de": "Kupfersulfat (Kupfervitriol)",
+    "es": "Sulfato de cobre (vitriolo de cobre)",
+    "fr": "Sulfate de cuivre (vitriol de cuivre)",
+    "pt": "Sulfato de cobre (vitríolo de cobre)",
+    "zh": "硫酸铜"
+   }
+  },
+  "cresol": {
+   "source": "Kresol (-Gemische)",
+   "names": {
+    "en": "Cresol",
+    "de": "Kresol",
+    "es": "Cresol",
+    "fr": "Crésol",
+    "pt": "Cresol",
+    "zh": "甲酚"
+   }
+  },
+  "crotonaldehyde": {
+   "source": "Crotonaldehyd",
+   "names": {
+    "en": "Crotonaldehyde",
+    "de": "Crotonaldehyd",
+    "es": "Crotonaldehído",
+    "fr": "Crotonaldéhyde",
+    "pt": "Crotonaldeído",
+    "zh": "巴豆醛"
+   }
+  },
+  "cumene": {
+   "source": "Cumol",
+   "names": {
+    "en": "Cumene",
+    "de": "Cumol",
+    "es": "Cumeno",
+    "fr": "Cumène",
+    "pt": "Cumeno",
+    "zh": "异丙苯"
+   }
+  },
+  "cyclohexane": {
+   "source": "Cyclohexan",
+   "names": {
+    "en": "Cyclohexane",
+    "de": "Cyclohexan",
+    "es": "Ciclohexano",
+    "fr": "Cyclohexane",
+    "pt": "Ciclo-hexano",
+    "zh": "环己烷"
+   }
+  },
+  "cyclohexanol": {
+   "source": "Cyclohexanol",
+   "names": {
+    "en": "Cyclohexanol",
+    "de": "Cyclohexanol",
+    "es": "Ciclohexanol",
+    "fr": "Cyclohexanol",
+    "pt": "Ciclo-hexanol",
+    "zh": "环己醇"
+   }
+  },
+  "cyclohexanone": {
+   "source": "Cyclohexanon",
+   "names": {
+    "en": "Cyclohexanone",
+    "de": "Cyclohexanon",
+    "es": "Ciclohexanona",
+    "fr": "Cyclohexanone",
+    "pt": "Ciclo-hexanona",
+    "zh": "环己酮"
+   }
+  },
+  "dichloromethane": {
+   "source": "Dichlormethan",
+   "names": {
+    "en": "Dichloromethane",
+    "de": "Dichlormethan",
+    "es": "Diclorometano",
+    "fr": "Dichlorométhane",
+    "pt": "Diclorometano",
+    "zh": "二氯甲烷"
+   }
+  },
+  "diesel-fuel": {
+   "source": "Dieselöl",
+   "names": {
+    "en": "Diesel Fuel",
+    "de": "Dieselkraftstoff",
+    "es": "Combustible diésel",
+    "fr": "Carburant diesel",
+    "pt": "Combustível diesel",
+    "zh": "柴油"
+   }
+  },
+  "diethyl-ether": {
+   "source": "Ethylether",
+   "names": {
+    "en": "Diethyl Ether",
+    "de": "Diethylether",
+    "es": "Éter dietílico",
+    "fr": "Éther diéthylique",
+    "pt": "Éter dietílico",
+    "zh": "乙醚"
+   }
+  },
+  "diethyl-ketone": {
+   "source": "Diethylketon",
+   "names": {
+    "en": "Diethyl Ketone",
+    "de": "Diethylketon",
+    "es": "Dietil cetona",
+    "fr": "Diéthyl cétone",
+    "pt": "Dietil cetona",
+    "zh": "二乙基酮"
+   }
+  },
+  "diethylamine": {
+   "source": "Diethylamin",
+   "names": {
+    "en": "Diethylamine",
+    "de": "Diethylamin",
+    "es": "Dietilamina",
+    "fr": "Diéthylamine",
+    "pt": "Dietilamina",
+    "zh": "二乙胺"
+   }
+  },
+  "diisobutylene": {
+   "source": "Diisobutylen (DIB)",
+   "names": {
+    "en": "Diisobutylene",
+    "de": "Diisobutylen",
+    "es": "Diisobutileno",
+    "fr": "Diisobutylène",
+    "pt": "Diisobutileno",
+    "zh": "二异丁烯"
+   }
+  },
+  "dioxane": {
+   "source": "Dioxan",
+   "names": {
+    "en": "Dioxane",
+    "de": "Dioxan",
+    "es": "Dioxano",
+    "fr": "Dioxane",
+    "pt": "Dioxano",
+    "zh": "二氧六环"
+   }
+  },
+  "dmf": {
+   "source": "Dimethylformamid (DMF)",
+   "names": {
+    "en": "Dimethylformamide (DMF)",
+    "de": "Dimethylformamid (DMF)",
+    "es": "Dimetilformamida (DMF)",
+    "fr": "Diméthylformamide (DMF)",
+    "pt": "Dimetilformamida (DMF)",
+    "zh": "二甲基甲酰胺 (DMF)"
+   }
+  },
+  "dmso": {
+   "source": "Dimethylsulfoxid (DMSO)",
+   "names": {
+    "en": "Dimethyl Sulfoxide (DMSO)",
+    "de": "Dimethylsulfoxid (DMSO)",
+    "es": "Dimetilsulfóxido (DMSO)",
+    "fr": "Diméthylsulfoxyde (DMSO)",
+    "pt": "Dimetilsulfóxido (DMSO)",
+    "zh": "二甲基亚砜 (DMSO)"
+   }
+  },
+  "epichlorohydrin": {
+   "source": "Epichlorhydrin",
+   "names": {
+    "en": "Epichlorohydrin",
+    "de": "Epichlorhydrin",
+    "es": "Epiclorhidrina",
+    "fr": "Épichlorhydrine",
+    "pt": "Epicloridrina",
+    "zh": "环氧氯丙烷"
+   }
+  },
+  "ethanol": {
+   "source": "Ethanol",
+   "names": {
+    "en": "Ethanol",
+    "de": "Ethanol",
+    "es": "Etanol",
+    "fr": "Éthanol",
+    "pt": "Etanol",
+    "zh": "乙醇"
+   }
+  },
+  "ethyl-acetate": {
+   "source": "Ethylacetat",
+   "names": {
+    "en": "Ethyl Acetate",
+    "de": "Ethylacetat",
+    "es": "Acetato de etilo",
+    "fr": "Acétate d'éthyle",
+    "pt": "Acetato de etila",
+    "zh": "乙酸乙酯"
+   }
+  },
+  "ethylbenzene": {
+   "source": "Ethylbenzol",
+   "names": {
+    "en": "Ethylbenzene",
+    "de": "Ethylbenzol",
+    "es": "Etilbenceno",
+    "fr": "Éthylbenzène",
+    "pt": "Etilbenzeno",
+    "zh": "乙苯"
+   }
+  },
+  "ethylene-dichloride": {
+   "source": "Ethylenchlorid",
+   "names": {
+    "en": "Ethylene Dichloride",
+    "de": "Ethylendichlorid",
+    "es": "Dicloruro de etileno",
+    "fr": "Dichlorure d'éthylène",
+    "pt": "Dicloreto de etileno",
+    "zh": "二氯乙烷"
+   }
+  },
+  "ethylene-glycol": {
+   "source": "Ethylenglycol",
+   "names": {
+    "en": "Ethylene Glycol",
+    "de": "Ethylenglykol",
+    "es": "Etilenglicol",
+    "fr": "Éthylène glycol",
+    "pt": "Etilenoglicol",
+    "zh": "乙二醇"
+   }
+  },
+  "ethylenediamine": {
+   "source": "Ethylendiamin",
+   "names": {
+    "en": "Ethylenediamine",
+    "de": "Ethylendiamin",
+    "es": "Etilendiamina",
+    "fr": "Éthylènediamine",
+    "pt": "Etilenediamina",
+    "zh": "乙二胺"
+   }
+  },
+  "fluorine": {
+   "source": "Fluor",
+   "names": {
+    "en": "Fluorine",
+    "de": "Fluor",
+    "es": "Flúor",
+    "fr": "Fluor",
+    "pt": "Flúor",
+    "zh": "氟"
+   }
+  },
+  "formaldehyde": {
+   "source": "Formaldehydlösung",
+   "names": {
+    "en": "Formaldehyde Solution",
+    "de": "Formaldehydlösung",
+    "es": "Solución de formaldehído",
+    "fr": "Solution de formaldéhyde",
+    "pt": "Solução de formaldeído",
+    "zh": "甲醛溶液"
+   }
+  },
+  "formaldehyde-solution": {
+   "redirect_to": "formaldehyde"
+  },
+  "formic-acid": {
+   "source": "Ameisensäure",
+   "names": {
+    "en": "Formic Acid",
+    "de": "Ameisensäure",
+    "es": "Ácido fórmico",
+    "fr": "Acide formique",
+    "pt": "Ácido fórmico",
+    "zh": "甲酸"
+   }
+  },
+  "gasoline-petrol": {
+   "source": "Benzin",
+   "names": {
+    "en": "Gasoline (Petrol)",
+    "de": "Benzin",
+    "es": "Gasolina",
+    "fr": "Essence",
+    "pt": "Gasolina",
+    "zh": "汽油"
+   }
+  },
+  "glycerin": {
+   "source": "Glycerin",
+   "names": {
+    "en": "Glycerin",
+    "de": "Glycerin",
+    "es": "Glicerina",
+    "fr": "Glycérine",
+    "pt": "Glicerina",
+    "zh": "甘油"
+   }
+  },
+  "glycolic-acid": {
+   "source": "Glycolsäure",
+   "names": {
+    "en": "Glycolic Acid",
+    "de": "Glykolsäure",
+    "es": "Ácido glicólico",
+    "fr": "Acide glycolique",
+    "pt": "Ácido glicólico",
+    "zh": "乙醇酸"
+   }
+  },
+  "heating-oil": {
+   "source": "Heizöl",
+   "names": {
+    "en": "Heating Oil",
+    "de": "Heizöl",
+    "es": "Aceite de calefacción",
+    "fr": "Fioul domestique",
+    "pt": "Óleo de aquecimento",
+    "zh": "燃料油"
+   }
+  },
+  "heptane": {
+   "source": "Heptan, n-",
+   "names": {
+    "en": "n-Heptane",
+    "de": "n-Heptan",
+    "es": "n-Heptano",
+    "fr": "n-Heptane",
+    "pt": "n-Heptano",
+    "zh": "正庚烷"
+   }
+  },
+  "hexane": {
+   "source": "Hexan, n-",
+   "names": {
+    "en": "n-Hexane",
+    "de": "n-Hexan",
+    "es": "n-Hexano",
+    "fr": "n-Hexane",
+    "pt": "n-Hexano",
+    "zh": "正己烷"
+   }
+  },
+  "hydraulic-oil": {
+   "source": "Hydrauliköle (Mineralölbasis)",
+   "names": {
+    "en": "Hydraulic Oil",
+    "de": "Hydrauliköl",
+    "es": "Aceite hidráulico",
+    "fr": "Huile hydraulique",
+    "pt": "Óleo hidráulico",
+    "zh": "液压油"
+   }
+  },
+  "hydrazine": {
+   "source": "Hydrazin",
+   "names": {
+    "en": "Hydrazine",
+    "de": "Hydrazin",
+    "es": "Hidrazina",
+    "fr": "Hydrazine",
+    "pt": "Hidrazina",
+    "zh": "联氨"
+   }
+  },
+  "hydrobromic-acid": {
+   "source": "Bromwasserstoffsäure",
+   "names": {
+    "en": "Hydrobromic Acid",
+    "de": "Bromwasserstoffsäure",
+    "es": "Ácido bromhídrico",
+    "fr": "Acide bromhydrique",
+    "pt": "Ácido bromídrico",
+    "zh": "氢溴酸"
+   }
+  },
+  "hydrochloric-acid": {
+   "source": "Salzsäure",
+   "names": {
+    "en": "Hydrochloric Acid",
+    "de": "Salzsäure",
+    "es": "Ácido clorhídrico",
+    "fr": "Acide chlorhydrique",
+    "pt": "Ácido clorídrico",
+    "zh": "盐酸"
+   }
+  },
+  "hydrofluoric-acid": {
+   "source": "Flusssäure",
+   "names": {
+    "en": "Hydrofluoric Acid",
+    "de": "Flusssäure",
+    "es": "Ácido fluorhídrico",
+    "fr": "Acide fluorhydrique",
+    "pt": "Ácido fluorídrico",
+    "zh": "氢氟酸"
+   }
+  },
+  "hydrogen-chloride-gas": {
+   "source": "Chlorwasserstoff(gas)",
+   "names": {
+    "en": "Hydrogen Chloride Gas",
+    "de": "Chlorwasserstoffgas",
+    "es": "Gas cloruro de hidrógeno",
+    "fr": "Gaz chlorure d'hydrogène",
+    "pt": "Gás cloreto de hidrogênio",
+    "zh": "氯化氢气体"
+   }
+  },
+  "hydrogen-fluoride": {
+   "source": "Fluorwasserstoff",
+   "names": {
+    "en": "Hydrogen Fluoride",
+    "de": "Fluorwasserstoff",
+    "es": "Fluoruro de hidrógeno",
+    "fr": "Fluorure d'hydrogène",
+    "pt": "Fluoreto de hidrogênio",
+    "zh": "氟化氢"
+   }
+  },
+  "hydrogen-peroxide": {
+   "source": "Wasserstoffperoxid",
+   "names": {
+    "en": "Hydrogen Peroxide",
+    "de": "Wasserstoffperoxid",
+    "es": "Peróxido de hidrógeno",
+    "fr": "Peroxyde d'hydrogène",
+    "pt": "Peróxido de hidrogênio",
+    "zh": "双氧水"
+   }
+  },
+  "hydrogen-sulfide": {
+   "source": "Schwefelwasserstoff",
+   "names": {
+    "en": "Hydrogen Sulfide",
+    "de": "Schwefelwasserstoff",
+    "es": "Sulfuro de hidrógeno",
+    "fr": "Sulfure d'hydrogène",
+    "pt": "Sulfeto de hidrogênio",
+    "zh": "硫化氢"
+   }
+  },
+  "iodine-pentafluoride": {
+   "source": "Jodpentafluorid",
+   "names": {
+    "en": "Iodine Pentafluoride",
+    "de": "Iodpentafluorid",
+    "es": "Pentafluoruro de yodo",
+    "fr": "Pentafluorure d'iode",
+    "pt": "Pentafluoreto de iodo",
+    "zh": "五氟化碘"
+   }
+  },
+  "isobutanol": {
+   "source": "Isobutanol",
+   "names": {
+    "en": "Isobutanol",
+    "de": "Isobutanol",
+    "es": "Isobutanol",
+    "fr": "Isobutanol",
+    "pt": "Isobutanol",
+    "zh": "异丁醇"
+   }
+  },
+  "isooctane": {
+   "source": "Isooctan",
+   "names": {
+    "en": "Isooctane",
+    "de": "Isooktan",
+    "es": "Isooctano",
+    "fr": "Isooctane",
+    "pt": "Iso-octano",
+    "zh": "异辛烷"
+   }
+  },
+  "isopropanol": {
+   "source": "Isopropanol",
+   "names": {
+    "en": "Isopropanol",
+    "de": "Isopropanol",
+    "es": "Isopropanol",
+    "fr": "Isopropanol",
+    "pt": "Isopropanol",
+    "zh": "异丙醇"
+   }
+  },
+  "kerosene": {
+   "source": "Kerosin",
+   "names": {
+    "en": "Kerosene",
+    "de": "Kerosin",
+    "es": "Queroseno",
+    "fr": "Kérosène",
+    "pt": "Querosene",
+    "zh": "煤油"
+   }
+  },
+  "labarraque-solution-sodium-hypochlorite": {
+   "redirect_to": "sodium-hypochlorite"
+  },
+  "lactic-acid": {
+   "source": "Milchsäure",
+   "names": {
+    "en": "Lactic Acid",
+    "de": "Milchsäure",
+    "es": "Ácido láctico",
+    "fr": "Acide lactique",
+    "pt": "Ácido láctico",
+    "zh": "乳酸"
+   }
+  },
+  "linseed-oil": {
+   "source": "Leinöl",
+   "names": {
+    "en": "Linseed Oil",
+    "de": "Leinöl",
+    "es": "Aceite de linaza",
+    "fr": "Huile de lin",
+    "pt": "Óleo de linhaça",
+    "zh": "亚麻籽油"
+   }
+  },
+  "lithium-bromide": {
+   "source": "Lithiumbromid",
+   "names": {
+    "en": "Lithium Bromide",
+    "de": "Lithiumbromid",
+    "es": "Bromuro de litio",
+    "fr": "Bromure de lithium",
+    "pt": "Brometo de lítio",
+    "zh": "溴化锂"
+   }
+  },
+  "lubricating-oil": {
+   "source": "Schmieröle",
+   "names": {
+    "en": "Lubricating Oil",
+    "de": "Schmieröl",
+    "es": "Aceite lubricante",
+    "fr": "Huile lubrifiante",
+    "pt": "Óleo lubrificante",
+    "zh": "润滑油"
+   }
+  },
+  "magnesium-bromide": {
+   "source": "Magnesiumbromid",
+   "names": {
+    "en": "Magnesium Bromide",
+    "de": "Magnesiumbromid",
+    "es": "Bromuro de magnesio",
+    "fr": "Bromure de magnésium",
+    "pt": "Brometo de magnésio",
+    "zh": "溴化镁"
+   }
+  },
+  "magnesium-carbonate": {
+   "source": "Magnesiumcarbonat",
+   "names": {
+    "en": "Magnesium Carbonate",
+    "de": "Magnesiumcarbonat",
+    "es": "Carbonato de magnesio",
+    "fr": "Carbonate de magnésium",
+    "pt": "Carbonato de magnésio",
+    "zh": "碳酸镁"
+   }
+  },
+  "magnesium-chloride": {
+   "source": "Magnesiumchlorid",
+   "names": {
+    "en": "Magnesium Chloride",
+    "de": "Magnesiumchlorid",
+    "es": "Cloruro de magnesio",
+    "fr": "Chlorure de magnésium",
+    "pt": "Cloreto de magnésio",
+    "zh": "氯化镁"
+   }
+  },
+  "magnesium-hydroxide": {
+   "source": "Magnesiumhydroxid",
+   "names": {
+    "en": "Magnesium Hydroxide",
+    "de": "Magnesiumhydroxid",
+    "es": "Hidróxido de magnesio",
+    "fr": "Hydroxyde de magnésium",
+    "pt": "Hidróxido de magnésio",
+    "zh": "氢氧化镁"
+   }
+  },
+  "magnesium-sulfate": {
+   "source": "Magnesiumsulfat",
+   "names": {
+    "en": "Magnesium Sulfate",
+    "de": "Magnesiumsulfat",
+    "es": "Sulfato de magnesio",
+    "fr": "Sulfate de magnésium",
+    "pt": "Sulfato de magnésio",
+    "zh": "硫酸镁"
+   }
+  },
+  "maleic-acid": {
+   "source": "Maleinsäure",
+   "names": {
+    "en": "Maleic Acid",
+    "de": "Maleinsäure",
+    "es": "Ácido maleico",
+    "fr": "Acide maléique",
+    "pt": "Ácido maleico",
+    "zh": "顺丁烯二酸"
+   }
+  },
+  "mercury": {
+   "source": "Quecksilber",
+   "names": {
+    "en": "Mercury",
+    "de": "Quecksilber",
+    "es": "Mercurio",
+    "fr": "Mercure",
+    "pt": "Mercúrio",
+    "zh": "汞"
+   }
+  },
+  "mercury-nitrate": {
+   "source": "Quecksilbernitrat",
+   "names": {
+    "en": "Mercury Nitrate",
+    "de": "Quecksilbernitrat",
+    "es": "Nitrato de mercurio",
+    "fr": "Nitrate de mercure",
+    "pt": "Nitrato de mercúrio",
+    "zh": "硝酸汞"
+   }
+  },
+  "methanol": {
+   "source": "Methanol",
+   "names": {
+    "en": "Methanol",
+    "de": "Methanol",
+    "es": "Metanol",
+    "fr": "Méthanol",
+    "pt": "Metanol",
+    "zh": "甲醇"
+   }
+  },
+  "methyl-acrylate": {
+   "source": "Methylacrylat",
+   "names": {
+    "en": "Methyl Acrylate",
+    "de": "Methylacrylat",
+    "es": "Acrilato de metilo",
+    "fr": "Acrylate de méthyle",
+    "pt": "Acrilato de metila",
+    "zh": "丙烯酸甲酯"
+   }
+  },
+  "methyl-isobutyl-ketone-mibk": {
+   "source": "Isobutylmethylketon",
+   "names": {
+    "en": "Methyl Isobutyl Ketone (MIBK)",
+    "de": "Methylisobutylketon (MIBK)",
+    "es": "Metil isobutil cetona (MIBK)",
+    "fr": "Méthyl isobutyl cétone (MIBK)",
+    "pt": "Metil isobutil cetona (MIBK)",
+    "zh": "甲基异丁基酮 (MIBK)"
+   }
+  },
+  "mineral-oil": {
+   "source": "Mineralöl",
+   "names": {
+    "en": "Mineral Oil",
+    "de": "Mineralöl",
+    "es": "Aceite mineral",
+    "fr": "Huile minérale",
+    "pt": "Óleo mineral",
+    "zh": "矿物油"
+   }
+  },
+  "molasses": {
+   "source": "Melasse",
+   "names": {
+    "en": "Molasses",
+    "de": "Melasse",
+    "es": "Melaza",
+    "fr": "Mélasse",
+    "pt": "Melaço",
+    "zh": "糖蜜"
+   }
+  },
+  "morpholine": {
+   "source": "Morpholin",
+   "names": {
+    "en": "Morpholine",
+    "de": "Morpholin",
+    "es": "Morfolina",
+    "fr": "Morpholine",
+    "pt": "Morfolina",
+    "zh": "吗啉"
+   }
+  },
+  "motor-oil": {
+   "source": "Motorenöl",
+   "names": {
+    "en": "Motor Oil",
+    "de": "Motoröl",
+    "es": "Aceite de motor",
+    "fr": "Huile moteur",
+    "pt": "Óleo de motor",
+    "zh": "机油"
+   }
+  },
+  "n-heptane": {
+   "redirect_to": "heptane"
+  },
+  "n-hexane": {
+   "redirect_to": "hexane"
+  },
+  "nickel-sulfate": {
+   "source": "Nickelsulfat",
+   "names": {
+    "en": "Nickel Sulfate",
+    "de": "Nickelsulfat",
+    "es": "Sulfato de níquel",
+    "fr": "Sulfate de nickel",
+    "pt": "Sulfato de níquel",
+    "zh": "硫酸镍"
+   }
+  },
+  "nitric-acid": {
+   "source": "Salpetersäure",
+   "names": {
+    "en": "Nitric Acid",
+    "de": "Salpetersäure",
+    "es": "Ácido nítrico",
+    "fr": "Acide nitrique",
+    "pt": "Ácido nítrico",
+    "zh": "硝酸"
+   }
+  },
+  "nitrobenzene": {
+   "source": "Nitrobenzol",
+   "names": {
+    "en": "Nitrobenzene",
+    "de": "Nitrobenzol",
+    "es": "Nitrobenceno",
+    "fr": "Nitrobenzène",
+    "pt": "Nitrobenzeno",
+    "zh": "硝基苯"
+   }
+  },
+  "oleic-acid": {
+   "source": "Ölsäure",
+   "names": {
+    "en": "Oleic Acid",
+    "de": "Ölsäure",
+    "es": "Ácido oleico",
+    "fr": "Acide oléique",
+    "pt": "Ácido oleico",
+    "zh": "油酸"
+   }
+  },
+  "oxalic-acid": {
+   "source": "Oxalsäure",
+   "names": {
+    "en": "Oxalic Acid",
+    "de": "Oxalsäure",
+    "es": "Ácido oxálico",
+    "fr": "Acide oxalique",
+    "pt": "Ácido oxálico",
+    "zh": "草酸"
+   }
+  },
+  "ozone": {
+   "source": "Ozon",
+   "names": {
+    "en": "Ozone",
+    "de": "Ozon",
+    "es": "Ozono",
+    "fr": "Ozone",
+    "pt": "Ozônio",
+    "zh": "臭氧"
+   }
+  },
+  "palmitic-acid": {
+   "source": "Palmitinsäure",
+   "names": {
+    "en": "Palmitic Acid",
+    "de": "Palmitinsäure",
+    "es": "Ácido palmítico",
+    "fr": "Acide palmitique",
+    "pt": "Ácido palmítico",
+    "zh": "棕榈酸"
+   }
+  },
+  "perchloric-acid": {
+   "source": "Perchlorsäure",
+   "names": {
+    "en": "Perchloric Acid",
+    "de": "Perchlorsäure",
+    "es": "Ácido perclórico",
+    "fr": "Acide perchlorique",
+    "pt": "Ácido perclórico",
+    "zh": "高氯酸"
+   }
+  },
+  "phenol": {
+   "source": "Phenol",
+   "names": {
+    "en": "Phenol",
+    "de": "Phenol",
+    "es": "Fenol",
+    "fr": "Phénol",
+    "pt": "Fenol",
+    "zh": "苯酚"
+   }
+  },
+  "phosgene": {
+   "source": "Phosgen",
+   "names": {
+    "en": "Phosgene",
+    "de": "Phosgen",
+    "es": "Fosgeno",
+    "fr": "Phosgène",
+    "pt": "Fosgênio",
+    "zh": "光气"
+   }
+  },
+  "phosphoric-acid": {
+   "source": "Phosphorsäure",
+   "names": {
+    "en": "Phosphoric Acid",
+    "de": "Phosphorsäure",
+    "es": "Ácido fosfórico",
+    "fr": "Acide phosphorique",
+    "pt": "Ácido fosfórico",
+    "zh": "磷酸"
+   }
+  },
+  "phthalic-acid": {
+   "source": "Phthalsäure",
+   "names": {
+    "en": "Phthalic Acid",
+    "de": "Phthalsäure",
+    "es": "Ácido ftálico",
+    "fr": "Acide phtalique",
+    "pt": "Ácido ftálico",
+    "zh": "邻苯二甲酸"
+   }
+  },
+  "picric-acid": {
+   "source": "Pikrinsäure",
+   "names": {
+    "en": "Picric Acid",
+    "de": "Pikrinsäure",
+    "es": "Ácido pícrico",
+    "fr": "Acide picrique",
+    "pt": "Ácido pícrico",
+    "zh": "苦味酸"
+   }
+  },
+  "piperidine": {
+   "source": "Piperidin",
+   "names": {
+    "en": "Piperidine",
+    "de": "Piperidin",
+    "es": "Piperidina",
+    "fr": "Pipéridine",
+    "pt": "Piperidina",
+    "zh": "哌啶"
+   }
+  },
+  "potassium-acetate": {
+   "source": "Kaliumacetat",
+   "names": {
+    "en": "Potassium Acetate",
+    "de": "Kaliumacetat",
+    "es": "Acetato de potasio",
+    "fr": "Acétate de potassium",
+    "pt": "Acetato de potássio",
+    "zh": "乙酸钾"
+   }
+  },
+  "potassium-bromate": {
+   "source": "Kaliumbromat",
+   "names": {
+    "en": "Potassium Bromate",
+    "de": "Kaliumbromat",
+    "es": "Bromato de potasio",
+    "fr": "Bromate de potassium",
+    "pt": "Bromato de potássio",
+    "zh": "溴酸钾"
+   }
+  },
+  "potassium-carbonate": {
+   "source": "Kaliumcarbonat",
+   "names": {
+    "en": "Potassium Carbonate",
+    "de": "Kaliumcarbonat",
+    "es": "Carbonato de potasio",
+    "fr": "Carbonate de potassium",
+    "pt": "Carbonato de potássio",
+    "zh": "碳酸钾"
+   }
+  },
+  "potassium-chloride": {
+   "source": "Kaliumchlorid",
+   "names": {
+    "en": "Potassium Chloride",
+    "de": "Kaliumchlorid",
+    "es": "Cloruro de potasio",
+    "fr": "Chlorure de potassium",
+    "pt": "Cloreto de potássio",
+    "zh": "氯化钾"
+   }
+  },
+  "potassium-chromate": {
+   "source": "Kaliumchromat",
+   "names": {
+    "en": "Potassium Chromate",
+    "de": "Kaliumchromat",
+    "es": "Cromato de potasio",
+    "fr": "Chromate de potassium",
+    "pt": "Cromato de potássio",
+    "zh": "铬酸钾"
+   }
+  },
+  "potassium-cyanide": {
+   "source": "Kaliumcyanid",
+   "names": {
+    "en": "Potassium Cyanide",
+    "de": "Kaliumcyanid",
+    "es": "Cianuro de potasio",
+    "fr": "Cyanure de potassium",
+    "pt": "Cianeto de potássio",
+    "zh": "氰化钾"
+   }
+  },
+  "potassium-dichromate": {
+   "source": "Kaliumdichromat",
+   "names": {
+    "en": "Potassium Dichromate",
+    "de": "Kaliumdichromat",
+    "es": "Dicromato de potasio",
+    "fr": "Dichromate de potassium",
+    "pt": "Dicromato de potássio",
+    "zh": "重铬酸钾"
+   }
+  },
+  "potassium-fluoride": {
+   "source": "Kaliumfluorid",
+   "names": {
+    "en": "Potassium Fluoride",
+    "de": "Kaliumfluorid",
+    "es": "Fluoruro de potasio",
+    "fr": "Fluorure de potassium",
+    "pt": "Fluoreto de potássio",
+    "zh": "氟化钾"
+   }
+  },
+  "potassium-hydroxide": {
+   "source": "Kaliumhydroxid",
+   "names": {
+    "en": "Potassium Hydroxide",
+    "de": "Kaliumhydroxid",
+    "es": "Hidróxido de potasio",
+    "fr": "Hydroxyde de potassium",
+    "pt": "Hidróxido de potássio",
+    "zh": "氢氧化钾"
+   }
+  },
+  "potassium-iodide": {
+   "source": "Kaliumjodid",
+   "names": {
+    "en": "Potassium Iodide",
+    "de": "Kaliumiodid",
+    "es": "Yoduro de potasio",
+    "fr": "Iodure de potassium",
+    "pt": "Iodeto de potássio",
+    "zh": "碘化钾"
+   }
+  },
+  "potassium-nitrate": {
+   "source": "Kaliumnitrat",
+   "names": {
+    "en": "Potassium Nitrate",
+    "de": "Kaliumnitrat",
+    "es": "Nitrato de potasio",
+    "fr": "Nitrate de potassium",
+    "pt": "Nitrato de potássio",
+    "zh": "硝酸钾"
+   }
+  },
+  "potassium-permanganate": {
+   "source": "Kaliumpermanganat",
+   "names": {
+    "en": "Potassium Permanganate",
+    "de": "Kaliumpermanganat",
+    "es": "Permanganato de potasio",
+    "fr": "Permanganate de potassium",
+    "pt": "Permanganato de potássio",
+    "zh": "高锰酸钾"
+   }
+  },
+  "potassium-sulfate": {
+   "source": "Kaliumsulfat",
+   "names": {
+    "en": "Potassium Sulfate",
+    "de": "Kaliumsulfat",
+    "es": "Sulfato de potasio",
+    "fr": "Sulfate de potassium",
+    "pt": "Sulfato de potássio",
+    "zh": "硫酸钾"
+   }
+  },
+  "potassium-sulfide": {
+   "source": "Kaliumsulfid",
+   "names": {
+    "en": "Potassium Sulfide",
+    "de": "Kaliumsulfid",
+    "es": "Sulfuro de potasio",
+    "fr": "Sulfure de potassium",
+    "pt": "Sulfeto de potássio",
+    "zh": "硫化钾"
+   }
+  },
+  "propanol": {
+   "source": "Propanol",
+   "names": {
+    "en": "Propanol",
+    "de": "Propanol",
+    "es": "Propanol",
+    "fr": "Propanol",
+    "pt": "Propanol",
+    "zh": "丙醇"
+   }
+  },
+  "propionic-acid": {
+   "source": "Propionsäure",
+   "names": {
+    "en": "Propionic Acid",
+    "de": "Propionsäure",
+    "es": "Ácido propiónico",
+    "fr": "Acide propionique",
+    "pt": "Ácido propiônico",
+    "zh": "丙酸"
+   }
+  },
+  "propylene-glycol": {
+   "source": "Propylenglycol",
+   "names": {
+    "en": "Propylene Glycol",
+    "de": "Propylenglykol",
+    "es": "Propilenglicol",
+    "fr": "Propylène glycol",
+    "pt": "Propilenoglicol",
+    "zh": "丙二醇"
+   }
+  },
+  "pyridine": {
+   "source": "Pyridin",
+   "names": {
+    "en": "Pyridine",
+    "de": "Pyridin",
+    "es": "Piridina",
+    "fr": "Pyridine",
+    "pt": "Piridina",
+    "zh": "吡啶"
+   }
+  },
+  "salicylic-acid": {
+   "source": "Salicylsäure",
+   "names": {
+    "en": "Salicylic Acid",
+    "de": "Salicylsäure",
+    "es": "Ácido salicílico",
+    "fr": "Acide salicylique",
+    "pt": "Ácido salicílico",
+    "zh": "水杨酸"
+   }
+  },
+  "seawater": {
+   "source": "Salzwasser, Meerwasser",
+   "names": {
+    "en": "Seawater (Salt Water)",
+    "de": "Meerwasser",
+    "es": "Agua de mar",
+    "fr": "Eau de mer",
+    "pt": "Água do mar",
+    "zh": "海水"
+   }
+  },
+  "silicone-oil": {
+   "source": "Siliconöl",
+   "names": {
+    "en": "Silicone Oil",
+    "de": "Silikonöl",
+    "es": "Aceite de silicona",
+    "fr": "Huile de silicone",
+    "pt": "Óleo de silicone",
+    "zh": "硅油"
+   }
+  },
+  "silver-nitrate": {
+   "source": "Silbernitrat",
+   "names": {
+    "en": "Silver Nitrate",
+    "de": "Silbernitrat",
+    "es": "Nitrato de plata",
+    "fr": "Nitrate d'argent",
+    "pt": "Nitrato de prata",
+    "zh": "硝酸银"
+   }
+  },
+  "sodium-acetate": {
+   "source": "Natriumacetat",
+   "names": {
+    "en": "Sodium Acetate",
+    "de": "Natriumacetat",
+    "es": "Acetato de sodio",
+    "fr": "Acétate de sodium",
+    "pt": "Acetato de sódio",
+    "zh": "乙酸钠"
+   }
+  },
+  "sodium-bicarbonate": {
+   "source": "Natriumbicarbonat",
+   "names": {
+    "en": "Sodium Bicarbonate",
+    "de": "Natriumhydrogencarbonat",
+    "es": "Bicarbonato de sodio",
+    "fr": "Bicarbonate de sodium",
+    "pt": "Bicarbonato de sódio",
+    "zh": "碳酸氢钠"
+   }
+  },
+  "sodium-borate": {
+   "source": "Natriumborat",
+   "names": {
+    "en": "Sodium Borate",
+    "de": "Natriumborat",
+    "es": "Borato de sodio",
+    "fr": "Borate de sodium",
+    "pt": "Borato de sódio",
+    "zh": "硼酸钠"
+   }
+  },
+  "sodium-bromate": {
+   "source": "Natriumbromat",
+   "names": {
+    "en": "Sodium Bromate",
+    "de": "Natriumbromat",
+    "es": "Bromato de sodio",
+    "fr": "Bromate de sodium",
+    "pt": "Bromato de sódio",
+    "zh": "溴酸钠"
+   }
+  },
+  "sodium-carbonate": {
+   "source": "Natriumcarbonat",
+   "names": {
+    "en": "Sodium Carbonate",
+    "de": "Natriumcarbonat",
+    "es": "Carbonato de sodio",
+    "fr": "Carbonate de sodium",
+    "pt": "Carbonato de sódio",
+    "zh": "碳酸钠"
+   }
+  },
+  "sodium-chloride": {
+   "source": "Natriumchlorid",
+   "names": {
+    "en": "Sodium Chloride",
+    "de": "Natriumchlorid",
+    "es": "Cloruro de sodio",
+    "fr": "Chlorure de sodium",
+    "pt": "Cloreto de sódio",
+    "zh": "氯化钠"
+   }
+  },
+  "sodium-cyanide": {
+   "source": "Natriumcyanid",
+   "names": {
+    "en": "Sodium Cyanide",
+    "de": "Natriumcyanid",
+    "es": "Cianuro de sodio",
+    "fr": "Cyanure de sodium",
+    "pt": "Cianeto de sódio",
+    "zh": "氰化钠"
+   }
+  },
+  "sodium-dichromate": {
+   "source": "Natriumdichromat",
+   "names": {
+    "en": "Sodium Dichromate",
+    "de": "Natriumdichromat",
+    "es": "Dicromato de sodio",
+    "fr": "Dichromate de sodium",
+    "pt": "Dicromato de sódio",
+    "zh": "重铬酸钠"
+   }
+  },
+  "sodium-fluoride": {
+   "source": "Natriumfluorid",
+   "names": {
+    "en": "Sodium Fluoride",
+    "de": "Natriumfluorid",
+    "es": "Fluoruro de sodio",
+    "fr": "Fluorure de sodium",
+    "pt": "Fluoreto de sódio",
+    "zh": "氟化钠"
+   }
+  },
+  "sodium-hydroxide-caustic-soda": {
+   "source": "Natriumhydroxid",
+   "names": {
+    "en": "Sodium Hydroxide (Caustic Soda)",
+    "de": "Natriumhydroxid (Ätznatron)",
+    "es": "Hidróxido de sodio (sosa cáustica)",
+    "fr": "Hydroxyde de sodium (soude caustique)",
+    "pt": "Hidróxido de sódio (soda cáustica)",
+    "zh": "氢氧化钠（烧碱）"
+   }
+  },
+  "sodium-hypochlorite": {
+   "source": "Natriumhypochlorit",
+   "names": {
+    "en": "Sodium Hypochlorite (Bleach)",
+    "de": "Natriumhypochlorit (Bleichlauge)",
+    "es": "Hipoclorito de sodio (lejía)",
+    "fr": "Hypochlorite de sodium (eau de Javel)",
+    "pt": "Hipoclorito de sódio (água sanitária)",
+    "zh": "次氯酸钠（漂白水）"
+   }
+  },
+  "sodium-iodide": {
+   "source": "Natriumjodid",
+   "names": {
+    "en": "Sodium Iodide",
+    "de": "Natriumiodid",
+    "es": "Yoduro de sodio",
+    "fr": "Iodure de sodium",
+    "pt": "Iodeto de sódio",
+    "zh": "碘化钠"
+   }
+  },
+  "sodium-nitrate": {
+   "source": "Natriumnitrat",
+   "names": {
+    "en": "Sodium Nitrate",
+    "de": "Natriumnitrat",
+    "es": "Nitrato de sodio",
+    "fr": "Nitrate de sodium",
+    "pt": "Nitrato de sódio",
+    "zh": "硝酸钠"
+   }
+  },
+  "sodium-nitrite": {
+   "source": "Natriumnitrit",
+   "names": {
+    "en": "Sodium Nitrite",
+    "de": "Natriumnitrit",
+    "es": "Nitrito de sodio",
+    "fr": "Nitrite de sodium",
+    "pt": "Nitrito de sódio",
+    "zh": "亚硝酸钠"
+   }
+  },
+  "sodium-perborate": {
+   "source": "Natriumperborat",
+   "names": {
+    "en": "Sodium Perborate",
+    "de": "Natriumperborat",
+    "es": "Perborato de sodio",
+    "fr": "Perborate de sodium",
+    "pt": "Perborato de sódio",
+    "zh": "过硼酸钠"
+   }
+  },
+  "sodium-peroxide": {
+   "source": "Natriumperoxid",
+   "names": {
+    "en": "Sodium Peroxide",
+    "de": "Natriumperoxid",
+    "es": "Peróxido de sodio",
+    "fr": "Peroxyde de sodium",
+    "pt": "Peróxido de sódio",
+    "zh": "过氧化钠"
+   }
+  },
+  "sodium-phosphate": {
+   "source": "Natriumphosphat",
+   "names": {
+    "en": "Sodium Phosphate",
+    "de": "Natriumphosphat",
+    "es": "Fosfato de sodio",
+    "fr": "Phosphate de sodium",
+    "pt": "Fosfato de sódio",
+    "zh": "磷酸钠"
+   }
+  },
+  "sodium-sulfate": {
+   "source": "Natriumsulfat",
+   "names": {
+    "en": "Sodium Sulfate",
+    "de": "Natriumsulfat",
+    "es": "Sulfato de sodio",
+    "fr": "Sulfate de sodium",
+    "pt": "Sulfato de sódio",
+    "zh": "硫酸钠"
+   }
+  },
+  "sodium-sulfide": {
+   "source": "Natriumsulfid",
+   "names": {
+    "en": "Sodium Sulfide",
+    "de": "Natriumsulfid",
+    "es": "Sulfuro de sodio",
+    "fr": "Sulfure de sodium",
+    "pt": "Sulfeto de sódio",
+    "zh": "硫化钠"
+   }
+  },
+  "sodium-sulfite": {
+   "source": "Natriumsulfit",
+   "names": {
+    "en": "Sodium Sulfite",
+    "de": "Natriumsulfit",
+    "es": "Sulfito de sodio",
+    "fr": "Sulfite de sodium",
+    "pt": "Sulfito de sódio",
+    "zh": "亚硫酸钠"
+   }
+  },
+  "sodium-thiosulfate": {
+   "source": "Natriumthiosulfat",
+   "names": {
+    "en": "Sodium Thiosulfate",
+    "de": "Natriumthiosulfat",
+    "es": "Tiosulfato de sodio",
+    "fr": "Thiosulfate de sodium",
+    "pt": "Tiossulfato de sódio",
+    "zh": "硫代硫酸钠"
+   }
+  },
+  "stearic-acid": {
+   "source": "Stearinsäure",
+   "names": {
+    "en": "Stearic Acid",
+    "de": "Stearinsäure",
+    "es": "Ácido esteárico",
+    "fr": "Acide stéarique",
+    "pt": "Ácido esteárico",
+    "zh": "硬脂酸"
+   }
+  },
+  "styrene": {
+   "source": "Styrol",
+   "names": {
+    "en": "Styrene",
+    "de": "Styrol",
+    "es": "Estireno",
+    "fr": "Styrène",
+    "pt": "Estireno",
+    "zh": "苯乙烯"
+   }
+  },
+  "succinic-acid": {
+   "source": "Bernsteinsäure",
+   "names": {
+    "en": "Succinic Acid",
+    "de": "Bernsteinsäure",
+    "es": "Ácido succínico",
+    "fr": "Acide succinique",
+    "pt": "Ácido succínico",
+    "zh": "琥珀酸"
+   }
+  },
+  "sulfur-dioxide": {
+   "source": "Schwefeldioxid",
+   "names": {
+    "en": "Sulfur Dioxide",
+    "de": "Schwefeldioxid",
+    "es": "Dióxido de azufre",
+    "fr": "Dioxyde de soufre",
+    "pt": "Dióxido de enxofre",
+    "zh": "二氧化硫"
+   }
+  },
+  "sulfuric-acid": {
+   "source": "Schwefelsäure",
+   "names": {
+    "en": "Sulfuric Acid",
+    "de": "Schwefelsäure",
+    "es": "Ácido sulfúrico",
+    "fr": "Acide sulfurique",
+    "pt": "Ácido sulfúrico",
+    "zh": "硫酸"
+   }
+  },
+  "tartaric-acid": {
+   "source": "Weinsäure",
+   "names": {
+    "en": "Tartaric Acid",
+    "de": "Weinsäure",
+    "es": "Ácido tartárico",
+    "fr": "Acide tartrique",
+    "pt": "Ácido tartárico",
+    "zh": "酒石酸"
+   }
+  },
+  "thf": {
+   "source": "Tetrahydrofuran (THF)",
+   "names": {
+    "en": "Tetrahydrofuran (THF)",
+    "de": "Tetrahydrofuran (THF)",
+    "es": "Tetrahidrofurano (THF)",
+    "fr": "Tétrahydrofurane (THF)",
+    "pt": "Tetra-hidrofurano (THF)",
+    "zh": "四氢呋喃 (THF)"
+   }
+  },
+  "toluene": {
+   "source": "Methylbenzol",
+   "names": {
+    "en": "Toluene",
+    "de": "Toluol",
+    "es": "Tolueno",
+    "fr": "Toluène",
+    "pt": "Tolueno",
+    "zh": "甲苯"
+   }
+  },
+  "transformer-oil": {
+   "source": "Transformatorenöl",
+   "names": {
+    "en": "Transformer Oil",
+    "de": "Transformatorenöl",
+    "es": "Aceite de transformador",
+    "fr": "Huile de transformateur",
+    "pt": "Óleo de transformador",
+    "zh": "变压器油"
+   }
+  },
+  "turpentine-oil": {
+   "source": "Terpentinöl",
+   "names": {
+    "en": "Turpentine Oil",
+    "de": "Terpentinöl",
+    "es": "Aceite de trementina",
+    "fr": "Huile de térébenthine",
+    "pt": "Óleo de terebintina",
+    "zh": "松节油"
+   }
+  },
+  "turpentine-substitute": {
+   "source": "Terpentinersatz",
+   "names": {
+    "en": "Turpentine Substitute",
+    "de": "Terpentinersatz",
+    "es": "Sustituto de trementina",
+    "fr": "Succédané de térébenthine",
+    "pt": "Substituto de terebintina",
+    "zh": "松节油替代品"
+   }
+  },
+  "urea": {
+   "source": "Harnstoff",
+   "names": {
+    "en": "Urea",
+    "de": "Harnstoff",
+    "es": "Urea",
+    "fr": "Urée",
+    "pt": "Ureia",
+    "zh": "尿素"
+   }
+  },
+  "vinyl-acetate": {
+   "source": "Vinylacetat",
+   "names": {
+    "en": "Vinyl Acetate",
+    "de": "Vinylacetat",
+    "es": "Acetato de vinilo",
+    "fr": "Acétate de vinyle",
+    "pt": "Acetato de vinila",
+    "zh": "乙酸乙烯酯"
+   }
+  },
+  "water-glass": {
+   "source": "Wasserglas",
+   "names": {
+    "en": "Water Glass (Sodium Silicate)",
+    "de": "Wasserglas (Natriumsilikat)",
+    "es": "Vidrio soluble (silicato de sodio)",
+    "fr": "Verre soluble (silicate de sodium)",
+    "pt": "Vidro solúvel (silicato de sódio)",
+    "zh": "水玻璃（硅酸钠）"
+   }
+  },
+  "xylene": {
+   "source": "Xylol",
+   "names": {
+    "en": "Xylene",
+    "de": "Xylol",
+    "es": "Xileno",
+    "fr": "Xylène",
+    "pt": "Xileno",
+    "zh": "二甲苯"
+   }
+  },
+  "zinc-chloride": {
+   "source": "Zinkchlorid",
+   "names": {
+    "en": "Zinc Chloride",
+    "de": "Zinkchlorid",
+    "es": "Cloruro de zinc",
+    "fr": "Chlorure de zinc",
+    "pt": "Cloreto de zinco",
+    "zh": "氯化锌"
+   }
+  },
+  "zinc-oxide": {
+   "source": "Zinkoxid",
+   "names": {
+    "en": "Zinc Oxide",
+    "de": "Zinkoxid",
+    "es": "Óxido de zinc",
+    "fr": "Oxyde de zinc",
+    "pt": "Óxido de zinco",
+    "zh": "氧化锌"
+   }
+  },
+  "zinc-sulfate": {
+   "source": "Zinksulfat",
+   "names": {
+    "en": "Zinc Sulfate",
+    "de": "Zinksulfat",
+    "es": "Sulfato de zinc",
+    "fr": "Sulfate de zinc",
+    "pt": "Sulfato de zinco",
+    "zh": "硫酸锌"
+   }
+  }
+ }
+}

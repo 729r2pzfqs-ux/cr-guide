@@ -3,6 +3,12 @@
 Rebuild all material pages to use the dynamic JSON-fetching template.
 Fixes: truncated static pages, missing filterTable(), broken rating filter.
 """
+raise SystemExit(
+    "rebuild_materials.py is RETIRED and must not be run. It rewrites published pages from stale\n"
+    "data or by patching HTML in place, and would undo the September 2026 rebuild.\n"
+    "Use build_material_tables.py. See BUILD.md."
+)
+
 import os
 import json
 

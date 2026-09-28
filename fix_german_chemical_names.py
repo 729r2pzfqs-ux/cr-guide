@@ -24,6 +24,12 @@ same map the runtime uses - so the static HTML and the hydrated HTML agree.
 Idempotent: rows that already carry a subtitle are not matched.
 """
 
+raise SystemExit(
+    "fix_german_chemical_names.py is RETIRED and must not be run. It rewrites published pages from stale\n"
+    "data or by patching HTML in place, and would undo the September 2026 rebuild.\n"
+    "Use build_material_tables.py. See BUILD.md."
+)
+
 import html
 import json
 import re

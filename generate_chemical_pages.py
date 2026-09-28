@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """Generate top 100 chemical pages for ChemicalResistance.org"""
 
+raise SystemExit(
+    "generate_chemical_pages.py is RETIRED and must not be run. It rewrites published pages from stale\n"
+    "data or by patching HTML in place, and would undo the September 2026 rebuild.\n"
+    "Use build_chemical_pages.py. See BUILD.md."
+)
+
 import json
 import os
 import re

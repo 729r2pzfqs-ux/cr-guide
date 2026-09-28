@@ -51,7 +51,7 @@
                     <a href="/pt/storage-compatibility/" class="text-gray-600 hover:text-gray-900 hover:underline">Armazenamento</a>
                     <a href="/pt/sds-decoder/" class="text-gray-600 hover:text-gray-900 hover:underline">Decodificador SDS</a>
                     <a href="/pt/viscosity/" class="text-gray-600 hover:text-gray-900 hover:underline">Viscosidade</a>
-                    <a href="/pt/about/" class="text-gray-600 hover:text-gray-900 hover:underline">Sobre</a>
+                    <a href="/pt-about/" class="text-gray-600 hover:text-gray-900 hover:underline">Sobre</a>
                 </nav>
                 <select id="langSelect" aria-label="Escolher idioma" class="bg-gray-100 border border-gray-200 rounded-lg px-2 py-1 text-sm cursor-pointer">
                     <option value="" selected disabled>&#127760;</option>
@@ -74,7 +74,7 @@
                 <a href="/pt/storage-compatibility/" class="py-2 px-3 rounded-lg text-gray-700 hover:bg-gray-50">Compatibilidade de armazenamento</a>
                 <a href="/pt/sds-decoder/" class="py-2 px-3 rounded-lg text-gray-700 hover:bg-gray-50">Decodificador SDS</a>
                 <a href="/pt/viscosity/" class="py-2 px-3 rounded-lg text-gray-700 hover:bg-gray-50">Viscosidade</a>
-                <a href="/pt/about/" class="py-2 px-3 rounded-lg text-gray-700 hover:bg-gray-50">Sobre</a>
+                <a href="/pt-about/" class="py-2 px-3 rounded-lg text-gray-700 hover:bg-gray-50">Sobre</a>
             </nav>
         </div>
     </header>
@@ -162,7 +162,9 @@
                                 <th class="py-3 px-4 font-semibold text-gray-600 text-center">ECTFE</th>
                             </tr>
                         </thead>
-                        <tbody id="compareTable" class="divide-y divide-gray-100"></tbody>
+                        <tbody id="compareTable" class="divide-y divide-gray-100">
+
+</tbody>
                     </table>
                 </div>
             </div>
@@ -232,6 +234,7 @@
     fetch('/data/chemicals_burkle_full.json')
         .then(function(r) { return r.json(); })
         .then(function(data) {
+            data = data.filter(function (c) { return !c.alias_of; });
             allDiffs = data.filter(function(c) {
                 var rA = c.ratings[MAT_A];
                 var rB = c.ratings[MAT_B];
