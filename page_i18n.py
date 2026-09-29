@@ -290,7 +290,6 @@ T = {
                   'zh': '金属'},
     'est': {'en': 'estimate', 'de': 'Schätzwert', 'es': 'estimación', 'fr': 'estimation',
             'pt': 'estimativa', 'zh': '估计值'},
-    'est_short': {'en': 'est.', 'de': 'gesch.', 'es': 'est.', 'fr': 'est.', 'pt': 'est.', 'zh': '估'},
     'no_temp': {
         'en': 'one value, no temperature given', 'de': 'ein Wert, ohne Temperaturangabe',
         'es': 'un solo valor, sin temperatura', 'fr': 'une seule valeur, sans température',
@@ -334,13 +333,16 @@ T = {
             'fr': 'non résistant', 'pt': 'não resistente', 'zh': '不耐受'},
     'g_none': {'en': 'no data', 'de': 'keine Angabe', 'es': 'sin datos', 'fr': 'aucune donnée',
                'pt': 'sem dados', 'zh': '无数据'},
+    'est_note': {
+        'en': 'estimated rating', 'de': 'geschätzte Bewertung', 'es': 'clasificación estimada',
+        'fr': 'note estimée', 'pt': 'classificação estimada', 'zh': '估计等级'},
     'legend_est': {
-        'en': 'Values marked “est.” are estimates in the source, not test results. An estimate is given as one value without a temperature.',
-        'de': 'Mit „gesch.“ markierte Werte sind Schätzwerte der Quelle, keine Prüfergebnisse. Ein Schätzwert wird als einzelner Wert ohne Temperatur angegeben.',
-        'es': 'Los valores marcados «est.» son estimaciones de la fuente, no resultados de ensayo. Una estimación se da como un solo valor sin temperatura.',
-        'fr': 'Les valeurs marquées « est. » sont des estimations de la source, pas des résultats d’essai. Une estimation est donnée comme une valeur unique sans température.',
-        'pt': 'Os valores marcados «est.» são estimativas da fonte, não resultados de ensaio. Uma estimativa é dada como um único valor sem temperatura.',
-        'zh': '标有“估”的数值为原始资料中的估计值，并非试验结果。估计值仅给出一个数值，不区分温度。'},
+        'en': 'A rating marked * is an estimate in the source, not a test result. An estimate is given as one value without a temperature.',
+        'de': 'Eine mit * markierte Bewertung ist ein Schätzwert der Quelle, kein Prüfergebnis. Ein Schätzwert wird als einzelner Wert ohne Temperatur angegeben.',
+        'es': 'Una clasificación marcada con * es una estimación de la fuente, no un resultado de ensayo. Una estimación se da como un solo valor sin temperatura.',
+        'fr': 'Une note marquée * est une estimation de la source, pas un résultat d’essai. Une estimation est donnée comme une valeur unique sans température.',
+        'pt': 'Uma classificação marcada com * é uma estimativa da fonte, não um resultado de ensaio. Uma estimativa é dada como um único valor sem temperatura.',
+        'zh': '标有 * 的等级为原始资料中的估计值，并非试验结果。估计值仅给出一个数值，不区分温度。'},
     'similar_h': {
         'en': 'Chemicals with a similar resistance profile',
         'de': 'Chemikalien mit ähnlichem Beständigkeitsprofil',

@@ -40,12 +40,12 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 LANGS = ['en', 'de', 'es', 'fr', 'pt', 'zh']
 
 NOTE = {
-    'en': 'est. = estimated value in the source, given without a temperature. L = risk of pitting or stress-corrosion cracking. Only chemicals with a rating for this material are listed.',
-    'de': 'gesch. = Schätzwert der Quelle, ohne Temperaturangabe. L = Gefahr von Lochfraß oder Spannungsrisskorrosion. Aufgeführt sind nur Chemikalien mit einer Bewertung für diesen Werkstoff.',
-    'es': 'est. = valor estimado en la fuente, sin temperatura. L = riesgo de picaduras o corrosión bajo tensión. Solo se indican los productos químicos con clasificación para este material.',
-    'fr': 'est. = valeur estimée dans la source, sans température. L = risque de piqûres ou de corrosion sous contrainte. Seuls les produits chimiques notés pour ce matériau sont indiqués.',
-    'pt': 'est. = valor estimado na fonte, sem temperatura. L = risco de pites ou corrosão sob tensão. São listados apenas os produtos químicos com classificação para este material.',
-    'zh': '估 = 原始资料中的估计值，未注明温度。L = 存在点蚀或应力腐蚀开裂风险。仅列出对该材料有等级的化学品。',
+    'en': '* = estimated rating in the source, given without a temperature. L = risk of pitting or stress-corrosion cracking. Only chemicals with a rating for this material are listed.',
+    'de': '* = geschätzte Bewertung der Quelle, ohne Temperaturangabe. L = Gefahr von Lochfraß oder Spannungsrisskorrosion. Aufgeführt sind nur Chemikalien mit einer Bewertung für diesen Werkstoff.',
+    'es': '* = clasificación estimada en la fuente, sin temperatura. L = riesgo de picaduras o corrosión bajo tensión. Solo se indican los productos químicos con clasificación para este material.',
+    'fr': '* = note estimée dans la source, sans température. L = risque de piqûres ou de corrosion sous contrainte. Seuls les produits chimiques notés pour ce matériau sont indiqués.',
+    'pt': '* = classificação estimada na fonte, sem temperatura. L = risco de pites ou corrosão sob tensão. São listados apenas os produtos químicos com classificação para este material.',
+    'zh': '* = 原始资料中的估计等级，未注明温度。L = 存在点蚀或应力腐蚀开裂风险。仅列出对该材料有等级的化学品。',
 }
 
 CHEMICALS_WORD = {'en': 'Chemicals', 'de': 'Chemikalien', 'es': 'químicos', 'fr': 'produits',
@@ -111,13 +111,11 @@ def cell(r, which, lang):
         return '<span class="rating-NR px-2 py-1 rounded text-xs font-bold">K</span>' if which == '20' else '&ndash;'
     if g is None:
         return '<span class="rating-NR px-2 py-1 rounded text-xs font-bold">&ndash;</span>'
-    flag = ''
-    if which == '20' and r.get('est'):
-        flag = ' <span class="text-xs text-gray-500">%s</span>' % esc(t('est_short', lang))
-    if r.get('pit' + which):
-        flag += ' <span class="text-xs text-gray-500">L</span>'
-    return '<span class="rating-%s px-2 py-1 rounded text-xs font-bold">%s</span>%s' % (
-        r['w' + which], esc(g), flag)
+    # an estimate is one value without a temperature, shown in the 20 °C column
+    star = '*' if which == '20' and r.get('est') else ''
+    flag = ' <span class="text-xs text-gray-500">L</span>' if r.get('pit' + which) else ''
+    return '<span class="rating-%s px-2 py-1 rounded text-xs font-bold">%s%s</span>%s' % (
+        r['w' + which], esc(g), star, flag)
 
 
 def build_rows(code, lang, columns, chems, links, trans):

@@ -195,19 +195,25 @@ def by_priority(codes):
     return sorted(codes, key=PRIORITY.index)
 
 
-def grade_span(g, worst):
+def grade_span(g, worst, est=False):
+    """A rating badge. An estimate carries an asterisk inside the badge, which
+    the footnote under the table explains."""
     if g is None:
         return '<span class="g gN">–</span>'
-    return '<span class="g g%s">%s</span>' % (worst, esc(g))
+    return '<span class="g g%s">%s%s</span>' % (worst, esc(g), '*' if est else '')
+
+
+def est_footnote(lang, ratings):
+    if any(r and r.get('est') for r in ratings):
+        return '<p class="cr-sub" style="margin-top:.6rem">* %s</p>' % esc(t('est_note', lang))
+    return ''
 
 
 def flags(r, lang, short=True):
     out = []
     if r.get('k'):
         out.append(t('k_value', lang))
-    if r.get('est'):
-        out.append(t('est', lang))
-    elif r.get('single'):
+    if r.get('single') and not r.get('est'):
         out.append(t('no_temp', lang))
     if r.get('pit20') or r.get('pit50'):
         out.append(t('pitting', lang))
@@ -227,9 +233,9 @@ def rating_cells(r, lang):
     if r.get('k'):
         return '<td class="c" colspan="2"><span class="g gN">K</span></td>' + remark
     if r.get('single'):
-        return '<td class="c" colspan="2">%s</td>%s' % (grade_span(r['c20'], r['w20']), remark)
+        return '<td class="c" colspan="2">%s</td>%s' % (grade_span(r['c20'], r['w20'], r.get('est')), remark)
     return '<td class="c">%s</td><td class="c">%s</td>%s' % (
-        grade_span(r['c20'], r['w20']), grade_span(r['c50'], r['w50']), remark)
+        grade_span(r['c20'], r['w20'], r.get('est')), grade_span(r['c50'], r['w50'], r.get('est')), remark)
 
 
 def legend(lang):
@@ -455,8 +461,7 @@ def matrix(lang, slug, name, chem):
                 elif r.get('k'):
                     cells += '<td class="c"><span class="g gN">K</span></td>'
                 else:
-                    mark = '<span class="fl">*</span>' if r.get('est') else ''
-                    cells += '<td class="c">%s%s</td>' % (grade_span(r['c20'], r['w20']), mark)
+                    cells += '<td class="c">%s</td>' % grade_span(r['c20'], r['w20'], r.get('est'))
             body += '<tr><th scope="row"><a href="%s">%s</a></th>%s</tr>' % (
                 material_url(lang, m), esc(material_name(m, lang)), cells)
     ladder = diagrams.figure(
@@ -465,9 +470,9 @@ def matrix(lang, slug, name, chem):
     return ('<section class="cr-card cr-noads"><h2>%s</h2>%s'
             '<details class="cr-details"><summary>%s</summary><div class="cr-scroll"><table class="cr-tbl">'
             '<thead><tr><th scope="col">%s</th>%s</tr></thead><tbody>%s</tbody></table></div>'
-            '<p class="cr-sub">* %s</p></details></section>') % (
+            '%s</details></section>') % (
         esc(t('fig_ladder_h', lang)), ladder, esc(t('table_view', lang)),
-        esc(t('material', lang)), head_cells, body, esc(t('est', lang)))
+        esc(t('material', lang)), head_cells, body, est_footnote(lang, [r for v in variants for r in v['ratings'].values()]))
 
 
 def variant_table(lang, slug, name, chem, v, index, first):
@@ -491,8 +496,9 @@ def variant_table(lang, slug, name, chem, v, index, first):
     return ('<section class="cr-card cr-noads" id="c%d"><h2>%s</h2>%s<div class="cr-scroll"%s>'
             '<table class="cr-tbl"><thead><tr><th scope="col">%s</th><th class="c" scope="col">20 °C</th>'
             '<th class="c" scope="col">50 °C</th><th scope="col">%s</th></tr></thead><tbody>%s</tbody>'
-            '</table></div></section>') % (
-        index, esc(title), note, zone, esc(t('material', lang)), esc(t('remark', lang)), body)
+            '</table></div>%s</section>') % (
+        index, esc(title), note, zone, esc(t('material', lang)), esc(t('remark', lang)), body,
+        est_footnote(lang, v['ratings'].values()))
 
 
 def corrections(lang, chem, only=None):
@@ -660,8 +666,9 @@ def pair_page(lang, slug, page, chem, mat, chrome):
         out.append(('<section class="cr-card cr-noads"><h2>%s</h2><div class="cr-scroll" id="compat-table-zone">'
                     '<table class="cr-tbl"><thead><tr><th scope="col">%s</th><th class="c" scope="col">20 °C</th>'
                     '<th class="c" scope="col">50 °C</th><th scope="col">%s</th></tr></thead><tbody>%s</tbody>'
-                    '</table></div></section>') % (
-            esc(t('pair_rating_h', lang)), esc(t('concentration', lang)), esc(t('remark', lang)), body))
+                    '</table></div>%s</section>') % (
+            esc(t('pair_rating_h', lang)), esc(t('concentration', lang)), esc(t('remark', lang)), body,
+            est_footnote(lang, [v['ratings'].get(mat) for v in chem['variants']])))
     else:
         out.append('<section class="cr-card"><h2>%s</h2><p>%s</p></section>' % (
             esc(t('pair_rating_h', lang)), esc(t('pair_nodata', lang))))
