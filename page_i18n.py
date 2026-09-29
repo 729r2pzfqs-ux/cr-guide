@@ -469,6 +469,19 @@ T = {
         'fr': 'page du matériau', 'pt': 'página do material', 'zh': '材料页面'},
     'details': {'en': 'details', 'de': 'Details', 'es': 'detalles', 'fr': 'détails', 'pt': 'detalhes',
                 'zh': '详情'},
+    'fig_ladder_h': {
+        'en': 'Rating by concentration', 'de': 'Bewertung nach Konzentration',
+        'es': 'Clasificación por concentración', 'fr': 'Note par concentration',
+        'pt': 'Classificação por concentração', 'zh': '按浓度列出的等级'},
+    'fig_ladder_cap': {
+        'en': 'Each cell shows the rating at 20 °C. Where the rating at 50 °C differs, it follows the arrow. * marks an estimate in the source.',
+        'de': 'Jede Zelle zeigt die Bewertung bei 20 °C. Weicht die Bewertung bei 50 °C ab, steht sie hinter dem Pfeil. * kennzeichnet einen Schätzwert der Quelle.',
+        'es': 'Cada celda muestra la clasificación a 20 °C. Si la clasificación a 50 °C es distinta, aparece tras la flecha. * indica una estimación de la fuente.',
+        'fr': 'Chaque cellule indique la note à 20 °C. Si la note à 50 °C diffère, elle suit la flèche. * signale une estimation de la source.',
+        'pt': 'Cada célula mostra a classificação a 20 °C. Quando a classificação a 50 °C é diferente, aparece depois da seta. * indica uma estimativa da fonte.',
+        'zh': '每个单元格显示 20 °C 下的等级；若 50 °C 下的等级不同，则列于箭头之后。* 表示原始资料中的估计值。'},
+    'table_view': {'en': 'Show as a table', 'de': 'Als Tabelle anzeigen', 'es': 'Ver como tabla',
+                   'fr': 'Afficher sous forme de tableau', 'pt': 'Ver como tabela', 'zh': '以表格显示'},
     'list_sep': {'en': ', ', 'de': ', ', 'es': ', ', 'fr': ', ', 'pt': ', ', 'zh': '、'},
 }
 

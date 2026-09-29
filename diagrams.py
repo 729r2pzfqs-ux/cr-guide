@@ -158,3 +158,85 @@ def temperature_shift(lang, name, variant):
 def temperature_key(lang):
     return ('<div class="cr-key"><span><i style="background:#fff;border:2px solid %s;border-radius:50%%"></i>20 °C</span>'
             '<span><i style="background:%s;border-radius:50%%"></i>50 °C</span></div>') % (MUTED, MUTED)
+
+
+# --- A: concentration ladder --------------------------------------------------
+
+def _wrap(label, width, size=9):
+    """Split a column label over at most two lines; shorten what still does not fit."""
+    per = size * 0.54
+    fits = max(3, int(width / per))
+    if len(label) <= fits:
+        return [label]
+    words = label.split(' ')
+    if len(words) > 1:
+        best = None
+        for i in range(1, len(words)):
+            a, b = ' '.join(words[:i]), ' '.join(words[i:])
+            longest = max(len(a), len(b))
+            if best is None or longest < best[0]:
+                best = (longest, [a, b])
+        lines = best[1]
+    else:
+        lines = [label]
+    return [l if len(l) <= fits else l[:fits - 1] + '…' for l in lines]
+
+
+def concentration_ladder(lang, name, chem, labels):
+    """Materials down, concentrations across. A cell shows the 20 °C grade, and
+    the 50 °C grade after an arrow when it differs. labels are the localized
+    concentration names, one per variant."""
+    variants = chem['variants']
+    left = 100
+    gap = 2
+    cw = (W - left - gap * (len(variants) - 1)) / len(variants)
+    heads = [_wrap(l, cw) for l in labels]
+    top = 12 * max(len(h) for h in heads) + 6
+    body = []
+    for i, lines in enumerate(heads):
+        x = left + i * (cw + gap) + cw / 2
+        for j, line in enumerate(lines):
+            body.append(_text(x, 10 + 12 * j + (12 if len(lines) == 1 and top > 18 else 0), line, 9, INK,
+                              'middle', '600'))
+    y = top
+    desc = []
+    for fam in rd.FAMILIES:
+        codes = [m for m, (_s, f) in rd.MATERIALS.items() if f == fam
+                 and any(m in v['ratings'] for v in variants)]
+        if not codes:
+            continue
+        body.append(_text(0, y + 9, t('fam_' + fam, lang).upper(), 8, MUTED, weight='600'))
+        y += 13
+        for m in codes:
+            mname = material_name(m, lang)
+            body.append(_text(0, y + 11, mname, 10, INK))
+            said = []
+            for i, v in enumerate(variants):
+                x = left + i * (cw + gap)
+                r = v['ratings'].get(m)
+                if r is None or (not r.get('w20') and not r.get('k')):
+                    g, label, word = None, '–', t('g_none', lang)
+                elif r.get('k'):
+                    g, label, word = None, 'K', t('k_value', lang)
+                else:
+                    g = r['w20']
+                    label = r['c20']
+                    word = '%s %s' % (r['c20'], t('at20', lang))
+                    if r.get('w50') and r['w50'] != r['w20']:
+                        label = '%s→%s' % (r['c20'], r['c50'])
+                    if r.get('w50'):
+                        word += ', %s %s' % (r['c50'], t('at50', lang))
+                    if r.get('est'):
+                        label += '*'
+                        word += ' (%s)' % t('est', lang)
+                tip = '%s, %s: %s' % (mname, labels[i], word)
+                size = 9 if len(label) * 5.4 + 4 <= cw else 8
+                body.append('<g><title>%s</title><rect x="%.1f" y="%d" width="%.1f" height="15" rx="2" fill="%s"/>%s</g>' % (
+                    esc(tip), x, y, cw, GRADE_FILL[g],
+                    _text(x + cw / 2, y + 11, label, size, GRADE_TEXT[g], 'middle', '600')))
+                said.append('%s %s' % (labels[i], label))
+            desc.append('%s: %s' % (mname, ', '.join(said)))
+            y += 17
+        y += 4
+    title = '%s: %s' % (name, t('fig_ladder_h', lang))
+    return _svg(y, title, '. '.join(desc) + '.', ''.join(body), max_width=640)

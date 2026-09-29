@@ -90,6 +90,8 @@ STYLE = '''<style>
 .cr-key{display:flex;flex-wrap:wrap;gap:.25rem .9rem;font-size:.78rem;color:#374151;margin-top:.5rem}
 .cr-key i{display:inline-block;width:.7rem;height:.7rem;border-radius:2px;margin-right:.3rem;vertical-align:-1px;box-sizing:border-box}
 .cr-tbl td.d{white-space:nowrap}
+.cr-details{margin-top:1rem}
+.cr-details summary{cursor:pointer;color:#047857;font-size:.9rem;font-weight:600;margin-bottom:.5rem}
 .cr-noads .google-auto-placed,.cr-noads ins.adsbygoogle,#compat-table-zone .google-auto-placed,#compat-table-zone ins.adsbygoogle{display:none!important}
 </style>'''
 
@@ -428,7 +430,7 @@ def facts(lang, chem, name):
         esc(t('facts', lang)), body)
 
 
-def matrix(lang, slug, chem):
+def matrix(lang, slug, name, chem):
     variants = chem['variants']
     head_cells = ''.join('<th class="c" scope="col">%s</th>' % esc(variant_label(v, lang))
                          for v in variants)
@@ -451,10 +453,15 @@ def matrix(lang, slug, chem):
                     cells += '<td class="c">%s%s</td>' % (grade_span(r['c20'], r['w20']), mark)
             body += '<tr><th scope="row"><a href="%s">%s</a></th>%s</tr>' % (
                 material_url(lang, m), esc(material_name(m, lang)), cells)
-    return ('<section class="cr-card cr-noads"><h2>%s</h2><div class="cr-scroll"><table class="cr-tbl">'
+    ladder = diagrams.figure(
+        diagrams.concentration_ladder(lang, name, chem, [variant_label(v, lang) for v in variants]),
+        t('fig_ladder_cap', lang), diagrams.grade_key(lang))
+    return ('<section class="cr-card cr-noads"><h2>%s</h2>%s'
+            '<details class="cr-details"><summary>%s</summary><div class="cr-scroll"><table class="cr-tbl">'
             '<thead><tr><th scope="col">%s</th>%s</tr></thead><tbody>%s</tbody></table></div>'
-            '<p class="cr-sub">* %s</p></section>') % (
-        esc(t('matrix_h', lang)), esc(t('material', lang)), head_cells, body, esc(t('est', lang)))
+            '<p class="cr-sub">* %s</p></details></section>') % (
+        esc(t('fig_ladder_h', lang)), ladder, esc(t('table_view', lang)),
+        esc(t('material', lang)), head_cells, body, esc(t('est', lang)))
 
 
 def variant_table(lang, slug, name, chem, v, index, first):
@@ -553,7 +560,7 @@ def chemical_page(lang, slug, page, chem, chrome, similar, pages):
     out.append(figures(lang, name, chem, pv))
     out.append(facts(lang, chem, name))
     if len(chem['variants']) > 1:
-        out.append(matrix(lang, slug, chem))
+        out.append(matrix(lang, slug, name, chem))
     for i, v in enumerate(chem['variants']):
         out.append(variant_table(lang, slug, name, chem, v, i + 1, i == 0))
     out.append('<section class="cr-card"><h2>%s</h2>%s</section>' % (esc(t('legend_h', lang)), legend(lang)))
