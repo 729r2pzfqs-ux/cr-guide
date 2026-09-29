@@ -381,15 +381,17 @@ def agreement_grid(lang, name_a, name_b, grid):
 
 # --- F: group chart -----------------------------------------------------------
 
-def class_grid(lang, names, profiles, class_name, min_rows, good_share, title):
+def class_grid(lang, names, profiles, class_name, min_rows, good_share, title, heads=None):
     """Classes down, materials across; each cell is the share of rows rated
-    A or B, as a number on a tinted cell."""
+    A or B, as a number on a tinted cell. heads are the column labels when the
+    full names are too long for a column; a line break in one is kept."""
     left, gap = 116, 2
     cw = (W - left - gap * (len(names) - 1)) / len(names)
     top = 30
     body = []
-    for i, name in enumerate(names):
-        lines = _wrap(name, cw)
+    heads = heads or names
+    for i, name in enumerate(heads):
+        lines = name.split('\n') if '\n' in name else _wrap(name, cw)
         for j, line in enumerate(lines[:2]):
             body.append(_text(left + i * (cw + gap) + cw / 2, 10 + 11 * j + (11 if len(lines) == 1 else 0),
                               line, 9, INK, 'middle', '600'))
@@ -422,3 +424,76 @@ def ramp_key(lang):
     steps = ''.join('<span><i style="background:%s"></i>%s</span>' % (c, lab)
                     for c, lab in zip(RAMP, ('0–19 %', '20–39 %', '40–59 %', '60–79 %', '80–100 %')))
     return '<div class="cr-key">%s</div>' % steps
+
+
+# --- G: viscosity scale -------------------------------------------------------
+
+def viscosity_scale(title, desc_unit, items):
+    """items: [(name, mPa·s)], drawn as dots on a logarithmic axis from 1 to
+    100,000 mPa·s."""
+    import math
+    left, right, top, step = 118, W - 34, 20, 15
+    lo, hi = 0, 5
+    span = right - left
+    body = []
+    for d in range(lo, hi + 1):
+        x = left + span * (d - lo) / (hi - lo)
+        body.append('<line x1="%.1f" y1="%d" x2="%.1f" y2="%d" stroke="%s" stroke-width="1"/>' % (
+            x, top - 4, x, top + step * len(items), GRID))
+        label = {0: '1', 1: '10', 2: '100', 3: '1,000', 4: '10k', 5: '100k'}[d]
+        body.append(_text(x, 10, label, 9, MUTED, 'middle'))
+    said = []
+    for i, (name, value) in enumerate(items):
+        y = top + step * i + step / 2
+        x = left + span * (math.log10(max(value, 1)) - lo) / (hi - lo)
+        shown = '{:,}'.format(int(value)) if value >= 10 else ('%g' % value)
+        tip = '%s: %s %s' % (name, shown, desc_unit)
+        side = _text(x + 8, y + 3.5, shown, 9, INK) if x < right - 30 else _text(x - 8, y + 3.5, shown, 9, INK, 'end')
+        body.append('<g><title>%s</title>%s<circle cx="%.1f" cy="%.1f" r="4" fill="#1d4ed8"/>%s</g>' % (
+            esc(tip), _text(0, y + 3.5, name, 9.5, INK), x, y, side))
+        said.append('%s %s' % (name, shown))
+    return _svg(top + step * len(items) + 2, title, ', '.join(said) + ' ' + desc_unit + '.', ''.join(body))
+
+
+# --- H: storage segregation matrix --------------------------------------------
+
+STORAGE_FILL = {'ok': '#15803d', 'caution': '#d97706', 'separate': '#475569', 'never': '#b91c1c', None: '#f1f5f9'}
+STORAGE_TEXT = {'ok': '#ffffff', 'caution': '#111827', 'separate': '#ffffff', 'never': '#ffffff', None: '#4b5563'}
+
+
+def storage_matrix(title, names, rating, labels):
+    """names: [(key, label)] in order. rating(a, b) -> key of labels or None.
+    Lower triangle of the class-by-class table, the rule written in each cell."""
+    n = len(names)
+    left, gap = 78, 2
+    cw = (W - left - gap * (n - 1)) / n
+    ch = 24
+    body, said = [], []
+    for i, (ka, la) in enumerate(names):
+        y = i * (ch + gap)
+        body.append(_text(0, y + 15, la, 9, INK, weight='600'))
+        for j, (kb, lb) in enumerate(names[:i + 1]):
+            x = left + j * (cw + gap)
+            r = rating(ka, kb)
+            word = labels[r]
+            tip = '%s + %s: %s' % (la, lb, word)
+            short = _wrap(word, cw, 8)[0]
+            body.append('<g><title>%s</title><rect x="%.1f" y="%d" width="%.1f" height="%d" rx="2" fill="%s"/>%s</g>' % (
+                esc(tip), x, y, cw, ch, STORAGE_FILL[r], _text(x + cw / 2, y + 15, short, 8, STORAGE_TEXT[r], 'middle', '600')))
+            if r:
+                said.append(tip)
+    y = n * (ch + gap) + 4
+    for j, (_k, lb) in enumerate(names):
+        x = left + j * (cw + gap) + cw / 2
+        for k, line in enumerate(_wrap(lb, cw, 8)[:2]):
+            body.append(_text(x, y + 8 + 10 * k, line, 8, INK, 'middle', '600'))
+    return _svg(y + 24, title, '; '.join(said) + '.', ''.join(body))
+
+
+#: column labels for narrow grids; the full name stays in the hover text
+SHORT = {'PVC_HART': 'PVC-U', 'PVC_WEICH': 'PVC-P', 'PS': 'PS', 'PC': 'PC', 'POM': 'POM', 'PA': 'PA',
+         'PSU': 'PSU', 'ECTFE_ETFE': 'ECTFE', 'FPM': 'FPM', 'V4A': '316', 'V2A': '304', 'AL': 'Al'}
+
+
+def short_name(code, lang):
+    return SHORT.get(code) or material_name(code, lang)

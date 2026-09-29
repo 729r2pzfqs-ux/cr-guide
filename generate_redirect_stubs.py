@@ -41,7 +41,6 @@ MATS = {'acetal-pom', 'aluminium', 'ectfe-etfe', 'epdm', 'fep', 'hdpe', 'ldpe',
 SLUG_ALIASES = {
     'gasoline': 'gasoline-petrol',
     'tetrahydrofuran-thf': 'thf',
-    'white-spirit': 'turpentine-substitute',
     # pages that duplicated another page of the same source chemical
     'ammonia': 'ammonium-hydroxide',
     'chlorine-bleach-solution': 'sodium-hypochlorite',

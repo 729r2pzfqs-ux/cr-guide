@@ -112,7 +112,7 @@ def group_block(mats, lang):
     if len(mats) <= 6:
         grid = diagrams.figure(
             diagrams.class_grid(lang, names, profiles, cs.class_name, cs.MIN_ROWS, cs.good_share,
-                                t('fig_group_h', lang)),
+                                t('fig_group_h', lang), heads=[diagrams.short_name(m, lang) for m in mats]),
             t('fig_group_cap', lang, n=cs.MIN_ROWS), diagrams.ramp_key(lang))
         figs += '<div><h3 class="font-semibold text-gray-900 mb-2">%s</h3>%s</div>' % (esc(t('fig_group_h', lang)), grid)
     return ('<!-- group-figures:start -->\n<section class="px-4 py-8 bg-white border-t border-gray-200">%s'
