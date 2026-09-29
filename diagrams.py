@@ -240,3 +240,185 @@ def concentration_ladder(lang, name, chem, labels):
         y += 4
     title = '%s: %s' % (name, t('fig_ladder_h', lang))
     return _svg(y, title, '. '.join(desc) + '.', ''.join(body), max_width=640)
+
+
+# --- D: material fingerprint --------------------------------------------------
+
+#: comparison series, validated as a pair; deliberately not a grade colour
+SERIES = ('#6d28d9', '#0891b2')
+#: share of rows rated A or B, five steps of one hue (validated as an ordinal ramp)
+RAMP = ('#a3b3d3', '#7d95c1', '#5876ad', '#3b5991', '#243c6b')
+RAMP_TEXT = ('#111827', '#111827', '#ffffff', '#ffffff', '#ffffff')
+
+
+def _ramp(share):
+    i = min(4, int(share * 5))
+    return RAMP[i], RAMP_TEXT[i]
+
+
+def _stacked(y, counts, tip_prefix, lang, height=16):
+    """A 100 % bar of the four grades. Returns (svg, text for desc)."""
+    groups = [(g, counts[g]) for g in 'ABCD' if counts[g]]
+    gap = 2
+    avail = W - gap * (len(groups) - 1)
+    x, out, said = 0.0, [], []
+    for g, k in groups:
+        w = avail * k / counts['n']
+        pct = round(100 * k / counts['n'])
+        tip = '%s: %s %d %% (%d)' % (tip_prefix, g, pct, k)
+        mark = '<rect x="%.1f" y="%d" width="%.1f" height="%d" rx="2" fill="%s"/>' % (
+            x, y, w, height, GRADE_FILL[g])
+        inner = '%s %d %%' % (g, pct)
+        if w >= 5.6 * len(inner) + 6:
+            mark += _text(x + w / 2, y + height / 2 + 3.5, inner, 10, GRADE_TEXT[g], 'middle', '600')
+        elif w >= 14:
+            mark += _text(x + w / 2, y + height / 2 + 3.5, g, 10, GRADE_TEXT[g], 'middle', '600')
+        out.append('<g><title>%s</title>%s</g>' % (esc(tip), mark))
+        said.append('%s %d %%' % (g, pct))
+        x += w + gap
+    return ''.join(out), ', '.join(said)
+
+
+def fingerprint(lang, mname, profile, class_name, min_rows):
+    """One 100 % bar per chemical class: how the material is rated across the
+    rows of that class at 20 °C."""
+    body, desc, y = [], [], 0
+    for cls, counts in profile.items():
+        if cls == 'all' or counts['n'] < min_rows:
+            continue
+        label = '%s (%d)' % (class_name(cls, lang), counts['n'])
+        body.append(_text(0, y + 10, label, 10, INK, weight='600'))
+        bar, said = _stacked(y + 14, counts, class_name(cls, lang), lang)
+        body.append(bar)
+        desc.append('%s: %s' % (class_name(cls, lang), said))
+        y += 14 + 16 + 10
+    if not body:
+        return None
+    title = '%s: %s' % (mname, t('fig_finger_h', lang))
+    return _svg(y - 6, title, '. '.join(desc) + '.', ''.join(body))
+
+
+def overall_bars(lang, items, title):
+    """items: [(material name, counts)]. One 100 % bar per material."""
+    body, desc, y = [], [], 0
+    for name, counts in items:
+        if not counts['n']:
+            continue
+        body.append(_text(0, y + 10, '%s (%d)' % (name, counts['n']), 10, INK, weight='600'))
+        bar, said = _stacked(y + 14, counts, name, lang, height=14)
+        body.append(bar)
+        desc.append('%s: %s' % (name, said))
+        y += 14 + 14 + 9
+    return _svg(y - 5, title, '. '.join(desc) + '.', ''.join(body))
+
+
+# --- E: comparison overlay and agreement grid ---------------------------------
+
+def overlay(lang, name_a, name_b, prof_a, prof_b, class_name, min_rows, good_share):
+    """Per class, the share of rows rated A or B for each of two materials."""
+    body, desc, y = [], [], 0
+    track = W - 40
+    for cls in prof_a:
+        if cls == 'all' or prof_a[cls]['n'] < min_rows or prof_b[cls]['n'] < min_rows:
+            continue
+        body.append(_text(0, y + 10, class_name(cls, lang), 10, INK, weight='600'))
+        y += 14
+        said = []
+        for i, (name, prof) in enumerate(((name_a, prof_a), (name_b, prof_b))):
+            share = good_share(prof[cls])
+            w = max(2.0, track * share)
+            pct = round(100 * share)
+            tip = '%s, %s: %d %% (%d)' % (class_name(cls, lang), name, pct, prof[cls]['n'])
+            body.append('<g><title>%s</title><rect x="0" y="%d" width="%d" height="9" rx="2" fill="#f1f5f9"/>'
+                        '<rect x="0" y="%d" width="%.1f" height="9" rx="2" fill="%s"/>%s</g>' % (
+                            esc(tip), y, track, y, w, SERIES[i],
+                            _text(track + 6, y + 8, '%d %%' % pct, 9, INK)))
+            said.append('%s %d %%' % (name, pct))
+            y += 11
+        desc.append('%s: %s' % (class_name(cls, lang), ', '.join(said)))
+        y += 8
+    if not body:
+        return None
+    title = '%s, %s: %s' % (name_a, name_b, t('fig_overlay_h', lang))
+    return _svg(y - 6, title, '. '.join(desc) + '.', ''.join(body))
+
+
+def series_key(name_a, name_b):
+    return '<div class="cr-key"><span><i style="background:%s"></i>%s</span><span><i style="background:%s"></i>%s</span></div>' % (
+        SERIES[0], esc(name_a), SERIES[1], esc(name_b))
+
+
+def agreement_grid(lang, name_a, name_b, grid):
+    """4 x 4 counts: rows are the grade of the first material, columns the
+    grade of the second. The diagonal is where they agree."""
+    left, top, cw, ch, gap = 96, 34, 54, 26, 2
+    peak = max(grid.values()) or 1
+    body = [_text(left + (4 * cw + 3 * gap) / 2, 10, name_b, 10, INK, 'middle', '600')]
+    for j, g in enumerate('ABCD'):
+        body.append(_text(left + j * (cw + gap) + cw / 2, 26, g, 11, INK, 'middle', '700'))
+    body.append(_text(0, top + 2 * ch + gap, name_a[:16], 10, INK, weight='600'))
+    desc = []
+    for i, ga in enumerate('ABCD'):
+        y = top + i * (ch + gap)
+        body.append(_text(left - 10, y + 17, ga, 11, INK, 'end', '700'))
+        for j, gb in enumerate('ABCD'):
+            k = grid[(ga, gb)]
+            x = left + j * (cw + gap)
+            if k:
+                fill, ink = _ramp(min(0.999, k / peak))
+            else:
+                fill, ink = '#f1f5f9', MUTED
+            tip = '%s %s, %s %s: %d' % (name_a, ga, name_b, gb, k)
+            ring = ' stroke="#111827" stroke-width="1.5"' if ga == gb else ''
+            body.append('<g><title>%s</title><rect x="%d" y="%d" width="%d" height="%d" rx="2" fill="%s"%s/>%s</g>' % (
+                esc(tip), x, y, cw, ch, fill, ring,
+                _text(x + cw / 2, y + 17, str(k), 10, ink, 'middle', '600')))
+            if k:
+                desc.append(tip)
+    title = '%s, %s: %s' % (name_a, name_b, t('fig_grid_h', lang))
+    return _svg(top + 4 * (ch + gap) + 2, title, '; '.join(desc) + '.', ''.join(body))
+
+
+# --- F: group chart -----------------------------------------------------------
+
+def class_grid(lang, names, profiles, class_name, min_rows, good_share, title):
+    """Classes down, materials across; each cell is the share of rows rated
+    A or B, as a number on a tinted cell."""
+    left, gap = 116, 2
+    cw = (W - left - gap * (len(names) - 1)) / len(names)
+    top = 30
+    body = []
+    for i, name in enumerate(names):
+        lines = _wrap(name, cw)
+        for j, line in enumerate(lines[:2]):
+            body.append(_text(left + i * (cw + gap) + cw / 2, 10 + 11 * j + (11 if len(lines) == 1 else 0),
+                              line, 9, INK, 'middle', '600'))
+    y, desc = top, []
+    for cls in profiles[0]:
+        if cls == 'all' or not any(p[cls]['n'] >= min_rows for p in profiles):
+            continue
+        label = class_name(cls, lang, short=True)
+        body.append(_text(0, y + 12, label, 9, INK))
+        said = []
+        for i, (name, prof) in enumerate(zip(names, profiles)):
+            x = left + i * (cw + gap)
+            if prof[cls]['n'] < min_rows:
+                fill, ink, label_c = '#f1f5f9', MUTED, '–'
+                tip = '%s, %s: %s' % (class_name(cls, lang), name, t('g_none', lang))
+            else:
+                share = good_share(prof[cls])
+                fill, ink = _ramp(min(0.999, share))
+                label_c = '%d %%' % round(100 * share)
+                tip = '%s, %s: %s (%d)' % (class_name(cls, lang), name, label_c, prof[cls]['n'])
+                said.append('%s %s' % (name, label_c))
+            body.append('<g><title>%s</title><rect x="%.1f" y="%d" width="%.1f" height="17" rx="2" fill="%s"/>%s</g>' % (
+                esc(tip), x, y, cw, fill, _text(x + cw / 2, y + 12, label_c, 9, ink, 'middle', '600')))
+        desc.append('%s: %s' % (class_name(cls, lang), ', '.join(said)))
+        y += 19
+    return _svg(y, title, '. '.join(desc) + '.', ''.join(body))
+
+
+def ramp_key(lang):
+    steps = ''.join('<span><i style="background:%s"></i>%s</span>' % (c, lab)
+                    for c, lab in zip(RAMP, ('0–19 %', '20–39 %', '40–59 %', '60–79 %', '80–100 %')))
+    return '<div class="cr-key">%s</div>' % steps

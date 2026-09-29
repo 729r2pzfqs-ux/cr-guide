@@ -31,6 +31,8 @@ import os
 import re
 import sys
 
+import class_stats as cs
+import diagrams
 import resistance_data as rd
 from page_i18n import conc_label, material_name, t
 
@@ -171,6 +173,45 @@ def build_rows(code, lang, columns, chems, links, trans):
     return rows, stats, rated_chems
 
 
+FIG_STYLE = ('<style>.cr-fig{margin:0}.cr-fig figcaption{font-size:.8rem;color:#4b5563;line-height:1.5;'
+             'margin-top:.5rem;max-width:520px}.cr-key{display:flex;flex-wrap:wrap;gap:.25rem .9rem;font-size:.78rem;'
+             'color:#374151;margin-top:.5rem}.cr-key i{display:inline-block;width:.7rem;height:.7rem;border-radius:2px;'
+             'margin-right:.3rem;vertical-align:-1px;box-sizing:border-box}.cr-fp{display:grid;'
+             'grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem 2rem;align-items:start}'
+             '.cr-fp dl{margin:0;font-size:.93rem}.cr-fp dt{font-weight:600;color:#111827;margin-top:.7rem}'
+             '.cr-fp dt:first-child{margin-top:0}.cr-fp dd{margin:.1rem 0 0;color:#374151}</style>')
+
+
+def fingerprint_block(code, lang):
+    """The "resistance by chemical class" section of a material page."""
+    profile = cs.material_profile(code)
+    name = material_name(code, lang)
+    diagrams.reset_ids()
+    svg = diagrams.fingerprint(lang, name, profile, cs.class_name, cs.MIN_ROWS)
+    if svg is None:
+        return ''
+    ranked = sorted(((cs.good_share(c), k) for k, c in profile.items()
+                     if k != 'all' and c['n'] >= cs.MIN_ROWS), key=lambda x: (-x[0], x[1]))
+
+    def listing(items):
+        return '; '.join('%s %d %%' % (esc(cs.class_name(k, lang)), round(100 * share))
+                         for share, k in items)
+
+    best, worst = ranked[:3], ranked[-3:][::-1]
+    overall = profile['all']
+    facts = '<dl><dt>%s</dt><dd>%s</dd><dt>%s</dt><dd>%s</dd><dt>%s</dt><dd>%s</dd></dl>' % (
+        esc(t('finger_best', lang)), listing(best), esc(t('finger_worst', lang)), listing(worst),
+        esc(t('fig_overall_h', lang)),
+        ', '.join('%s %d %%' % (g, round(100 * overall[g] / overall['n'])) for g in 'ABCD')
+        + ' (%d)' % overall['n'])
+    fig = diagrams.figure(svg, t('fig_finger_cap', lang, n=cs.MIN_ROWS), diagrams.grade_key(lang, with_none=False))
+    return ('<!-- fingerprint:start -->\n<section class="px-4 py-8 bg-white border-t border-gray-200">%s'
+            '<div class="max-w-5xl mx-auto"><h2 class="text-2xl font-bold text-gray-900 mb-4">%s</h2>'
+            '<div class="cr-fp"><div>%s<p style="font-size:.8rem;color:#4b5563;margin-top:1rem">%s</p></div>%s</div>'
+            '</div></section>\n<!-- fingerprint:end -->\n    ') % (
+        FIG_STYLE, esc(t('fig_finger_h', lang)), facts, esc(t('class_note', lang)), fig)
+
+
 def columns_of(thead):
     cols = []
     for i, th in enumerate(re.findall(r'<th[^>]*>(.*?)</th>', thead, re.S)):
@@ -223,6 +264,13 @@ def patch(path, lang, code, chems, links, trans):
     page = re.sub(r'<script>\s*function filterTable\(\)(?:(?!</script>)[\s\S])*?</script>',
                   lambda _: FILTER_SCRIPT, page)
     page = re.sub(r'\s+onkeyup="filterTable\(\)"', '', page)
+
+    # resistance by chemical class, in front of the search and table section
+    page = re.sub(r'<!-- fingerprint:start -->[\s\S]*?<!-- fingerprint:end -->\s*', '', page)
+    at = page.find('id="searchInput"')
+    at = page.rfind('<section', 0, at) if at > 0 else -1
+    if at > 0:
+        page = page[:at] + fingerprint_block(code, lang) + page[at:]
 
     # "1,650+ chemicals" -> what is really rated for this material
     page = re.sub(r'1[,.\u00a0\u202f ]?65[01]\+', str(rated), page)

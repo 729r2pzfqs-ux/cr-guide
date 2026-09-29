@@ -13,6 +13,7 @@ layer. Do not edit ratings, titles or descriptions in the HTML by hand.
 | `diagrams.py` | Inline SVG diagrams. Rules are in its docstring: no script, hex colours, 320-wide viewBox, title and desc. |
 | `data/chemical_names_en.json` | English name for each German source name. |
 | `data/chemical_pages.json` | Which chemicals have a page, the source row group each page shows, names in six languages, redirects. |
+| `data/chemical_classes.json` | Chemical class of each chemical, assigned by hand. Read through `class_stats.py`. |
 | `data/rating_overrides.json` | Corrected and disputed values, each with a reason and references. |
 | `data/chemicals_burkle_full.json` | OUTPUT for the in-browser tools. Written by `export_frontend_data.py`. |
 
@@ -23,7 +24,8 @@ python3 resistance_data.py          # summary only, checks that overrides apply
 python3 export_frontend_data.py     # data for homepage lookup, compare, charts
 python3 build_chemical_pages.py     # chemical pages, pair pages, chemicals index, About corrections list
 python3 build_material_tables.py    # tables inside the material pages
-python3 build_chart_tables.py       # static rows in chart and comparison pages
+python3 build_chart_tables.py       # static rows and group figures in chart pages
+python3 build_compare_pages.py      # comparison pages (en, de, es) and the compare index
 python3 fix_internal_links.py       # run twice if it reports changes
 python3 noindex_french.py           # keeps French out of the index, see below
 python3 build_sitemap.py            # always last

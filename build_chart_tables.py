@@ -19,7 +19,11 @@ import os
 import re
 import sys
 
+import class_stats as cs
+import diagrams
 import resistance_data as rd
+from build_material_tables import FIG_STYLE
+from page_i18n import material_name, t
 from build_material_tables import load_translations
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -95,6 +99,28 @@ def compare_rows(a, b, lang, chems, trans):
     return out, len(rows)
 
 
+def group_block(mats, lang):
+    """Summary figures of a chart page: overall rating shares per material and,
+    for groups of up to six materials, the share rated A or B by chemical class."""
+    names = [material_name(m, lang) for m in mats]
+    profiles = [cs.material_profile(m) for m in mats]
+    diagrams.reset_ids()
+    figs = diagrams.figure(
+        diagrams.overall_bars(lang, [(n, p['all']) for n, p in zip(names, profiles)], t('fig_overall_h', lang)),
+        t('fig_overall_cap', lang), diagrams.grade_key(lang, with_none=False))
+    figs = '<div><h3 class="font-semibold text-gray-900 mb-2">%s</h3>%s</div>' % (esc(t('fig_overall_h', lang)), figs)
+    if len(mats) <= 6:
+        grid = diagrams.figure(
+            diagrams.class_grid(lang, names, profiles, cs.class_name, cs.MIN_ROWS, cs.good_share,
+                                t('fig_group_h', lang)),
+            t('fig_group_cap', lang, n=cs.MIN_ROWS), diagrams.ramp_key(lang))
+        figs += '<div><h3 class="font-semibold text-gray-900 mb-2">%s</h3>%s</div>' % (esc(t('fig_group_h', lang)), grid)
+    return ('<!-- group-figures:start -->\n<section class="px-4 py-8 bg-white border-t border-gray-200">%s'
+            '<div class="max-w-5xl mx-auto"><div class="cr-fp">%s</div>'
+            '<p style="font-size:.8rem;color:#4b5563;margin-top:1rem">%s</p></div></section>\n'
+            '<!-- group-figures:end -->\n    ') % (FIG_STYLE, figs, esc(t('class_note', lang)))
+
+
 def patch(page, lang, chems, trans):
     total = None
     if 'id="chartTable"' in page:
@@ -103,6 +129,11 @@ def patch(page, lang, chems, trans):
         if not mats:
             return page
         rows, total = chart_rows(mats, lang, chems, trans)
+        page = re.sub(r'<!-- group-figures:start -->[\s\S]*?<!-- group-figures:end -->\s*', '', page)
+        at = page.find('id="searchInput"')
+        at = page.rfind('<section', 0, at) if at > 0 else -1
+        if at > 0:
+            page = page[:at] + group_block(mats, lang) + page[at:]
         page = re.sub(r'(<tbody id="chartTable"[^>]*>)[\s\S]*?(</tbody>)',
                       lambda x: x.group(1) + '\n' + '\n'.join(rows) + '\n' + x.group(2), page, count=1)
     elif 'id="compareTable"' in page:

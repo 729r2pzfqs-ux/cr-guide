@@ -482,6 +482,83 @@ T = {
         'zh': '每个单元格显示 20 °C 下的等级；若 50 °C 下的等级不同，则列于箭头之后。* 表示原始资料中的估计值。'},
     'table_view': {'en': 'Show as a table', 'de': 'Als Tabelle anzeigen', 'es': 'Ver como tabla',
                    'fr': 'Afficher sous forme de tableau', 'pt': 'Ver como tabela', 'zh': '以表格显示'},
+    'fig_finger_h': {
+        'en': 'Resistance by chemical class', 'de': 'Beständigkeit nach Chemikalienklasse',
+        'es': 'Resistencia por clase de producto químico', 'fr': 'Résistance par classe chimique',
+        'pt': 'Resistência por classe química', 'zh': '按化学品类别的耐受性'},
+    'fig_finger_cap': {
+        'en': 'Share of each rating at 20 °C among the source rows of a class. The number in brackets is the number of rated rows; a row is one chemical at one concentration. Classes with fewer than {n} rated rows are left out.',
+        'de': 'Anteil jeder Bewertung bei 20 °C an den Quellzeilen einer Klasse. Die Zahl in Klammern ist die Anzahl der bewerteten Zeilen; eine Zeile ist eine Chemikalie bei einer Konzentration. Klassen mit weniger als {n} bewerteten Zeilen fehlen.',
+        'es': 'Proporción de cada clasificación a 20 °C entre las filas de la fuente de una clase. El número entre paréntesis es el número de filas clasificadas; una fila es un producto químico a una concentración. Se omiten las clases con menos de {n} filas clasificadas.',
+        'fr': 'Part de chaque note à 20 °C parmi les lignes de la source d’une classe. Le nombre entre parenthèses est le nombre de lignes notées ; une ligne est un produit chimique à une concentration. Les classes de moins de {n} lignes notées sont omises.',
+        'pt': 'Proporção de cada classificação a 20 °C entre as linhas da fonte de uma classe. O número entre parênteses é o número de linhas classificadas; uma linha é um produto químico a uma concentração. Classes com menos de {n} linhas classificadas são omitidas.',
+        'zh': '各等级在某类别原始数据行中所占比例（20 °C）。括号内为有等级的行数；一行代表一种化学品的一个浓度。少于 {n} 行的类别未列出。'},
+    'finger_best': {
+        'en': 'Most rows rated A or B', 'de': 'Meiste Zeilen mit Bewertung A oder B',
+        'es': 'Más filas con clasificación A o B', 'fr': 'Le plus de lignes notées A ou B',
+        'pt': 'Mais linhas com classificação A ou B', 'zh': 'A 或 B 级占比最高'},
+    'finger_worst': {
+        'en': 'Fewest rows rated A or B', 'de': 'Wenigste Zeilen mit Bewertung A oder B',
+        'es': 'Menos filas con clasificación A o B', 'fr': 'Le moins de lignes notées A ou B',
+        'pt': 'Menos linhas com classificação A ou B', 'zh': 'A 或 B 级占比最低'},
+    'fig_overlay_h': {
+        'en': 'Share of rows rated A or B, by chemical class',
+        'de': 'Anteil der Zeilen mit Bewertung A oder B, nach Chemikalienklasse',
+        'es': 'Proporción de filas con clasificación A o B, por clase',
+        'fr': 'Part des lignes notées A ou B, par classe chimique',
+        'pt': 'Proporção de linhas com classificação A ou B, por classe',
+        'zh': '各化学品类别中 A 或 B 级的占比'},
+    'fig_grid_h': {
+        'en': 'How often the two ratings agree', 'de': 'Wie oft die beiden Bewertungen übereinstimmen',
+        'es': 'Con qué frecuencia coinciden las dos clasificaciones',
+        'fr': 'Fréquence de concordance des deux notes',
+        'pt': 'Com que frequência as duas classificações coincidem', 'zh': '两种材料等级一致的频率'},
+    'fig_grid_cap': {
+        'en': 'Number of source rows for each pair of ratings at 20 °C. Outlined cells are rows where both materials have the same rating.',
+        'de': 'Anzahl der Quellzeilen für jedes Bewertungspaar bei 20 °C. Umrandete Zellen sind Zeilen, in denen beide Werkstoffe gleich bewertet sind.',
+        'es': 'Número de filas de la fuente para cada par de clasificaciones a 20 °C. Las celdas con borde son filas en las que ambos materiales tienen la misma clasificación.',
+        'fr': 'Nombre de lignes de la source pour chaque paire de notes à 20 °C. Les cellules encadrées sont les lignes où les deux matériaux ont la même note.',
+        'pt': 'Número de linhas da fonte para cada par de classificações a 20 °C. As células com contorno são linhas em que os dois materiais têm a mesma classificação.',
+        'zh': '20 °C 下每种等级组合对应的原始数据行数。带边框的单元格表示两种材料等级相同。'},
+    'fig_overlay_cap': {
+        'en': 'Rating at 20 °C. Only classes with at least {n} rated rows for both materials are shown.',
+        'de': 'Bewertung bei 20 °C. Gezeigt werden nur Klassen mit mindestens {n} bewerteten Zeilen für beide Werkstoffe.',
+        'es': 'Clasificación a 20 °C. Solo se muestran las clases con al menos {n} filas clasificadas para ambos materiales.',
+        'fr': 'Note à 20 °C. Seules les classes comptant au moins {n} lignes notées pour les deux matériaux sont représentées.',
+        'pt': 'Classificação a 20 °C. São mostradas apenas as classes com pelo menos {n} linhas classificadas para ambos os materiais.',
+        'zh': '20 °C 下的等级。仅显示两种材料均至少有 {n} 行有等级的类别。'},
+    'fig_group_h': {
+        'en': 'Share of rows rated A or B, by material and chemical class',
+        'de': 'Anteil der Zeilen mit Bewertung A oder B, nach Werkstoff und Chemikalienklasse',
+        'es': 'Proporción de filas con clasificación A o B, por material y clase',
+        'fr': 'Part des lignes notées A ou B, par matériau et classe chimique',
+        'pt': 'Proporção de linhas com classificação A ou B, por material e classe',
+        'zh': '按材料和化学品类别列出的 A 或 B 级占比'},
+    'fig_overall_h': {
+        'en': 'All rated rows, by rating', 'de': 'Alle bewerteten Zeilen, nach Bewertung',
+        'es': 'Todas las filas clasificadas, por clasificación', 'fr': 'Toutes les lignes notées, par note',
+        'pt': 'Todas as linhas classificadas, por classificação', 'zh': '全部有等级的数据行（按等级）'},
+    'fig_overall_cap': {
+        'en': 'Share of each rating at 20 °C. The number in brackets is the number of rated source rows.',
+        'de': 'Anteil jeder Bewertung bei 20 °C. Die Zahl in Klammern ist die Anzahl der bewerteten Quellzeilen.',
+        'es': 'Proporción de cada clasificación a 20 °C. El número entre paréntesis es el número de filas clasificadas de la fuente.',
+        'fr': 'Part de chaque note à 20 °C. Le nombre entre parenthèses est le nombre de lignes notées de la source.',
+        'pt': 'Proporção de cada classificação a 20 °C. O número entre parênteses é o número de linhas classificadas da fonte.',
+        'zh': '20 °C 下各等级所占比例。括号内为有等级的原始数据行数。'},
+    'class_note': {
+        'en': 'Chemical classes were assigned by this site, not by the source. Mixtures and trade products without a clear class are not counted.',
+        'de': 'Die Chemikalienklassen wurden von dieser Website zugeordnet, nicht von der Quelle. Gemische und Handelsprodukte ohne eindeutige Klasse werden nicht gezählt.',
+        'es': 'Las clases químicas fueron asignadas por este sitio, no por la fuente. Las mezclas y los productos comerciales sin una clase clara no se cuentan.',
+        'fr': 'Les classes chimiques ont été attribuées par ce site, non par la source. Les mélanges et produits commerciaux sans classe claire ne sont pas comptés.',
+        'pt': 'As classes químicas foram atribuídas por este site, não pela fonte. Misturas e produtos comerciais sem classe clara não são contados.',
+        'zh': '化学品类别由本站划分，并非来自原始资料。无法明确归类的混合物和商品未计入。'},
+    'fig_group_cap': {
+        'en': 'Rating at 20 °C. A dash means fewer than {n} rated rows in that class.',
+        'de': 'Bewertung bei 20 °C. Ein Strich bedeutet weniger als {n} bewertete Zeilen in dieser Klasse.',
+        'es': 'Clasificación a 20 °C. Un guion indica menos de {n} filas clasificadas en esa clase.',
+        'fr': 'Note à 20 °C. Un tiret signifie moins de {n} lignes notées dans cette classe.',
+        'pt': 'Classificação a 20 °C. Um traço indica menos de {n} linhas classificadas nessa classe.',
+        'zh': '20 °C 下的等级。短横线表示该类别中有等级的数据行少于 {n} 行。'},
     'list_sep': {'en': ', ', 'de': ', ', 'es': ', ', 'fr': ', ', 'pt': ', ', 'zh': '、'},
 }
 
@@ -517,3 +594,102 @@ MATERIAL_NOTES_EN = {
 def t(key, lang, **kw):
     s = T[key][lang]
     return s.format(**kw) if kw else s
+
+
+MATERIAL_FULL_I18N = {
+    'de': {
+        'HDPE': 'Polyethylen hoher Dichte', 'LDPE': 'Polyethylen niedriger Dichte', 'PP': 'Polypropylen',
+        'PVC_HART': 'Hart-PVC (weichmacherfreies Polyvinylchlorid)',
+        'PVC_WEICH': 'Weich-PVC (weichmacherhaltiges Polyvinylchlorid)',
+        'PMP': 'Polymethylpenten (TPX)', 'PS': 'Polystyrol', 'SAN': 'Styrol-Acrylnitril',
+        'PC': 'Polycarbonat', 'PETG': 'Polyethylenterephthalat-Glykol (Co-Polyester)',
+        'POM': 'Polyoxymethylen (Acetal)', 'PA': 'Polyamid (Nylon)', 'PSU': 'Polysulfon',
+        'PTFE': 'Polytetrafluorethylen', 'FEP': 'Tetrafluorethylen-Perfluorpropylen',
+        'PVDF': 'Polyvinylidenfluorid',
+        'ECTFE_ETFE': 'Ethylen-Chlortrifluorethylen / Ethylen-Tetrafluorethylen',
+        'EPDM': 'Ethylen-Propylen-Dien-Kautschuk', 'FPM': 'Fluorkautschuk (FKM/FPM)',
+        'NBR': 'Nitril-Butadien-Kautschuk', 'SI': 'Silikonkautschuk',
+        'V4A': 'Edelstahl 1.4401 (AISI 316)', 'V2A': 'Edelstahl 1.4301 (AISI 304)', 'AL': 'Aluminium',
+    },
+    'es': {
+        'HDPE': 'Polietileno de alta densidad', 'LDPE': 'Polietileno de baja densidad',
+        'PP': 'Polipropileno', 'PVC_HART': 'PVC rígido (policloruro de vinilo sin plastificante)',
+        'PVC_WEICH': 'PVC flexible (policloruro de vinilo plastificado)',
+        'PMP': 'Polimetilpenteno (TPX)', 'PS': 'Poliestireno', 'SAN': 'Estireno-acrilonitrilo',
+        'PC': 'Policarbonato', 'PETG': 'Tereftalato de polietileno glicol (copoliéster)',
+        'POM': 'Polioximetileno (acetal)', 'PA': 'Poliamida (nailon)', 'PSU': 'Polisulfona',
+        'PTFE': 'Politetrafluoroetileno', 'FEP': 'Etileno propileno fluorado',
+        'PVDF': 'Fluoruro de polivinilideno',
+        'ECTFE_ETFE': 'Etileno-clorotrifluoroetileno / etileno-tetrafluoroetileno',
+        'EPDM': 'Caucho de etileno-propileno-dieno', 'FPM': 'Fluoroelastómero (FKM/FPM)',
+        'NBR': 'Caucho de nitrilo-butadieno', 'SI': 'Caucho de silicona',
+        'V4A': 'Acero inoxidable 1.4401 (AISI 316)', 'V2A': 'Acero inoxidable 1.4301 (AISI 304)',
+        'AL': 'Aluminio',
+    },
+}
+
+
+def material_full(code, lang):
+    return MATERIAL_FULL_I18N.get(lang, {}).get(code, MATERIAL_FULL[code])
+
+
+MATERIAL_NOTES = {
+    'en': MATERIAL_NOTES_EN,
+    'de': {
+        'HDPE': 'Polyethylen hoher Dichte ist gegen die meisten wässrigen Säuren, Laugen und Salzlösungen beständig. Stark oxidierende Säuren, chlorierte Lösungsmittel und aromatische Kohlenwasserstoffe greifen es an oder lassen es quellen. Die Dauergebrauchstemperatur liegt meist bei etwa 80 °C.',
+        'LDPE': 'Polyethylen niedriger Dichte verhält sich ähnlich wie HDPE, ist aber weicher und durchlässiger, sodass Lösungsmittel es früher quellen lassen. Die Dauergebrauchstemperatur liegt meist bei etwa 60 °C.',
+        'PP': 'Polypropylen ist gegen die meisten Säuren, Laugen und Salzlösungen beständig. Konzentrierte oxidierende Säuren, chlorierte Lösungsmittel und aromatische Kohlenwasserstoffe greifen es an; unter etwa 0 °C wird es spröde.',
+        'PVC_HART': 'Hart-PVC ist gegen Säuren, Laugen und Salzlösungen gut beständig. Ketone, Ester sowie aromatische und chlorierte Lösungsmittel lösen es an oder lassen es quellen. Die Gebrauchstemperatur ist auf etwa 60 °C begrenzt.',
+        'PVC_WEICH': 'Weich-PVC hat die gleichen Schwächen gegenüber Lösungsmitteln wie Hart-PVC; zusätzlich verhärtet es, wenn eine Flüssigkeit den Weichmacher herauslöst. Es ist insgesamt weniger beständig als Hart-PVC.',
+        'PMP': 'Polymethylpenten (TPX) ist ein transparentes Polyolefin für Laborgeräte. Es ist gegen viele Säuren und Laugen beständig; aromatische und chlorierte Lösungsmittel sowie starke Oxidationsmittel greifen es an.',
+        'PS': 'Polystyrol wird von den meisten organischen Lösungsmitteln angegriffen, darunter Ketone, Ester sowie aromatische und chlorierte Kohlenwasserstoffe. Es wird für verdünnte wässrige Lösungen eingesetzt.',
+        'SAN': 'Styrol-Acrylnitril ist gegen Öle und verdünnte Säuren beständiger als Polystyrol; Ketone, Ester sowie aromatische und chlorierte Lösungsmittel greifen es dennoch an.',
+        'PC': 'Polycarbonat wird von Laugen, Aminen, Ketonen, Estern und vielen organischen Lösungsmitteln angegriffen und neigt im Kontakt damit unter Last zu Spannungsrissen.',
+        'PETG': 'PETG ist ein Co-Polyester für transparente Behälter. Starke Säuren und Laugen sowie die meisten organischen Lösungsmittel greifen es an.',
+        'POM': 'POM (Acetal) ist gegen viele organische Lösungsmittel und Kraftstoffe beständig. Starke Säuren und Oxidationsmittel bauen es ab.',
+        'PA': 'Polyamid (Nylon) ist gegen Kraftstoffe, Öle und viele Lösungsmittel beständig. Mineralsäuren, auch verdünnte, und starke Oxidationsmittel greifen es an; außerdem nimmt es Wasser auf.',
+        'PSU': 'Polysulfon hält heißem Wasser und Dampf stand. Ketone, Ester sowie chlorierte und aromatische Lösungsmittel greifen es an.',
+        'PTFE': 'PTFE ist gegen nahezu alle Chemikalien dieser Liste beständig. Bekannte Ausnahmen sind geschmolzene Alkalimetalle, elementares Fluor und einige Fluorierungsmittel bei erhöhter Temperatur.',
+        'FEP': 'FEP erreicht nahezu die chemische Beständigkeit von PTFE und lässt sich aus der Schmelze verarbeiten. Seine Gebrauchstemperatur von etwa 200 °C liegt unter der von PTFE.',
+        'PVDF': 'PVDF ist gegen Säuren, Halogene und Kohlenwasserstoffe beständig. Starke Basen, Amine, Ketone und Ester greifen es an. Die Gebrauchstemperatur reicht bis etwa 150 °C.',
+        'ECTFE_ETFE': 'ECTFE und ETFE sind zähe Fluorkunststoffe mit breiter Beständigkeit. Ihre Grenzen liegen vor allem bei heißen Aminen und einigen chlorierten Lösungsmitteln bei erhöhter Temperatur.',
+        'EPDM': 'EPDM ist gegen Wasser, Dampf, Laugen, Ketone und Alkohole beständig. Mineralöle, Kraftstoffe und aromatische Lösungsmittel lassen es stark quellen.',
+        'FPM': 'Fluorkautschuk (Viton, FKM/FPM) ist gegen Kraftstoffe, Öle und viele Säuren beständig. Ketone, Ester, Amine sowie heißes Wasser und Dampf greifen ihn an.',
+        'NBR': 'Nitrilkautschuk ist gegen Mineralöle und Kraftstoffe beständig. Ketone, Ester, chlorierte Lösungsmittel, starke Oxidationsmittel und Ozon greifen ihn an.',
+        'SI': 'Silikonkautschuk bleibt über einen weiten Temperaturbereich elastisch. Konzentrierte Säuren und Laugen sowie Kohlenwasserstoff-Lösungsmittel greifen ihn an oder lassen ihn quellen.',
+        'V4A': 'Edelstahl 316 (1.4401) enthält Molybdän, das die Beständigkeit gegen Chloride gegenüber 304 verbessert. Salzsäure und andere Halogenwasserstoffsäuren verursachen dennoch Lochfraß.',
+        'V2A': 'Edelstahl 304 (1.4301) ist gegen oxidierende Säuren und die meisten organischen Chemikalien beständig. Chloride verursachen Lochfraß und Spannungsrisskorrosion.',
+        'AL': 'Aluminium ist durch eine dünne Oxidschicht geschützt. Starke Säuren, starke Laugen und Quecksilberverbindungen zerstören diese Schicht.',
+    },
+    'es': {
+        'HDPE': 'El polietileno de alta densidad resiste la mayoría de los ácidos, álcalis y soluciones salinas en medio acuoso. Los ácidos oxidantes fuertes, los disolventes clorados y los hidrocarburos aromáticos lo atacan o lo hinchan. El servicio continuo suele limitarse a unos 80 °C.',
+        'LDPE': 'El polietileno de baja densidad se comporta de forma parecida al HDPE, pero es más blando y permeable, por lo que los disolventes lo hinchan antes. El servicio continuo suele limitarse a unos 60 °C.',
+        'PP': 'El polipropileno resiste la mayoría de los ácidos, álcalis y soluciones salinas. Los ácidos oxidantes concentrados, los disolventes clorados y los hidrocarburos aromáticos lo atacan, y se vuelve frágil por debajo de unos 0 °C.',
+        'PVC_HART': 'El PVC rígido resiste bien los ácidos, álcalis y soluciones salinas. Las cetonas, los ésteres y los disolventes aromáticos y clorados lo disuelven o lo hinchan. La temperatura de servicio se limita a unos 60 °C.',
+        'PVC_WEICH': 'El PVC flexible comparte las debilidades del PVC rígido frente a los disolventes, y además se endurece cuando un líquido extrae el plastificante. En general es menos resistente que el PVC rígido.',
+        'PMP': 'El polimetilpenteno (TPX) es una poliolefina transparente usada en material de laboratorio. Resiste muchos ácidos y álcalis; los disolventes aromáticos y clorados y los oxidantes fuertes lo atacan.',
+        'PS': 'El poliestireno es atacado por la mayoría de los disolventes orgánicos, entre ellos cetonas, ésteres e hidrocarburos aromáticos y clorados. Se usa con soluciones acuosas diluidas.',
+        'SAN': 'El estireno-acrilonitrilo resiste los aceites y los ácidos diluidos mejor que el poliestireno, pero las cetonas, los ésteres y los disolventes aromáticos y clorados también lo atacan.',
+        'PC': 'El policarbonato es atacado por álcalis, aminas, cetonas, ésteres y muchos disolventes orgánicos, y en contacto con ellos se agrieta por tensión bajo carga.',
+        'PETG': 'El PETG es un copoliéster para envases transparentes. Los ácidos y álcalis fuertes y la mayoría de los disolventes orgánicos lo atacan.',
+        'POM': 'El acetal (POM) resiste muchos disolventes orgánicos y combustibles. Los ácidos fuertes y los agentes oxidantes lo degradan.',
+        'PA': 'La poliamida (nailon) resiste combustibles, aceites y muchos disolventes. Los ácidos minerales, incluso diluidos, y los oxidantes fuertes la atacan, y además absorbe agua.',
+        'PSU': 'La polisulfona soporta agua caliente y vapor. Las cetonas, los ésteres y los disolventes clorados y aromáticos la atacan.',
+        'PTFE': 'El PTFE resiste casi todos los productos químicos de esta lista. Las excepciones conocidas son los metales alcalinos fundidos, el flúor elemental y algunos agentes fluorantes a temperatura elevada.',
+        'FEP': 'El FEP tiene casi la resistencia química del PTFE y puede procesarse por fusión. Su temperatura de servicio, unos 200 °C, es inferior a la del PTFE.',
+        'PVDF': 'El PVDF resiste ácidos, halógenos e hidrocarburos. Las bases fuertes, las aminas, las cetonas y los ésteres lo atacan. La temperatura de servicio llega a unos 150 °C.',
+        'ECTFE_ETFE': 'El ECTFE y el ETFE son fluoropolímeros tenaces de resistencia amplia. Sus límites principales son las aminas calientes y algunos disolventes clorados a temperatura elevada.',
+        'EPDM': 'El EPDM resiste agua, vapor, álcalis, cetonas y alcoholes. Los aceites minerales, los combustibles y los disolventes aromáticos lo hinchan intensamente.',
+        'FPM': 'El fluoroelastómero (Viton, FKM/FPM) resiste combustibles, aceites y muchos ácidos. Las cetonas, los ésteres, las aminas y el agua caliente o el vapor lo atacan.',
+        'NBR': 'El caucho de nitrilo resiste aceites minerales y combustibles. Las cetonas, los ésteres, los disolventes clorados, los oxidantes fuertes y el ozono lo atacan.',
+        'SI': 'El caucho de silicona conserva su flexibilidad en un amplio intervalo de temperaturas. Los ácidos y álcalis concentrados y los disolventes de hidrocarburos lo atacan o lo hinchan.',
+        'V4A': 'El acero inoxidable 316 (1.4401) contiene molibdeno, que mejora la resistencia a los cloruros respecto al 304. El ácido clorhídrico y otros ácidos halogenados siguen causando picaduras.',
+        'V2A': 'El acero inoxidable 304 (1.4301) resiste los ácidos oxidantes y la mayoría de los productos químicos orgánicos. Los cloruros causan picaduras y corrosión bajo tensión.',
+        'AL': 'El aluminio depende de una fina capa de óxido. Los ácidos fuertes, los álcalis fuertes y los compuestos de mercurio destruyen esa capa.',
+    },
+}
+
+
+def material_note(code, lang):
+    """Note on a material, or None where it has not been translated."""
+    return MATERIAL_NOTES.get(lang, {}).get(code)
