@@ -32,6 +32,7 @@ import sys
 from collections import OrderedDict
 
 import analytics_head
+import diagrams
 import resistance_data as rd
 from redirect_stub import stub
 from page_i18n import (INDEXED_LANGS, LANGS, MATERIAL_FULL, MATERIAL_NOTES_EN, conc_label,
@@ -39,7 +40,7 @@ from page_i18n import (INDEXED_LANGS, LANGS, MATERIAL_FULL, MATERIAL_NOTES_EN, c
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://chemicalresistance.org'
-CONTENT_UPDATED = '2026-09-28'
+CONTENT_UPDATED = '2026-09-29'
 
 # Pair pages that have a rating: hidden from Google only, so the other search
 # engines that send the site its traffic keep them. Set to
@@ -69,7 +70,7 @@ STYLE = '''<style>
 .cr-tbl tbody th{font-weight:500;color:#111827}
 .cr-tbl tr.me th,.cr-tbl tr.me td{background:#f0fdf4}
 .g{display:inline-block;min-width:2rem;padding:.15rem .45rem;border-radius:.375rem;font-weight:700;text-align:center;color:#fff}
-.gA{background:#15803d}.gB{background:#1d4ed8}.gC{background:#b45309}.gD{background:#b91c1c}
+.gA{background:#15803d}.gB{background:#1d4ed8}.gC{background:#d97706;color:#111827}.gD{background:#b91c1c}
 .gN{background:#e5e7eb;color:#4b5563;font-weight:500}
 .fl{font-size:.75rem;color:#4b5563}
 .cr-facts{display:grid;grid-template-columns:minmax(8rem,max-content) 1fr;gap:.4rem 1rem;font-size:.9rem;margin:0}
@@ -82,6 +83,13 @@ STYLE = '''<style>
 .cr-legend{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;font-size:.85rem;color:#374151;margin:0 0 .75rem;padding:0;list-style:none}
 .cr-links{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;font-size:.95rem}
 .cr-crumb a{text-decoration:underline}
+.cr-figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem 2rem;align-items:start}
+.cr-fig{margin:0}
+.cr-fig h3{font-size:1rem;font-weight:600;color:#111827;margin:0 0 .6rem}
+.cr-fig figcaption{font-size:.8rem;color:#4b5563;line-height:1.5;margin-top:.5rem;max-width:520px}
+.cr-key{display:flex;flex-wrap:wrap;gap:.25rem .9rem;font-size:.78rem;color:#374151;margin-top:.5rem}
+.cr-key i{display:inline-block;width:.7rem;height:.7rem;border-radius:2px;margin-right:.3rem;vertical-align:-1px;box-sizing:border-box}
+.cr-tbl td.d{white-space:nowrap}
 .cr-noads .google-auto-placed,.cr-noads ins.adsbygoogle,#compat-table-zone .google-auto-placed,#compat-table-zone ins.adsbygoogle{display:none!important}
 </style>'''
 
@@ -374,6 +382,24 @@ def glance(lang, slug, chem, pv):
         esc(t('glance', lang)), esc(basis), body)
 
 
+def figures(lang, name, chem, pv):
+    """Rating profile and temperature shift for the row the summary is based on."""
+    basis = ''
+    if len(chem['variants']) > 1 or pv['conc']:
+        basis = '<p class="cr-sub">%s</p>' % esc(t('glance_basis', lang, conc=variant_label(pv, lang)))
+    profile = ('<div class="cr-fig"><h3>%s</h3>%s</div>' % (
+        esc(t('fig_profile_h', lang)),
+        diagrams.figure(diagrams.profile_bars(lang, name, pv), t('fig_profile_cap', lang),
+                        diagrams.grade_key(lang))))
+    shift = diagrams.temperature_shift(lang, name, pv)
+    if shift:
+        temp = diagrams.figure(shift, t('fig_temp_cap', lang), diagrams.temperature_key(lang))
+    else:
+        temp = '<p class="cr-sub">%s</p>' % esc(t('fig_temp_none', lang))
+    temp = '<div class="cr-fig"><h3>%s</h3>%s</div>' % (esc(t('fig_temp_h', lang)), temp)
+    return '<section class="cr-card">%s<div class="cr-figs">%s%s</div></section>' % (basis, profile, temp)
+
+
 def facts(lang, chem, name):
     rows = []
     if chem['cas']:
@@ -424,7 +450,7 @@ def matrix(lang, slug, chem):
                     mark = '<span class="fl">*</span>' if r.get('est') else ''
                     cells += '<td class="c">%s%s</td>' % (grade_span(r['c20'], r['w20']), mark)
             body += '<tr><th scope="row"><a href="%s">%s</a></th>%s</tr>' % (
-                pair_url(lang, slug, m), esc(material_name(m, lang)), cells)
+                material_url(lang, m), esc(material_name(m, lang)), cells)
     return ('<section class="cr-card cr-noads"><h2>%s</h2><div class="cr-scroll"><table class="cr-tbl">'
             '<thead><tr><th scope="col">%s</th>%s</tr></thead><tbody>%s</tbody></table></div>'
             '<p class="cr-sub">* %s</p></section>') % (
@@ -439,7 +465,7 @@ def variant_table(lang, slug, name, chem, v, index, first):
             if mfam != fam:
                 continue
             body += '<tr><th scope="row"><a href="%s">%s</a></th>%s</tr>' % (
-                pair_url(lang, slug, m), esc(material_name(m, lang)),
+                material_url(lang, m), esc(material_name(m, lang)),
                 rating_cells(v['ratings'].get(m), lang))
     title = t('table_h', lang)
     if len(chem['variants']) > 1 or v['conc']:
@@ -522,7 +548,9 @@ def chemical_page(lang, slug, page, chem, chrome, similar, pages):
 ''' % (home_url(lang), esc(t('home', lang)), chem_base(lang), esc(t('chemicals', lang)), esc(name),
        esc(t('h1_chem', lang, chem=name)), esc(lead)))
 
+    diagrams.reset_ids()
     out.append(glance(lang, slug, chem, pv))
+    out.append(figures(lang, name, chem, pv))
     out.append(facts(lang, chem, name))
     if len(chem['variants']) > 1:
         out.append(matrix(lang, slug, chem))

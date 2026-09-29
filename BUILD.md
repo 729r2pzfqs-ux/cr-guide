@@ -10,6 +10,7 @@ layer. Do not edit ratings, titles or descriptions in the HTML by hand.
 |---|---|
 | `data/Beständigkeitsliste Bürkle.xlsx` | The source. Never edited. |
 | `resistance_data.py` | Reads the spreadsheet: concentration, estimates `( )`, pitting `L`, `K`, synonym rows. |
+| `diagrams.py` | Inline SVG diagrams. Rules are in its docstring: no script, hex colours, 320-wide viewBox, title and desc. |
 | `data/chemical_names_en.json` | English name for each German source name. |
 | `data/chemical_pages.json` | Which chemicals have a page, the source row group each page shows, names in six languages, redirects. |
 | `data/rating_overrides.json` | Corrected and disputed values, each with a reason and references. |

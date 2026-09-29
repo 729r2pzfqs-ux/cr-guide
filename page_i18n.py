@@ -433,6 +433,42 @@ T = {
                        'pt': 'materiais', 'zh': '种材料'},
     'rated': {'en': 'Rated {g}', 'de': 'Bewertung {g}', 'es': 'Clasificación {g}', 'fr': 'Note {g}',
               'pt': 'Classificação {g}', 'zh': '{g} 级'},
+    'fig_profile_h': {
+        'en': 'Rating profile by material family', 'de': 'Bewertungsprofil nach Werkstoffgruppe',
+        'es': 'Perfil de clasificación por familia de materiales',
+        'fr': 'Profil de notation par famille de matériaux',
+        'pt': 'Perfil de classificação por família de materiais', 'zh': '按材料类别的等级分布'},
+    'fig_profile_cap': {
+        'en': 'Number of materials in each family with each rating at 20 °C.',
+        'de': 'Anzahl der Werkstoffe je Gruppe mit der jeweiligen Bewertung bei 20 °C.',
+        'es': 'Número de materiales de cada familia con cada clasificación a 20 °C.',
+        'fr': 'Nombre de matériaux de chaque famille pour chaque note à 20 °C.',
+        'pt': 'Número de materiais de cada família com cada classificação a 20 °C.',
+        'zh': '各类别中在 20 °C 下处于各等级的材料数量。'},
+    'fig_temp_h': {
+        'en': 'Effect of temperature, 20 °C to 50 °C', 'de': 'Einfluss der Temperatur, 20 °C bis 50 °C',
+        'es': 'Efecto de la temperatura, de 20 °C a 50 °C',
+        'fr': 'Effet de la température, de 20 °C à 50 °C',
+        'pt': 'Efeito da temperatura, de 20 °C a 50 °C', 'zh': '温度的影响：20 °C 至 50 °C'},
+    'fig_temp_cap': {
+        'en': 'Materials whose rating differs between 20 °C and 50 °C. Materials not shown keep their rating or have no 50 °C value.',
+        'de': 'Werkstoffe, deren Bewertung sich zwischen 20 °C und 50 °C unterscheidet. Nicht gezeigte Werkstoffe behalten ihre Bewertung oder haben keinen Wert für 50 °C.',
+        'es': 'Materiales cuya clasificación difiere entre 20 °C y 50 °C. Los materiales no mostrados mantienen su clasificación o no tienen valor a 50 °C.',
+        'fr': 'Matériaux dont la note diffère entre 20 °C et 50 °C. Les matériaux non représentés conservent leur note ou n’ont pas de valeur à 50 °C.',
+        'pt': 'Materiais cuja classificação difere entre 20 °C e 50 °C. Os materiais não mostrados mantêm a classificação ou não têm valor a 50 °C.',
+        'zh': '在 20 °C 与 50 °C 之间等级不同的材料。未显示的材料等级不变，或没有 50 °C 的数值。'},
+    'fig_temp_none': {
+        'en': 'No material with a rating at both temperatures changes grade between 20 °C and 50 °C.',
+        'de': 'Kein Werkstoff mit Bewertungen für beide Temperaturen ändert seine Bewertung zwischen 20 °C und 50 °C.',
+        'es': 'Ningún material con clasificación a ambas temperaturas cambia de grado entre 20 °C y 50 °C.',
+        'fr': 'Aucun matériau noté aux deux températures ne change de note entre 20 °C et 50 °C.',
+        'pt': 'Nenhum material com classificação nas duas temperaturas muda de grau entre 20 °C e 50 °C.',
+        'zh': '在两个温度下均有等级的材料中，没有材料在 20 °C 与 50 °C 之间发生等级变化。'},
+    'material_page': {
+        'en': 'material page', 'de': 'Werkstoffseite', 'es': 'página del material',
+        'fr': 'page du matériau', 'pt': 'página do material', 'zh': '材料页面'},
+    'details': {'en': 'details', 'de': 'Details', 'es': 'detalles', 'fr': 'détails', 'pt': 'detalhes',
+                'zh': '详情'},
     'list_sep': {'en': ', ', 'de': ', ', 'es': ', ', 'fr': ', ', 'pt': ', ', 'zh': '、'},
 }
 
