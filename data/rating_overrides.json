@@ -1,5 +1,5 @@
 {
- "_comment": "Departures from the Buerkle spreadsheet. kind \"corrected\" replaces the source value with \"value\" (same notation as the spreadsheet); kind \"disputed\" leaves the source value and flags it. Add an entry only when at least two independent published sources disagree with the source in the unsafe direction, and give the references. conc is the German concentration text of the row, or * for every row of the chemical.",
+ "_comment": "Departures from the Buerkle spreadsheet. kind \"corrected\" replaces the source value with \"value\" (same notation as the spreadsheet); kind \"disputed\" leaves the source value and flags it. Add an entry only when at least two independent published sources disagree with the source in the unsafe direction, and give the references. conc is the German concentration text of the row, or * for every row of the chemical. reason_de and reason_es are the translations shown on the German and Spanish pages.",
  "checked": "2026-09-28",
  "overrides": [
   {
@@ -15,7 +15,9 @@
     "https://page.arkema.com/rs/253-HSZ-754/images/kynar-pvdf-chemical-resistance-chart.pdf",
     "https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf",
     "https://www.astisensor.com/KYNAR_PVDF_Chemical_Compatibility_Resistance_Chart.pdf"
-   ]
+   ],
+   "reason_de": "Der Rohstoffhersteller führt PVDF-Homopolymer für Natronlauge in jeder Konzentration als nicht empfohlen, und zwei weitere Tabellen bewerten es mit D. Die Quelle bewertet es mit A bis C, überwiegend als Schätzwert.",
+   "reason_es": "El fabricante de la resina indica que el homopolímero de PVDF no se recomienda para el hidróxido de sodio a ninguna concentración, y otras dos tablas lo clasifican como D. La fuente lo clasifica de A a C, en su mayoría como estimación."
   },
   {
    "chemical_de": "Salzwasser, Meerwasser",
@@ -30,7 +32,9 @@
     "https://www.assda.asn.au/blog/340-common-misconceptions-about-stainless-steel",
     "https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf",
     "https://www.cplabsafety.com/stainless-steel-chemical-compatibility-chart/"
-   ]
+   ],
+   "reason_de": "Edelstahl 304 neigt in Meerwasser zu Lochfraß. Der australische Edelstahlverband ASSDA beschränkt ihn auf Beschläge, die regelmäßig mit Süßwasser gespült werden, und zwei Tabellen bewerten ihn mit C. Die Quelle bewertet ihn bei 20 °C mit A.",
+   "reason_es": "El acero inoxidable 304 sufre picaduras en agua de mar. La asociación australiana del acero inoxidable (ASSDA) lo limita a herrajes que se lavan regularmente con agua dulce, y dos tablas lo clasifican como C. La fuente lo clasifica como A a 20 °C."
   },
   {
    "chemical_de": "Salzwasser, Meerwasser",
@@ -44,7 +48,9 @@
    "refs": [
     "https://www.assda.asn.au/blog/340-common-misconceptions-about-stainless-steel",
     "https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf"
-   ]
+   ],
+   "reason_de": "Edelstahl 316 unterliegt in Meerwasser oberhalb von etwa 10 bis 15 °C der Spaltkorrosion. Die Quelle bewertet ihn bei 20 °C mit A.",
+   "reason_es": "El acero inoxidable 316 sufre corrosión en resquicios en agua de mar por encima de unos 10 a 15 °C. La fuente lo clasifica como A a 20 °C."
   },
   {
    "chemical_de": "Schwefelsäure",
@@ -58,7 +64,9 @@
    "refs": [
     "https://bssa.org.uk/bssa_articles/selection-of-stainless-steels-for-handling-sulphuric-acid-h2so4/",
     "https://www.cplabsafety.com/stainless-steel-chemical-compatibility-chart/"
-   ]
+   ],
+   "reason_de": "Der britische Edelstahlverband BSSA begrenzt 304 bei Raumtemperatur auf etwa 5 % Schwefelsäure; mittlere Konzentrationen greifen ihn rasch an. Die Quelle bewertet ihn mit B.",
+   "reason_es": "La asociación británica del acero inoxidable (BSSA) limita el 304 a un 5 % de ácido sulfúrico a temperatura ambiente; las concentraciones intermedias lo corroen rápidamente. La fuente lo clasifica como B."
   },
   {
    "chemical_de": "Schwefelsäure",
@@ -73,7 +81,9 @@
    "refs": [
     "https://bssa.org.uk/bssa_articles/selection-of-stainless-steels-for-handling-sulphuric-acid-h2so4/",
     "https://www.cplabsafety.com/stainless-steel-chemical-compatibility-chart/"
-   ]
+   ],
+   "reason_de": "Weder 304 noch 316 ist gegen Schwefelsäure mittlerer Konzentration beständig: Der britische Edelstahlverband BSSA begrenzt 304 bei Raumtemperatur auf etwa 5 % und 316 auf etwa 22 %. Die Quelle bewertet beide mit B.",
+   "reason_es": "Ni el 304 ni el 316 resisten el ácido sulfúrico de concentración intermedia: la asociación británica del acero inoxidable (BSSA) limita el 304 a un 5 % y el 316 a un 22 % a temperatura ambiente. La fuente clasifica ambos como B."
   },
   {
    "chemical_de": "Schwefelsäure",
@@ -88,7 +98,9 @@
    "refs": [
     "https://bssa.org.uk/bssa_articles/selection-of-stainless-steels-for-handling-sulphuric-acid-h2so4/",
     "https://www.cplabsafety.com/stainless-steel-chemical-compatibility-chart/"
-   ]
+   ],
+   "reason_de": "Weder 304 noch 316 ist gegen Schwefelsäure mittlerer Konzentration beständig: Der britische Edelstahlverband BSSA begrenzt 304 bei Raumtemperatur auf etwa 5 % und 316 auf etwa 22 %. Die Quelle bewertet beide mit B.",
+   "reason_es": "Ni el 304 ni el 316 resisten el ácido sulfúrico de concentración intermedia: la asociación británica del acero inoxidable (BSSA) limita el 304 a un 5 % y el 316 a un 22 % a temperatura ambiente. La fuente clasifica ambos como B."
   },
   {
    "chemical_de": "Methylethylketon (MEK)",
@@ -102,7 +114,9 @@
     "https://www.astisensor.com/HDPE_Chemical_Compatibility_Resistance_Chart.pdf",
     "https://www.professionalplastics.com/professionalplastics/HDPE-LDPEChemicalResistanceChart.pdf",
     "https://www.kingplastic.com/wp-content/uploads/2014/05/HDPE_CRCWB.pdf"
-   ]
+   ],
+   "reason_de": "Der HDPE-Leitfaden von INEOS bewertet Methylethylketon als ungeeignet, und zwei Tabellen bewerten es mit D oder als nicht für den Dauereinsatz empfohlen; eine Tabelle bewertet es als beständig.",
+   "reason_es": "La guía de HDPE de INEOS considera insatisfactoria la metiletilcetona, y dos tablas la clasifican como D o no recomendada para uso continuo; una tabla la considera resistente."
   },
   {
    "chemical_de": "Aceton",
@@ -116,7 +130,9 @@
     "https://www.astisensor.com/HDPE_Chemical_Compatibility_Resistance_Chart.pdf",
     "https://www.professionalplastics.com/professionalplastics/HDPE-LDPEChemicalResistanceChart.pdf",
     "https://documents.thermofisher.com/TFS-Assets/LCD/Specification-Sheets/D20480.pdf"
-   ]
+   ],
+   "reason_de": "Die veröffentlichten Tabellen sind uneinheitlich: Zwei bewerten Aceton auf HDPE mit D oder als nicht für den Dauereinsatz empfohlen, der HDPE-Leitfaden von INEOS dagegen als geeignet.",
+   "reason_es": "Las tablas publicadas no coinciden: dos clasifican la acetona como D o no recomendada para uso continuo con HDPE, mientras que la guía de HDPE de INEOS la considera satisfactoria."
   },
   {
    "chemical_de": "Isobutylmethylketon",
@@ -129,7 +145,9 @@
    "refs": [
     "https://www.astisensor.com/HDPE_Chemical_Compatibility_Resistance_Chart.pdf",
     "https://documents.thermofisher.com/TFS-Assets/LCD/Specification-Sheets/D20480.pdf"
-   ]
+   ],
+   "reason_de": "Eine Tabelle bewertet Methylisobutylketon auf HDPE mit D, die Nalgene-Tabelle mit „mäßig“.",
+   "reason_es": "Una tabla clasifica la metilisobutilcetona como D con HDPE y la tabla de Nalgene como «regular»."
   },
   {
    "chemical_de": "Wasserstoffperoxid",
@@ -142,7 +160,9 @@
    "refs": [
     "https://www.cplabsafety.com/acetal-polyoxymethylene-chemical-compatibility-chart/",
     "https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf"
-   ]
+   ],
+   "reason_de": "Zwei Tabellen mit gemeinsamer Datengrundlage bewerten POM für verdünntes Wasserstoffperoxid mit D. Die Quelle selbst bewertet POM ab 30 % mit D.",
+   "reason_es": "Dos tablas que comparten un mismo conjunto de datos clasifican el acetal como D para el peróxido de hidrógeno diluido. La propia fuente clasifica el acetal como D a partir del 30 %."
   },
   {
    "chemical_de": "Dimethylformamid (DMF)",
@@ -155,7 +175,9 @@
    "refs": [
     "https://www.cplabsafety.com/acetal-polyoxymethylene-chemical-compatibility-chart/",
     "https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf"
-   ]
+   ],
+   "reason_de": "Zwei Tabellen mit gemeinsamer Datengrundlage bewerten POM für Dimethylformamid mit D.",
+   "reason_es": "Dos tablas que comparten un mismo conjunto de datos clasifican el acetal como D para la dimetilformamida."
   },
   {
    "chemical_de": "Flusssäure",
@@ -168,7 +190,9 @@
    "refs": [
     "https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf",
     "https://www.cambridgereactordesign.com/ammonite/pdf/Chemical-Compatability.pdf"
-   ]
+   ],
+   "reason_de": "Der Quellwert ist ein Schätzwert. Tabellen für Flusssäure ab 20 % und ein O-Ring-Handbuch ohne Konzentrationsangabe bewerten Nitrilkautschuk als ungeeignet.",
+   "reason_es": "El valor de la fuente es una estimación. Las tablas para ácido fluorhídrico del 20 % o más, y un manual de juntas tóricas sin concentración indicada, consideran inadecuado el caucho de nitrilo."
   },
   {
    "chemical_de": "Dichlormethan",
@@ -181,7 +205,9 @@
    "refs": [
     "https://www.cplabsafety.com/aluminum-chemical-compatibility-chart/",
     "https://www.graco.com/content/dam/graco/ipd/literature/misc/chemical-compatibility-guide/Graco_ChemCompGuideEN-D.pdf"
-   ]
+   ],
+   "reason_de": "Zwei Tabellen bewerten Aluminium für Dichlormethan mit C und D.",
+   "reason_es": "Dos tablas clasifican el aluminio como C y D para el diclorometano."
   },
   {
    "chemical_de": "Ethanol",
@@ -193,7 +219,9 @@
    "reason": "Two charts rate rigid PVC fair or limited for pure ethanol.",
    "refs": [
     "https://www.cplabsafety.com/pvc-polyvinyl-chloride-chemical-compatibility-chart/"
-   ]
+   ],
+   "reason_de": "Zwei Tabellen bewerten Hart-PVC für reines Ethanol als mäßig oder eingeschränkt beständig.",
+   "reason_es": "Dos tablas clasifican el PVC rígido como regular o de resistencia limitada para el etanol puro."
   }
  ]
 }

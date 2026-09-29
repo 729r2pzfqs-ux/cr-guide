@@ -26,6 +26,7 @@ python3 build_chemical_pages.py     # chemical pages, pair pages, chemicals inde
 python3 build_material_tables.py    # tables inside the material pages
 python3 build_chart_tables.py       # static rows and group figures in chart pages
 python3 build_compare_pages.py      # comparison pages (en, de, es) and the compare index
+python3 fix_page_quality.py         # badge colours and structured data on patched pages
 python3 fix_internal_links.py       # run twice if it reports changes
 python3 noindex_french.py           # keeps French out of the index, see below
 python3 build_sitemap.py            # always last

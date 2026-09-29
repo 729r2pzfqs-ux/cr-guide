@@ -35,8 +35,8 @@ import analytics_head
 import diagrams
 import resistance_data as rd
 from redirect_stub import stub
-from page_i18n import (INDEXED_LANGS, LANGS, MATERIAL_FULL, MATERIAL_NOTES_EN, conc_label,
-                       hazard_text, material_name, t)
+from page_i18n import (INDEXED_LANGS, LANGS, conc_label, hazard_text, material_full,
+                       material_name, material_note, t)
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://chemicalresistance.org'
@@ -52,6 +52,12 @@ NOINDEX = '<meta name="robots" content="noindex,follow">'
 PRIORITY = ['PTFE', 'HDPE', 'PP', 'PVDF', 'PVC_HART', 'EPDM', 'FPM', 'NBR', 'V4A', 'V2A', 'AL',
             'LDPE', 'FEP', 'ECTFE_ETFE', 'PA', 'POM', 'PC', 'SI', 'PVC_WEICH', 'PS', 'PSU',
             'PETG', 'PMP', 'SAN']
+
+DATASET_DESC = {
+    'en': 'Chemical resistance ratings of {n} plastics, elastomers and metals against {chem} at 20 °C and 50 °C, for {k} concentration(s). Ratings A to D, from the chemical resistance list of Bürkle GmbH.',
+    'de': 'Beständigkeitsbewertungen von {n} Kunststoffen, Elastomeren und Metallen gegenüber {chem} bei 20 °C und 50 °C, für {k} Konzentration(en). Bewertungen A bis D aus der Beständigkeitsliste der Bürkle GmbH.',
+    'es': 'Clasificaciones de resistencia química de {n} plásticos, elastómeros y metales frente a {chem} a 20 °C y 50 °C, para {k} concentración(es). Clasificaciones de A a D, de la lista de resistencia química de Bürkle GmbH.',
+}
 
 STYLE = '''<style>
 *{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}body{background:#f8fafc}
@@ -501,7 +507,11 @@ def corrections(lang, chem, only=None):
                      conc=variant_label(v, lang), old=c['source_value'], new=c.get('value', ''))
             refs = ' '.join('<a href="%s" rel="nofollow noopener">[%d]</a>' % (esc(u), i + 1)
                             for i, u in enumerate(c.get('refs', [])))
-            reason = '<span lang="en">%s</span>' % esc(c['reason'])
+            local = c.get('reasons', {}).get(lang)
+            if local or lang == 'en':
+                reason = esc(local or c['reason'])
+            else:
+                reason = '<span lang="en">%s</span>' % esc(c['reason'])
             rows.append('<li>%s %s %s</li>' % (esc(line), reason, refs))
     if not rows:
         return ''
@@ -534,6 +544,18 @@ def chemical_page(lang, slug, page, chem, chrome, similar, pages):
         'about': {'@type': 'ChemicalSubstance', 'name': name,
                   **({'identifier': chem['cas']} if chem['cas'] else {})},
     }]
+    if indexed:
+        ld.append({
+            '@context': 'https://schema.org', '@type': 'Dataset',
+            'name': t('h1_chem', lang, chem=name), 'url': url, 'inLanguage': lang,
+            'description': DATASET_DESC[lang].format(chem=name, n=n_mats, k=len(chem['variants'])),
+            'dateModified': CONTENT_UPDATED,
+            'variableMeasured': ['Resistance rating at 20 °C', 'Resistance rating at 50 °C'],
+            'creator': {'@type': 'Organization', 'name': 'ChemicalResistance.org', 'url': SITE + '/'},
+            'isBasedOn': {'@type': 'CreativeWork', 'name': 'Beständigkeitsliste (chemical resistance list)',
+                          'publisher': {'@type': 'Organization', 'name': 'Bürkle GmbH',
+                                        'url': 'https://www.buerkle.de'}},
+        })
     header, footer = chrome[lang]
 
     lead = t('lead_chem', lang, n=n_mats)
@@ -628,7 +650,7 @@ def pair_page(lang, slug, page, chem, mat, chrome):
     <main class="max-w-4xl mx-auto px-4 py-8">
 ''' % (home_url(lang), esc(t('home', lang)), chem_base(lang), esc(t('chemicals', lang)),
        chem_url(lang, slug), esc(name), esc(mname), esc(t('h1_pair', lang, mat=mname, chem=name)),
-       esc(MATERIAL_FULL[mat]) if lang == 'en' else ''))
+       esc(material_full(mat, lang)) if lang in ('en', 'de', 'es') else ''))
 
     if rated:
         body = ''
@@ -662,9 +684,10 @@ def pair_page(lang, slug, page, chem, mat, chrome):
         out.append('<section class="cr-card"><h2>%s</h2>%s<dl class="cr-list">%s</dl></section>' % (
             esc(t('alternatives_h', lang)), basis, rows))
 
-    if lang == 'en':
+    note = material_note(mat, lang)
+    if note:
         out.append('<section class="cr-card"><h2>%s</h2><p>%s</p></section>' % (
-            esc(t('material_note_h', lang, mat=mname)), esc(MATERIAL_NOTES_EN[mat])))
+            esc(t('material_note_h', lang, mat=mname)), esc(note)))
     out.append('<section class="cr-card"><h2>%s</h2>%s</section>' % (esc(t('legend_h', lang)), legend(lang)))
     out.append('<section class="cr-card"><div class="cr-links"><a href="%s">%s</a><a href="%s">%s</a></div></section>' % (
         chem_url(lang, slug), esc(t('see_chemical', lang, chem=name)),
@@ -722,32 +745,36 @@ def patch_index(lang, pages, chems, changed, check):
 
 
 def patch_about(pages, chems, changed, check):
-    """List every corrected and disputed value on the About page."""
+    """List every corrected and disputed value on the About pages."""
     import re
-    rel = 'about/index.html'
-    with open(os.path.join(ROOT, rel), encoding='utf-8') as f:
-        page = f.read()
+    scale = {'en': 'Source values use the scale 1 (very good) to 4 (not resistant).',
+             'de': t('source_scale', 'de'), 'es': t('source_scale', 'es')}
     by_source = {p['source']: s for s, p in pages.items()}
-    rows = []
-    for chem in chems.values():
-        for v in chem['variants']:
-            for c in v['corrections']:
-                slug = by_source.get(chem['name_de'])
-                name = esc(pages[slug]['names']['en']) if slug else esc(chem['name_en'])
-                if slug:
-                    name = '<a href="%s" class="text-emerald-600 underline">%s</a>' % (chem_url('en', slug), name)
-                what = ('corrected from %s to %s' % (c['source_value'], c['value'])
-                        if c['kind'] == 'corrected' else 'source value %s kept, disputed' % c['source_value'])
-                refs = ' '.join('<a href="%s" rel="nofollow noopener" class="underline">[%d]</a>' % (esc(u), i + 1)
-                                for i, u in enumerate(c['refs']))
-                rows.append('<li>%s, %s, %s: %s. %s %s</li>' % (
-                    name, esc(variant_label(v, 'en')), esc(material_name(c['material'], 'en')), what,
-                    esc(c['reason']), refs))
-    block = ('<!-- corrections:start -->\n<ul class="text-sm text-gray-600 space-y-2 list-disc pl-5">\n%s\n</ul>\n'
-             '<p class="text-xs text-gray-500 mt-3">Source values use the scale 1 (very good) to 4 (not resistant).</p>\n'
-             '                <!-- corrections:end -->') % '\n'.join(rows)
-    new = re.sub(r'<!-- corrections:start -->[\s\S]*?<!-- corrections:end -->', lambda _: block, page)
-    write(rel, new, changed, check)
+    for lang, rel in (('en', 'about/index.html'), ('de', 'de-about/index.html'), ('es', 'es-about/index.html')):
+        with open(os.path.join(ROOT, rel), encoding='utf-8') as f:
+            page = f.read()
+        rows = []
+        for chem in chems.values():
+            for v in chem['variants']:
+                for c in v['corrections']:
+                    slug = by_source.get(chem['name_de'])
+                    if slug:
+                        name = '<a href="%s" class="text-emerald-600 underline">%s</a>' % (
+                            chem_url(lang, slug), esc(pages[slug]['names'][lang]))
+                    else:
+                        name = esc(chem['name_de'] if lang == 'de' else chem['name_en'])
+                    key = 'disputed_row' if c['kind'] == 'disputed' else 'corrections_row'
+                    line = t(key, lang, mat=material_name(c['material'], lang), conc=variant_label(v, lang),
+                             old=c['source_value'], new=c.get('value', ''))
+                    refs = ' '.join('<a href="%s" rel="nofollow noopener" class="underline">[%d]</a>'
+                                    % (esc(u), i + 1) for i, u in enumerate(c['refs']))
+                    reason = c.get('reasons', {}).get(lang) or c['reason']
+                    rows.append('<li>%s. %s %s %s</li>' % (name, esc(line), esc(reason), refs))
+        block = ('<!-- corrections:start -->\n<ul class="text-sm text-gray-600 space-y-2 list-disc pl-5">\n%s\n</ul>\n'
+                 '<p class="text-xs text-gray-500 mt-3">%s</p>\n'
+                 '                <!-- corrections:end -->') % ('\n'.join(rows), esc(scale[lang]))
+        new = re.sub(r'<!-- corrections:start -->[\s\S]*?<!-- corrections:end -->', lambda _: block, page)
+        write(rel, new, changed, check)
 
 
 def main():

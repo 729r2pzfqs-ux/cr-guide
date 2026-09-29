@@ -290,7 +290,8 @@ def build():
                     old = v['ratings'].get(m)
                     note = {'kind': o.get('kind', 'corrected'), 'material': m,
                             'source_value': old['raw'] if old else '0/0',
-                            'reason': o['reason'], 'refs': o.get('refs', [])}
+                            'reason': o['reason'], 'refs': o.get('refs', []),
+                            'reasons': {'de': o.get('reason_de'), 'es': o.get('reason_es')}}
                     if note['kind'] == 'disputed':
                         if old is None:
                             continue
