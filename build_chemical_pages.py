@@ -69,7 +69,10 @@ STYLE = '''<style>
 .cr-scroll{overflow-x:auto}
 .cr-tbl{width:100%;border-collapse:collapse;font-size:.9rem}
 .cr-tbl th,.cr-tbl td{padding:.45rem .6rem;border-bottom:1px solid #f1f5f9;text-align:left;vertical-align:middle}
-.cr-tbl .c{text-align:center;white-space:nowrap}
+.cr-tbl .c{text-align:center;white-space:nowrap;width:5.5rem}
+.cr-tbl .nd{color:#9ca3af}
+.cr-tbl .fl{min-width:6rem}
+.cr-sub a{color:#047857;text-decoration:underline}
 .cr-tbl thead th{background:#f8fafc;font-weight:600;color:#111827;border-bottom:1px solid #e5e7eb}
 .cr-tbl tr.fam th{background:#ecfdf5;color:#065f46;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
 .cr-tbl td a,.cr-tbl th a{color:#047857;text-decoration:underline}
@@ -199,7 +202,7 @@ def grade_span(g, worst, est=False):
     """A rating badge. An estimate carries an asterisk inside the badge, which
     the footnote under the table explains."""
     if g is None:
-        return '<span class="g gN">–</span>'
+        return '<span class="nd">–</span>'
     return '<span class="g g%s">%s%s</span>' % (worst, esc(g), '*' if est else '')
 
 
@@ -224,24 +227,35 @@ def flags(r, lang, short=True):
     return out
 
 
+def no_value(lang):
+    """An empty cell: a quiet dash, not a badge, so that a table with gaps does
+    not look like a table of grey ratings."""
+    return '<span class="nd" title="%s" aria-label="%s">–</span>' % (
+        esc(t('g_none', lang)), esc(t('g_none', lang)))
+
+
 def rating_cells(r, lang):
-    """The 20 °C and 50 °C cells of one rating, plus the remark cell."""
+    """The 20 °C and 50 °C cells of one rating, plus the remark cell.
+
+    Every row has the same two rating cells, so badges line up in two columns
+    whatever the row holds. A value the source gives without a temperature
+    (an estimate) stands in the first column and leaves the second empty."""
     if r is None:
-        none = '<td class="c"><span class="g gN" title="%s">–</span></td>' % esc(t('g_none', lang))
-        return none + none + '<td></td>'
+        return '<td class="c">%s</td><td class="c">%s</td><td></td>' % (no_value(lang), no_value(lang))
     remark = '<td class="fl">%s</td>' % esc('; '.join(flags(r, lang)))
     if r.get('k'):
-        return '<td class="c" colspan="2"><span class="g gN">K</span></td>' + remark
-    if r.get('single'):
-        return '<td class="c" colspan="2">%s</td>%s' % (grade_span(r['c20'], r['w20'], r.get('est')), remark)
-    return '<td class="c">%s</td><td class="c">%s</td>%s' % (
-        grade_span(r['c20'], r['w20'], r.get('est')), grade_span(r['c50'], r['w50'], r.get('est')), remark)
+        first = '<span class="g gN">K</span>'
+        second = no_value(lang)
+    else:
+        first = grade_span(r['c20'], r['w20'], r.get('est')) if r['c20'] else no_value(lang)
+        second = grade_span(r['c50'], r['w50'], r.get('est')) if r['c50'] else no_value(lang)
+    return '<td class="c">%s</td><td class="c">%s</td>%s' % (first, second, remark)
 
 
 def legend(lang):
     items = ''.join('<li><span class="g g%s">%s</span> %s</li>' % (g, g, esc(t('g_' + g, lang)))
                     for g in 'ABCD')
-    items += '<li><span class="g gN">–</span> %s</li>' % esc(t('g_none', lang))
+    items += '<li><span class="nd" style="color:#9ca3af">–</span> %s</li>' % esc(t('g_none', lang))
     items += '<li><span class="g gN">K</span> %s</li>' % esc(t('k_value', lang))
     return '<ul class="cr-legend">%s</ul><p class="cr-sub">%s</p>' % (items, esc(t('legend_est', lang)))
 
@@ -457,7 +471,7 @@ def matrix(lang, slug, name, chem):
             for v in variants:
                 r = v['ratings'].get(m)
                 if r is None:
-                    cells += '<td class="c"><span class="g gN">–</span></td>'
+                    cells += '<td class="c">%s</td>' % no_value(lang)
                 elif r.get('k'):
                     cells += '<td class="c"><span class="g gN">K</span></td>'
                 else:
@@ -477,14 +491,22 @@ def matrix(lang, slug, name, chem):
 
 def variant_table(lang, slug, name, chem, v, index, first):
     body = ''
+    missing = []
     for fam in rd.FAMILIES:
-        body += '<tr class="fam"><th colspan="4" scope="colgroup">%s</th></tr>' % esc(t('fam_' + fam, lang))
+        rows = ''
         for m, (mslug, mfam) in rd.MATERIALS.items():
             if mfam != fam:
                 continue
-            body += '<tr><th scope="row"><a href="%s">%s</a></th>%s</tr>' % (
+            if m not in v['ratings']:
+                # a material the source does not rate is named under the table
+                missing.append('<a href="%s">%s</a>' % (material_url(lang, m), esc(material_name(m, lang))))
+                continue
+            rows += '<tr><th scope="row"><a href="%s">%s</a></th>%s</tr>' % (
                 material_url(lang, m), esc(material_name(m, lang)),
                 rating_cells(v['ratings'].get(m), lang))
+        if rows:
+            body += '<tr class="fam"><th colspan="4" scope="colgroup">%s</th></tr>%s' % (
+                esc(t('fam_' + fam, lang)), rows)
     title = t('table_h', lang)
     if len(chem['variants']) > 1 or v['conc']:
         title = '%s: %s, %s' % (title, name, variant_label(v, lang))
@@ -496,9 +518,11 @@ def variant_table(lang, slug, name, chem, v, index, first):
     return ('<section class="cr-card cr-noads" id="c%d"><h2>%s</h2>%s<div class="cr-scroll"%s>'
             '<table class="cr-tbl"><thead><tr><th scope="col">%s</th><th class="c" scope="col">20 °C</th>'
             '<th class="c" scope="col">50 °C</th><th scope="col">%s</th></tr></thead><tbody>%s</tbody>'
-            '</table></div>%s</section>') % (
+            '</table></div>%s%s</section>') % (
         index, esc(title), note, zone, esc(t('material', lang)), esc(t('remark', lang)), body,
-        est_footnote(lang, v['ratings'].values()))
+        est_footnote(lang, v['ratings'].values()),
+        ('<p class="cr-sub" style="margin-top:.6rem">%s: %s</p>' % (
+            esc(t('not_listed', lang)), t('list_sep', lang).join(missing))) if missing else '')
 
 
 def corrections(lang, chem, only=None):

@@ -334,8 +334,19 @@ T = {
     'g_none': {'en': 'no data', 'de': 'keine Angabe', 'es': 'sin datos', 'fr': 'aucune donnée',
                'pt': 'sem dados', 'zh': '无数据'},
     'est_note': {
-        'en': 'estimated rating', 'de': 'geschätzte Bewertung', 'es': 'clasificación estimada',
-        'fr': 'note estimée', 'pt': 'classificação estimada', 'zh': '估计等级'},
+        'en': 'estimated rating, given in the source without a temperature',
+        'de': 'geschätzte Bewertung, in der Quelle ohne Temperaturangabe',
+        'es': 'clasificación estimada, indicada en la fuente sin temperatura',
+        'fr': 'note estimée, indiquée dans la source sans température',
+        'pt': 'classificação estimada, indicada na fonte sem temperatura',
+        'zh': '估计等级，原始资料未注明温度'},
+    'not_listed': {
+        'en': 'Not rated in the source, so not in the table',
+        'de': 'In der Quelle nicht bewertet, daher nicht in der Tabelle',
+        'es': 'Sin clasificación en la fuente, por lo que no figuran en la tabla',
+        'fr': 'Non notés dans la source, donc absents du tableau',
+        'pt': 'Sem classificação na fonte, por isso fora da tabela',
+        'zh': '原始资料未评定，故未列入表中'},
     'legend_est': {
         'en': 'A rating marked * is an estimate in the source, not a test result. An estimate is given as one value without a temperature.',
         'de': 'Eine mit * markierte Bewertung ist ein Schätzwert der Quelle, kein Prüfergebnis. Ein Schätzwert wird als einzelner Wert ohne Temperatur angegeben.',
