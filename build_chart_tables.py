@@ -99,6 +99,25 @@ def compare_rows(a, b, lang, chems, trans):
     return out, len(rows)
 
 
+CENTER_STYLE = ('<style id="cr-chart-center">.cr-hero-center{text-align:center}.cr-hero-center .flex{justify-content:center}'
+                '.cr-hero-center p{margin-left:auto;margin-right:auto}.cr-center{text-align:center}'
+                '.cr-center svg{margin-left:auto;margin-right:auto}.cr-center .cr-key{justify-content:center}'
+                '.cr-center figcaption{margin-left:auto;margin-right:auto}</style>')
+
+
+def center_hero(page):
+    """Centre the title block of a chart page: breadcrumb, title, description
+    and rating key. The style travels with the page, not the shared stylesheet."""
+    # replaced where it stands, so that it does not trade places with the
+    # markup fix_page_quality.py adds at the end of the head
+    if 'id="cr-chart-center"' in page:
+        page = re.sub(r'<style id="cr-chart-center">[\s\S]*?</style>', lambda _: CENTER_STYLE, page, count=1)
+    else:
+        page = page.replace('</head>', CENTER_STYLE + '\n</head>', 1)
+    return re.sub(r'<section class="(?:cr-hero-center )?(bg-gradient-to-b[^"]*)"',
+                  r'<section class="cr-hero-center \1"', page, count=1)
+
+
 def group_block(mats, lang):
     """Summary figures of a chart page: overall rating shares per material and,
     for groups of up to six materials, the share rated A or B by chemical class."""
@@ -115,7 +134,7 @@ def group_block(mats, lang):
                                 t('fig_group_h', lang), heads=[diagrams.short_name(m, lang) for m in mats]),
             t('fig_group_cap', lang, n=cs.MIN_ROWS), diagrams.ramp_key(lang))
         figs += '<div><h3 class="font-semibold text-gray-900 mb-2">%s</h3>%s</div>' % (esc(t('fig_group_h', lang)), grid)
-    return ('<!-- group-figures:start -->\n<section class="px-4 py-8 bg-white border-t border-gray-200">%s'
+    return ('<!-- group-figures:start -->\n<section class="cr-center px-4 py-8 bg-white border-t border-gray-200">%s'
             '<div class="max-w-5xl mx-auto"><div class="cr-fp">%s</div>'
             '<p style="font-size:.8rem;color:#4b5563;margin-top:1rem">%s</p></div></section>\n'
             '<!-- group-figures:end -->\n    ') % (FIG_STYLE, figs, esc(t('class_note', lang)))
@@ -134,6 +153,7 @@ def patch(page, lang, chems, trans):
         at = page.rfind('<section', 0, at) if at > 0 else -1
         if at > 0:
             page = page[:at] + group_block(mats, lang) + page[at:]
+        page = center_hero(page)
         page = re.sub(r'(<tbody id="chartTable"[^>]*>)[\s\S]*?(</tbody>)',
                       lambda x: x.group(1) + '\n' + '\n'.join(rows) + '\n' + x.group(2), page, count=1)
     elif 'id="compareTable"' in page:

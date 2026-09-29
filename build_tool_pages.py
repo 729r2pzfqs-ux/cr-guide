@@ -295,7 +295,9 @@ def charts_index(lang, page):
         diagrams.figure(svg, s('families_cap', lang), diagrams.ramp_key(lang)),
         diagrams.figure(overall, t('fig_overall_cap', lang), diagrams.grade_key(lang, with_none=False)),
         esc(t('class_note', lang)))
-    return place(page, 'family-figures', block('family-figures', inner), before_footer)
+    from build_chart_tables import center_hero
+    centred = block('family-figures', inner).replace('<section class="px-4', '<section class="cr-center px-4', 1)
+    return place(center_hero(page), 'family-figures', centred, before_footer)
 
 
 def silicone(lang, page):
