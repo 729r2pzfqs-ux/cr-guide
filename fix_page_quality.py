@@ -140,6 +140,7 @@ def fix(rel, page, counts, rated):
                 'dateModified': CONTENT_UPDATED,
                 'variableMeasured': ['Resistance rating at 20 °C', 'Resistance rating at 50 °C'],
                 'creator': {'@type': 'Organization', 'name': 'ChemicalResistance.org', 'url': SITE + '/'},
+                'license': 'https://creativecommons.org/licenses/by-nc/4.0/',
                 'isBasedOn': {'@type': 'CreativeWork', 'name': 'Beständigkeitsliste (chemical resistance list)',
                               'publisher': {'@type': 'Organization', 'name': 'Bürkle GmbH',
                                             'url': 'https://www.buerkle.de'}},
