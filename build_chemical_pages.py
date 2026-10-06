@@ -42,10 +42,10 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://chemicalresistance.org'
 CONTENT_UPDATED = '2026-09-29'
 
-# Pair pages that have a rating: hidden from Google only, so the other search
-# engines that send the site its traffic keep them. Set to
-# '<meta name="robots" content="noindex,follow">' to hide them everywhere.
-PAIR_ROBOTS = '<meta name="googlebot" content="noindex,follow">'
+# Pair pages that have a rating: indexable so Google (and other engines) can
+# surface them. Previously set to googlebot noindex, which hid 4,900+ pages
+# of core content from search results.
+PAIR_ROBOTS = ''
 NOINDEX = '<meta name="robots" content="noindex,follow">'
 
 # Order in which materials are named in summaries: the ones people look for first.
