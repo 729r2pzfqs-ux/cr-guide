@@ -5,7 +5,8 @@
     python3 noindex_french.py --check    # report only
 
   * every French page (fr/, materials/fr/, chemicals/fr/, fr-about/) gets
-    <meta name="robots" content="noindex,follow">,
+    <meta name="googlebot" content="noindex"> (Google-only; other engines
+    like Bing, DuckDuckGo and Yahoo still index the page),
   * every hreflang="fr" declaration is removed, on every page of the site,
   * French is dropped from language menus.
 
@@ -19,8 +20,8 @@ import sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SKIP_DIRS = {'.git', '.venv', '__pycache__', 'node_modules', 'data'}
-NOINDEX = '<meta name="robots" content="noindex,follow">'
-ROBOTS = re.compile(r'<meta[^>]+name=["\']robots["\'][^>]*>', re.I)
+NOINDEX = '<meta name="googlebot" content="noindex">'
+ROBOTS = re.compile(r'<meta[^>]+name=["\'](?:robots|googlebot)["\'][^>]*>', re.I)
 HREFLANG_FR = re.compile(r'[ \t]*<link[^>]+hreflang=["\']fr["\'][^>]*>[ \t]*\n?', re.I)
 OPTION_FR = re.compile(r'[ \t]*<option value="fr"(?! selected)[^>]*>[^<]*</option>[ \t]*\n?')
 

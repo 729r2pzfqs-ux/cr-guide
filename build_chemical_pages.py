@@ -15,9 +15,11 @@ Output, for every language
     chemicals/[<lang>/]<slug>/<material>/index.html   one page per material
 
 The chemical page carries the whole data set for that chemical: every
-concentration the source lists, all 24 materials, both temperatures. The pair
-pages repeat one row of it, so they are kept out of Google's index and out of
-the sitemap (PAIR_ROBOTS below) while staying reachable for readers.
+concentration the source lists, all 24 materials, both temperatures. Pair
+pages with substantial content (multiple concentrations, full temperature
+data, or corrections) are indexed.  Thin pair pages (single estimated rating,
+no corrections) get a googlebot-only noindex so they stay visible to Bing,
+DuckDuckGo and Yahoo while being excluded from Google's index.
 
 This replaces generate_chemical_pages.py, generate_chemical_material_pages.py,
 enrich_chemical_pages.py, the add_*.py scripts and the fix_ratings/fix_mappings
@@ -42,10 +44,12 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://chemicalresistance.org'
 CONTENT_UPDATED = '2026-09-29'
 
-# Pair pages that have a rating: indexable so Google (and other engines) can
-# surface them. Previously set to googlebot noindex, which hid 4,900+ pages
-# of core content from search results.
-PAIR_ROBOTS = ''
+# Googlebot-only noindex: tells Google not to index a page while keeping
+# it visible to Bing, DuckDuckGo, Yahoo and other engines (which deliver
+# most of this site's search traffic).
+NOINDEX_GOOGLEBOT = '<meta name="googlebot" content="noindex">'
+
+# Full noindex for ALL engines (redirect stubs, truly empty pages).
 NOINDEX = '<meta name="robots" content="noindex,follow">'
 
 # Order in which materials are named in summaries: the ones people look for first.
@@ -258,6 +262,25 @@ def legend(lang):
     items += '<li><span class="nd" style="color:#9ca3af">–</span> %s</li>' % esc(t('g_none', lang))
     items += '<li><span class="g gN">K</span> %s</li>' % esc(t('k_value', lang))
     return '<ul class="cr-legend">%s</ul><p class="cr-sub">%s</p>' % (items, esc(t('legend_est', lang)))
+
+
+def is_thin_pair(chem, mat):
+    """True when a pair page carries minimal content: a single concentration
+    variant whose rating is an estimate or a K (no general statement), and no
+    corrections for this specific material.  These pages are essentially a
+    single data point repeated from the chemical hub page."""
+    rated = [v for v in chem['variants'] if mat in v['ratings']]
+    if not rated:
+        return True          # no data at all — already noindexed, but flag it
+    if len(rated) > 1:
+        return False          # multiple concentrations → substantial
+    r = rated[0]['ratings'][mat]
+    if not r.get('single') and not r.get('k'):
+        return False          # has both 20 °C and 50 °C data → substantial
+    # single estimated rating or K-only — check for corrections
+    has_corrections = any(c['material'] == mat
+                          for v in chem['variants'] for c in v['corrections'])
+    return not has_corrections
 
 
 def similar_chemicals(pages, chems):
@@ -593,7 +616,7 @@ def chemical_page(lang, slug, page, chem, chrome, similar, pages):
     if len(chem['variants']) > 1:
         lead += ' ' + t('lead_variants', lang, k=len(chem['variants']))
 
-    out = [head(lang, title, desc, url, '' if indexed else NOINDEX, alternates, ld), header]
+    out = [head(lang, title, desc, url, '' if indexed else NOINDEX_GOOGLEBOT, alternates, ld), header]
     out.append('''
     <section class="bg-gradient-to-b from-emerald-50 to-white px-4 py-8">
         <div class="max-w-4xl mx-auto">
@@ -660,10 +683,14 @@ def pair_page(lang, slug, page, chem, mat, chrome):
     else:
         desc = t('desc_pair_nodata', lang, mat=mname, chem=name, n=len(rd.MATERIALS) - 1)
 
-    if lang in INDEXED_LANGS and rated:
-        robots = PAIR_ROBOTS
+    if not rated:
+        robots = NOINDEX_GOOGLEBOT        # no data → noindex for Google
+    elif lang not in INDEXED_LANGS:
+        robots = NOINDEX_GOOGLEBOT        # non-indexed language → noindex for Google
+    elif is_thin_pair(chem, mat):
+        robots = NOINDEX_GOOGLEBOT        # thin content → noindex for Google
     else:
-        robots = NOINDEX
+        robots = ''                       # substantial content → fully indexed
     crumbs = [(t('home', lang), home_url(lang)), (t('chemicals', lang), chem_base(lang)),
               (name, chem_url(lang, slug)), (mname, pair_url(lang, slug, mat))]
     header, footer = chrome[lang]
