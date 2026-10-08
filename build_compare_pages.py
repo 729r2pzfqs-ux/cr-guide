@@ -15,6 +15,7 @@ page. The French, Portuguese and Chinese comparison pages are not indexed and
 are left as they are, apart from that redirect.
 """
 
+import itertools
 import os
 import re
 import sys
@@ -31,23 +32,59 @@ LANGS = ['en', 'de', 'es']
 CONTENT_UPDATED = '2026-10-08'
 MAX_DIFF_ROWS = 40
 
-# (material a, material b, {lang: slug}); slugs of the four older pages are kept
-PAIRS = [
-    ('PTFE', 'FEP', {'en': 'ptfe-vs-fep'}),
-    ('NBR', 'EPDM', {'en': 'nbr-vs-epdm'}),
-    ('HDPE', 'PVDF', {'en': 'hdpe-vs-pvdf'}),
-    ('PSU', 'PVDF', {'en': 'polysulfone-vs-pvdf', 'de': 'polysulfon-vs-pvdf', 'es': 'polisulfona-vs-pvdf'}),
-    ('EPDM', 'FPM', {'en': 'epdm-vs-viton'}),
-    ('NBR', 'FPM', {'en': 'nbr-vs-viton'}),
-    ('V2A', 'V4A', {'en': 'ss304-vs-ss316'}),
-    ('AL', 'V4A', {'en': 'aluminium-vs-ss316'}),
-    ('HDPE', 'PP', {'en': 'hdpe-vs-pp'}),
-    ('HDPE', 'LDPE', {'en': 'hdpe-vs-ldpe'}),
-    ('PVC_HART', 'PP', {'en': 'pvc-vs-pp'}),
-    ('PTFE', 'PVDF', {'en': 'ptfe-vs-pvdf'}),
-    ('PC', 'PETG', {'en': 'polycarbonate-vs-petg'}),
-    ('PA', 'POM', {'en': 'nylon-vs-acetal'}),
-]
+# Legacy slugs for the original pages — these must not change so existing URLs
+# keep working.  Every other pair gets an auto-generated slug.
+_LEGACY_SLUGS = {
+    ('PTFE', 'FEP'): {'en': 'ptfe-vs-fep'},
+    ('NBR', 'EPDM'): {'en': 'nbr-vs-epdm'},
+    ('HDPE', 'PVDF'): {'en': 'hdpe-vs-pvdf'},
+    ('PSU', 'PVDF'): {'en': 'polysulfone-vs-pvdf', 'de': 'polysulfon-vs-pvdf', 'es': 'polisulfona-vs-pvdf'},
+    ('EPDM', 'FPM'): {'en': 'epdm-vs-viton'},
+    ('NBR', 'FPM'): {'en': 'nbr-vs-viton'},
+    ('V2A', 'V4A'): {'en': 'ss304-vs-ss316'},
+    ('AL', 'V4A'): {'en': 'aluminium-vs-ss316'},
+    ('HDPE', 'PP'): {'en': 'hdpe-vs-pp'},
+    ('HDPE', 'LDPE'): {'en': 'hdpe-vs-ldpe'},
+    ('PVC_HART', 'PP'): {'en': 'pvc-vs-pp'},
+    ('PTFE', 'PVDF'): {'en': 'ptfe-vs-pvdf'},
+    ('PC', 'PETG'): {'en': 'polycarbonate-vs-petg'},
+    ('PA', 'POM'): {'en': 'nylon-vs-acetal'},
+}
+
+
+def _auto_slug(code):
+    """Short URL-friendly name for a material code."""
+    _SLUG_MAP = {
+        'HDPE': 'hdpe', 'LDPE': 'ldpe', 'PP': 'pp', 'PVC_HART': 'pvc-rigid',
+        'PVC_WEICH': 'pvc-flexible', 'PMP': 'pmp', 'PS': 'polystyrene',
+        'SAN': 'san', 'PC': 'polycarbonate', 'PETG': 'petg',
+        'POM': 'acetal', 'PA': 'nylon', 'PSU': 'polysulfone',
+        'PTFE': 'ptfe', 'FEP': 'fep', 'PVDF': 'pvdf',
+        'ECTFE_ETFE': 'ectfe-etfe',
+        'EPDM': 'epdm', 'FPM': 'viton', 'NBR': 'nbr', 'SI': 'silicone',
+        'V4A': 'ss316', 'V2A': 'ss304', 'AL': 'aluminium',
+    }
+    return _SLUG_MAP[code]
+
+
+def _build_pairs():
+    """All 276 material pairs (24 choose 2), keeping legacy slugs where they
+    exist and auto-generating slugs for the rest.  ECTFE_ETFE is excluded
+    from self-comparison but included in cross-material pairs."""
+    mats = list(rd.MATERIALS.keys())
+    pairs = []
+    for a, b in itertools.combinations(mats, 2):
+        # Look up legacy slugs in both orderings
+        slugs = _LEGACY_SLUGS.get((a, b)) or _LEGACY_SLUGS.get((b, a))
+        if slugs and (b, a) in _LEGACY_SLUGS:
+            a, b = b, a  # respect original ordering
+        if not slugs:
+            slugs = {'en': '%s-vs-%s' % (_auto_slug(a), _auto_slug(b))}
+        pairs.append((a, b, slugs))
+    return pairs
+
+
+PAIRS = _build_pairs()
 
 S = {
     'compare': {'en': 'Compare', 'de': 'Vergleich', 'es': 'Comparar'},
@@ -409,10 +446,9 @@ def page(pair, lang, header, footer, links, trans):
     out.append('<section class="cr-card"><h2>%s</h2>%s</section>' % (esc(t('legend_h', lang)), legend(lang)))
 
     related = [p for p in PAIRS if p is not pair and ({p[0], p[1]} & {a, b})]
-    related += [p for p in PAIRS if p is not pair and p not in related]
     more = ''.join('<a href="%s">%s %s %s</a>' % (
         url_of(p, lang), esc(material_name(p[0], lang)), s('vs', lang), esc(material_name(p[1], lang)))
-        for p in related)
+        for p in related[:20])
     out.append('<section class="cr-card"><h2>%s</h2><div class="cr-links">%s</div></section>' % (
         esc(s('more_h', lang)), more))
     if faq_html:
@@ -423,8 +459,23 @@ def page(pair, lang, header, footer, links, trans):
     return '\n'.join(x for x in out if x)
 
 
+_POPULAR_KEYS = {frozenset(k) for k in _LEGACY_SLUGS}
+
+S_INDEX = {
+    'all_h': {'en': 'All Material Comparisons', 'de': 'Alle Materialvergleiche',
+              'es': 'Todas las comparaciones de materiales'},
+    'family_h': {
+        'thermoplastic': {'en': 'Thermoplastics', 'de': 'Thermoplaste', 'es': 'Termoplásticos'},
+        'fluoropolymer': {'en': 'Fluoropolymers', 'de': 'Fluorpolymere', 'es': 'Fluoropolímeros'},
+        'elastomer': {'en': 'Elastomers', 'de': 'Elastomere', 'es': 'Elastómeros'},
+        'metal': {'en': 'Metals', 'de': 'Metalle', 'es': 'Metales'},
+        'cross': {'en': 'Cross-Family', 'de': 'Familienübergreifend', 'es': 'Entre familias'},
+    },
+}
+
+
 def patch_index(lang, changed, check):
-    """The list of comparisons on the compare index."""
+    """The list of comparisons on the compare index: popular cards + grouped browse list."""
     rel = base(lang).lstrip('/') + 'index.html'
     with open(os.path.join(ROOT, rel), encoding='utf-8') as f:
         text = f.read()
@@ -432,9 +483,13 @@ def patch_index(lang, changed, check):
     if not m:
         print('no comparison list in', rel)
         return
+    # Popular comparisons (the original legacy set)
+    popular = [p for p in PAIRS if frozenset((p[0], p[1])) in _POPULAR_KEYS]
     cards = ''
-    for p in PAIRS:
+    for p in popular:
         st = cs.pair_stats(p[0], p[1])
+        if not st['n']:
+            continue
         cards += ('<a href="%s" class="bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-300 '
                   'hover:shadow-sm transition-all">\n'
                   '                    <h3 class="text-lg font-bold text-gray-900 mb-1">%s %s %s</h3>\n'
@@ -442,7 +497,38 @@ def patch_index(lang, changed, check):
                   '                </a>\n                ') % (
             url_of(p, lang), esc(material_name(p[0], lang)), s('vs', lang), esc(material_name(p[1], lang)),
             esc(s('card', lang, p=round(100 * st['same'] / st['n']), n=st['n'])))
-    write(rel, text[:m.start()] + cards + text[m.end():], changed, check)
+
+    # Grouped browse list of ALL pairs by family combination
+    groups = {}
+    for p in PAIRS:
+        fa = rd.MATERIALS[p[0]][1]
+        fb = rd.MATERIALS[p[1]][1]
+        key = fa if fa == fb else 'cross'
+        groups.setdefault(key, []).append(p)
+    browse = '\n'
+    for fam_key in list(rd.FAMILIES) + ['cross']:
+        if fam_key not in groups:
+            continue
+        fam_name = S_INDEX['family_h'][fam_key][lang]
+        browse += '<h3 class="text-lg font-semibold text-gray-800 mt-6 mb-2">%s</h3>\n' % esc(fam_name)
+        browse += '<div class="grid md:grid-cols-3 gap-2">\n'
+        for p in groups[fam_key]:
+            st = cs.pair_stats(p[0], p[1])
+            if not st['n']:
+                continue
+            browse += ('<a href="%s" class="bg-white p-3 rounded-lg border border-gray-200 hover:border-blue-300 '
+                       'hover:shadow-sm transition-all text-sm">'
+                       '<span class="font-semibold text-gray-900">%s %s %s</span>'
+                       '</a>\n') % (
+                url_of(p, lang), esc(material_name(p[0], lang)), s('vs', lang), esc(material_name(p[1], lang)))
+        browse += '</div>\n'
+
+    all_section = ('\n            </div>\n'
+                   '            <details class="mt-8"><summary class="text-xl font-bold text-gray-900 cursor-pointer">'
+                   '%s (%d)</summary>\n%s</details>\n        '
+                   ) % (esc(S_INDEX['all_h'][lang]), len(PAIRS), browse)
+
+    write(rel, text[:m.start()] + cards + all_section + text[m.end():], changed, check)
 
 
 def main():
