@@ -850,6 +850,25 @@ def pair_page(lang, slug, page, chem, mat, chrome):
         'dateModified': CONTENT_UPDATED,
         'isPartOf': {'@type': 'WebSite', 'name': 'ChemicalResistance.org', 'url': SITE + '/'},
     }]
+    if rated and lang in INDEXED_LANGS:
+        n_concs = len(rated)
+        pair_ld.append({
+            '@context': 'https://schema.org', '@type': 'Dataset',
+            'name': '%s resistance of %s' % (name, mname) if lang == 'en'
+                    else t('h1_pair', lang, mat=mname, chem=name),
+            'url': url, 'inLanguage': lang,
+            'description': 'Chemical resistance rating of %s against %s at 20 °C and 50 °C for %d concentration(s).' % (
+                mname, name, n_concs) if lang == 'en'
+                else desc,
+            'dateModified': CONTENT_UPDATED,
+            'variableMeasured': ['Resistance rating at 20 °C', 'Resistance rating at 50 °C'],
+            'creator': {'@type': 'Organization', 'name': 'ChemicalResistance.org', 'url': SITE + '/'},
+            'license': 'https://creativecommons.org/licenses/by-nc/4.0/',
+            'isBasedOn': {'@type': 'CreativeWork',
+                          'name': 'Beständigkeitsliste (chemical resistance list)',
+                          'publisher': {'@type': 'Organization', 'name': 'Bürkle GmbH',
+                                        'url': 'https://www.buerkle.de'}},
+        })
     header, footer = chrome[lang]
     out = [head(lang, title, desc, url, robots, [], pair_ld), header]
     out.append('''
@@ -883,6 +902,14 @@ def pair_page(lang, slug, page, chem, mat, chrome):
             esc(t('pair_rating_h', lang)), esc(t('pair_nodata', lang))))
 
     out.append(corrections(lang, chem, only=mat))
+
+    # Mini-chart: how this material ranks among all 24
+    mini_svg = diagrams.pair_mini_chart(lang, name, chem, mat, pv)
+    mini_cap = t('fig_pair_chart_cap', lang)
+    out.append('<section class="cr-card"><h2>%s</h2>'
+               '<figure class="cr-fig">%s%s<figcaption>%s</figcaption></figure></section>' % (
+                   esc(t('fig_pair_chart', lang)), mini_svg, diagrams.grade_key(lang),
+                   esc(mini_cap)))
 
     good = by_priority([m for m, r in pv['ratings'].items() if r.get('w20') in ('A', 'B') and m != mat])
     if good:

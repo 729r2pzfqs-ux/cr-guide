@@ -51,6 +51,15 @@ NOTE = {
 CHEMICALS_WORD = {'en': 'Chemicals', 'de': 'Chemikalien', 'es': 'químicos', 'fr': 'produits',
                   'pt': 'químicos', 'zh': '种化学品'}
 
+SHOW_ALL_TEXT = {
+    'en': 'Show all {n} chemicals',
+    'de': 'Alle {n} Chemikalien anzeigen',
+    'es': 'Mostrar los {n} químicos',
+    'fr': 'Afficher les {n} produits',
+    'pt': 'Mostrar todos os {n} químicos',
+    'zh': '显示全部 {n} 种化学品',
+}
+
 FILTER_SCRIPT = '''<script>
     (function () {
         var rows = [].slice.call(document.querySelectorAll('#chemTable tr[data-s]'));
@@ -58,19 +67,29 @@ FILTER_SCRIPT = '''<script>
         var rating = document.getElementById('ratingFilter');
         var temp = document.getElementById('tempFilter');
         var count = document.getElementById('resultCount');
+        var expanded = false;
+        function expand() {
+            if (expanded) return;
+            expanded = true;
+            rows.forEach(function (tr) { tr.removeAttribute('data-lazy'); });
+            var btn = document.getElementById('cr-show-all');
+            if (btn) btn.style.display = 'none';
+        }
         function apply() {
             var q = search ? search.value.toLowerCase() : '';
             var r = rating ? rating.value : 'all';
+            if (q || r !== 'all') expand();
             var key = temp && temp.value === 'c50' ? 'g50' : 'g20';
             var n = 0;
             rows.forEach(function (tr) {
+                if (!expanded && tr.hasAttribute('data-lazy')) return;
                 var g = tr.getAttribute('data-' + key) || '';
                 var ok = (!q || tr.getAttribute('data-s').indexOf(q) > -1) &&
                     (r === 'all' || (r === 'AB' ? (g === 'A' || g === 'B') : g === r));
                 tr.style.display = ok ? '' : 'none';
                 if (ok) n++;
             });
-            if (count) count.textContent = n;
+            if (count) count.textContent = expanded ? n : n + '+';
         }
         if (search) search.addEventListener('input', apply);
         if (rating) rating.addEventListener('change', apply);
@@ -240,15 +259,36 @@ def patch(path, lang, code, chems, links, trans):
     columns = columns_of(thead)
     rows, stats, rated = build_rows(code, lang, columns, chems, links, trans)
     table_open = re.sub(r'\s+id="chemTable"', '', re.match(r'<table[^>]*>', table).group(0))
+    # Lazy-load: hide rows beyond the first 50 behind a button
+    LAZY_LIMIT = 50
+    if len(rows) > LAZY_LIMIT:
+        visible = rows[:LAZY_LIMIT]
+        hidden = rows[LAZY_LIMIT:]
+        for i, row in enumerate(hidden):
+            hidden[i] = row.replace('<tr ', '<tr style="display:none" data-lazy="1" ', 1)
+        all_rows = visible + hidden
+    else:
+        all_rows = rows
     new_table = '%s\n%s\n<tbody id="chemTable" class="divide-y divide-gray-100">\n%s\n</tbody>\n</table>' % (
-        table_open, thead, '\n'.join(rows))
+        table_open, thead, '\n'.join(all_rows))
     page = page[:m.start()] + new_table + page[m.end():]
 
-    # note under the table
+    # note under the table (and clean up previous show-all button)
+    page = re.sub(r'\s*<div id="cr-show-all"[^>]*>[\s\S]*?</div>', '', page)
     page = re.sub(r'\s*<p id="cr-table-note"[^>]*>[\s\S]*?</p>', '', page)
+    # Show-all button when lazy-loaded
+    show_all_btn = ''
+    if len(rows) > LAZY_LIMIT:
+        btn_text = SHOW_ALL_TEXT.get(lang, SHOW_ALL_TEXT['en']).format(n=len(rows))
+        show_all_btn = ('\n<div id="cr-show-all" style="text-align:center;padding:.75rem">'
+                        '<button onclick="document.querySelectorAll(\'#chemTable tr[data-lazy]\').forEach('
+                        'function(r){r.style.display=\'\';r.removeAttribute(\'data-lazy\')});'
+                        'this.parentElement.style.display=\'none\'" '
+                        'style="background:#059669;color:#fff;padding:.5rem 1.5rem;border-radius:.5rem;'
+                        'border:none;cursor:pointer;font-size:.9rem;font-weight:600">%s</button></div>' % esc(btn_text))
     note = '\n<p id="cr-table-note" class="px-4 py-3 text-xs text-gray-500">%s</p>' % esc(NOTE[lang])
     end = page.index('</table>', m.start()) + len('</table>')
-    page = page[:end] + note + page[end:]
+    page = page[:end] + show_all_btn + note + page[end:]
 
     # counts
     for g in 'ABCD':

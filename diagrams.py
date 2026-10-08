@@ -343,6 +343,59 @@ def overlay(lang, name_a, name_b, prof_a, prof_b, class_name, min_rows, good_sha
     return _svg(y - 6, title, '. '.join(desc) + '.', ''.join(body))
 
 
+def pair_mini_chart(lang, chem_name, chem, mat, pv):
+    """Small bar chart showing all 24 materials ranked by 20 °C grade for this
+    chemical, with the current material highlighted. Returns (svg, key)."""
+    ratings = pv['ratings']
+    items = []
+    for m in rd.MATERIALS:
+        r = ratings.get(m)
+        g = r['w20'] if r and r.get('w20') else None
+        items.append((m, g))
+    # sort: A first, then B, C, D, None
+    rank = {'A': 0, 'B': 1, 'C': 2, 'D': 3, None: 4}
+    items.sort(key=lambda x: (rank.get(x[1], 4), x[0]))
+
+    bar_w = 10
+    gap = 2
+    left = 0
+    top = 14
+    bar_h = 40
+    total_w = left + len(items) * (bar_w + gap) - gap
+    height = top + bar_h + 24
+
+    body = []
+    desc_parts = []
+    for i, (m, g) in enumerate(items):
+        x = left + i * (bar_w + gap)
+        h = {None: 5, 'D': 10, 'C': 20, 'B': 30, 'A': 40}[g]
+        y = top + bar_h - h
+        fill = GRADE_FILL[g]
+        mname = material_name(m, lang)
+        grade_label = g or '–'
+        is_current = m == mat
+        tip = '%s: %s' % (mname, grade_label)
+        stroke = ' stroke="#111827" stroke-width="1.5"' if is_current else ''
+        body.append('<g><title>%s</title>'
+                    '<rect x="%.1f" y="%d" width="%d" height="%d" rx="1" fill="%s"%s/>'
+                    '</g>' % (esc(tip), x, y, bar_w, h, fill, stroke))
+        if is_current:
+            # label below the highlighted bar
+            body.append(_text(x + bar_w / 2, top + bar_h + 11,
+                              short_name(m, lang), 8, INK, 'middle', '700'))
+            desc_parts.insert(0, '%s: %s (highlighted)' % (mname, grade_label))
+        else:
+            desc_parts.append('%s: %s' % (mname, grade_label))
+    title = '%s: %s' % (chem_name, t('fig_pair_chart', lang))
+    svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d" role="img" '
+           'aria-labelledby="fg%dt fg%dd" style="display:block;width:100%%;max-width:400px;height:auto" %s>'
+           '<title id="fg%dt">%s</title><desc id="fg%dd">%s</desc>%s</svg>') % (
+        total_w, height, _counter[0] + 1, _counter[0] + 1, FONT,
+        _counter[0] + 1, esc(title), _counter[0] + 1, esc('; '.join(desc_parts[:6]) + '.'), ''.join(body))
+    _counter[0] += 1
+    return svg
+
+
 def series_key(name_a, name_b):
     return '<div class="cr-key"><span><i style="background:%s"></i>%s</span><span><i style="background:%s"></i>%s</span></div>' % (
         SERIES[0], esc(name_a), SERIES[1], esc(name_b))

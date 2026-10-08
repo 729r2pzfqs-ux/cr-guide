@@ -573,6 +573,17 @@ T = {
         'pt': 'Classificação a 20 °C. Um traço indica menos de {n} linhas classificadas nessa classe.',
         'zh': '20 °C 下的等级。短横线表示该类别中有等级的数据行少于 {n} 行。'},
     'list_sep': {'en': ', ', 'de': ', ', 'es': ', ', 'fr': ', ', 'pt': ', ', 'zh': '、'},
+    'fig_pair_chart': {
+        'en': 'Material comparison at 20 °C', 'de': 'Werkstoffvergleich bei 20 °C',
+        'es': 'Comparación de materiales a 20 °C', 'fr': 'Comparaison des matériaux à 20 °C',
+        'pt': 'Comparação de materiais a 20 °C', 'zh': '20 °C 材料对比'},
+    'fig_pair_chart_cap': {
+        'en': 'Each bar is one material. Taller bars indicate better resistance. The highlighted bar is the current material.',
+        'de': 'Jeder Balken steht für einen Werkstoff. Höhere Balken bedeuten bessere Beständigkeit. Der hervorgehobene Balken ist der aktuelle Werkstoff.',
+        'es': 'Cada barra representa un material. Las barras más altas indican mejor resistencia. La barra resaltada es el material actual.',
+        'fr': 'Chaque barre représente un matériau. Les barres plus hautes indiquent une meilleure résistance. La barre mise en évidence est le matériau actuel.',
+        'pt': 'Cada barra representa um material. Barras mais altas indicam melhor resistência. A barra destacada é o material atual.',
+        'zh': '每根柱子代表一种材料。越高表示耐受性越好。高亮柱子是当前材料。'},
 }
 
 #: English material notes for pair pages: service limits and known weaknesses.
