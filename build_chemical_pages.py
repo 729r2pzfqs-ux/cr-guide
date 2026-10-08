@@ -35,6 +35,7 @@ from collections import OrderedDict
 
 import analytics_head
 import diagrams
+import editorial_content
 import resistance_data as rd
 from redirect_stub import stub
 from page_i18n import (INDEXED_LANGS, LANGS, conc_label, hazard_text, material_full,
@@ -910,6 +911,11 @@ def pair_page(lang, slug, page, chem, mat, chrome):
                '<figure class="cr-fig">%s%s<figcaption>%s</figcaption></figure></section>' % (
                    esc(t('fig_pair_chart', lang)), mini_svg, diagrams.grade_key(lang),
                    esc(mini_cap)))
+
+    # Editorial content — unique, data-driven paragraphs for indexed languages
+    ed = editorial_content.editorial_html(lang, slug, page, chem, mat)
+    if ed:
+        out.append(ed)
 
     good = by_priority([m for m, r in pv['ratings'].items() if r.get('w20') in ('A', 'B') and m != mat])
     if good:
