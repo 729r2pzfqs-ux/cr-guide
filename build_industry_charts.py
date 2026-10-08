@@ -46,18 +46,91 @@ STYLES = '''    <style>
         .diff-row { background: #fffbeb; }
     </style>'''
 
-SHARED_JS = r'''
-    const ratingMap = { '1':'A', '2':'B', '3':'C', '4':'D', '0':'NR' };
+CONC_MAP = {
+    'en': {
+        'wässrig': 'Aqueous', 'gesättigt': 'Saturated', 'verdünnt': 'Diluted',
+        'konz.': 'Concentrated', 'konzentriert': 'Concentrated', 'rein': 'Pure',
+        'techn. rein': 'Technical Grade', 'jede': 'Any', 'gering': 'Low',
+        'flüssig': 'Liquid', 'gasförmig': 'Gaseous', 'geschmolzen': 'Molten',
+        'trocken': 'Dry', 'feucht': 'Wet/Moist', 'fest': 'Solid',
+        'Pulver': 'Powder', 'gemahlen': 'Ground', 'ölhaltig': 'Oil-containing',
+        'sulfuriert': 'Sulfurized', 'kalt': 'Cold', 'heiß': 'Hot', 'heiss': 'Hot',
+        'siedend': 'Boiling', 'handelsüblich': 'Commercial Grade',
+    },
+    'de': {},  # source data is already German
+    'es': {
+        'wässrig': 'Acuoso', 'gesättigt': 'Saturado', 'verdünnt': 'Diluido',
+        'konz.': 'Concentrado', 'konzentriert': 'Concentrado', 'rein': 'Puro',
+        'techn. rein': 'Grado técnico', 'jede': 'Cualquiera', 'gering': 'Bajo',
+        'flüssig': 'Líquido', 'gasförmig': 'Gaseoso', 'geschmolzen': 'Fundido',
+        'trocken': 'Seco', 'feucht': 'Húmedo', 'fest': 'Sólido',
+        'Pulver': 'Polvo', 'gemahlen': 'Molido', 'ölhaltig': 'Oleoso',
+        'sulfuriert': 'Sulfurado', 'kalt': 'Frío', 'heiß': 'Caliente', 'heiss': 'Caliente',
+        'siedend': 'Hirviendo', 'handelsüblich': 'Grado comercial',
+    },
+}
 
+
+def _shared_js(lang):
+    """Return the shared JS block with language-appropriate translateConc and translateName."""
+    conc_entries = CONC_MAP.get(lang, {})
+    if conc_entries:
+        pairs = ','.join("'%s':'%s'" % (k, v) for k, v in conc_entries.items())
+        translate_conc = r'''
+    function translateConc(conc) {
+        if (!conc) return '&mdash;';
+        var map = {%s};
+        for (var de in map) {
+            if (conc.toLowerCase().indexOf(de.toLowerCase()) !== -1) {
+                conc = conc.replace(new RegExp(de, 'gi'), map[de]);
+            }
+        }
+        return conc;
+    }''' % pairs
+    else:
+        # German: source data is already in German, pass through
+        translate_conc = r'''
     function translateConc(conc) {
         if (!conc) return '&mdash;';
         return conc;
+    }'''
+
+    if lang == 'en':
+        translate_name = r'''
+    function translateName(n) {
+        return n;
     }
+    function displayName(c) {
+        return c.name_en || c.name;
+    }'''
+    elif lang == 'de':
+        translate_name = r'''
+    function translateName(n) {
+        return n;
+    }
+    function displayName(c) {
+        return c.name;
+    }'''
+    else:
+        translate_name = r'''
+    function translateName(n) {
+        var lower = n.toLowerCase();
+        if (typeof chemicalTranslations !== 'undefined' && chemicalTranslations[lower]) return chemicalTranslations[lower];
+        return n;
+    }
+    function displayName(c) {
+        return translateName(c.name);
+    }'''
+
+    return r'''
+    const ratingMap = { '1':'A', '2':'B', '3':'C', '4':'D', '0':'NR' };
+%(translate_conc)s
+%(translate_name)s
 
     function getRating(c, matKey, temp) {
         return ratingMap[c.ratings[matKey]?.[temp]] || 'NR';
     }
-'''
+''' % dict(translate_conc=translate_conc, translate_name=translate_name)
 
 MAT_KEY_TO_DIR = {
     'AL': 'aluminium', 'ECTFE_ETFE': 'ectfe-etfe', 'EPDM': 'epdm', 'FEP': 'fep',
@@ -688,6 +761,7 @@ def build_chart_page(chart, lang, all_charts):
 
 %(footer)s
 
+    %(translations_script)s
     <script>
     var MATS = %(mat_js)s;
     %(shared_js)s
@@ -726,8 +800,8 @@ def build_chart_page(chart, lang, all_charts):
 
         filtered = chemicals.filter(function(c) {
             if (query) {
-                var name = c.name.toLowerCase();
-                if (!name.includes(query) && !(c.cas && c.cas.includes(query))) return false;
+                var name = displayName(c).toLowerCase();
+                if (!name.includes(query) && !c.name.toLowerCase().includes(query) && !(c.cas && c.cas.includes(query))) return false;
             }
             if (filter === 'diff') return hasDiff(c, temp);
             if (filter === 'any-A') return MATS.some(function(m) { return getRating(c, m.key, temp) === 'A'; });
@@ -743,7 +817,7 @@ def build_chart_page(chart, lang, all_charts):
             var aDiff = hasDiff(a, temp) ? 0 : 1;
             var bDiff = hasDiff(b, temp) ? 0 : 1;
             if (aDiff !== bDiff) return aDiff - bDiff;
-            return a.name.localeCompare(b.name);
+            return displayName(a).localeCompare(displayName(b), '%(lang)s');
         });
 
         displayCount = 80;
@@ -760,6 +834,7 @@ def build_chart_page(chart, lang, all_charts):
         document.getElementById('loadMore').classList.toggle('hidden', displayCount >= filtered.length);
 
         tbody.innerHTML = toShow.map(function(c) {
+            var name = displayName(c);
             var conc = translateConc(c.concentration);
             var isDiff = hasDiff(c, temp);
             var rowClass = (highlight && isDiff) ? 'diff-row hover:bg-amber-100' : 'hover:bg-gray-50';
@@ -771,7 +846,9 @@ def build_chart_page(chart, lang, all_charts):
             }
 
             return '<tr class="' + rowClass + '">'
-                + '<td class="py-2 px-4 text-sm sticky left-0 z-10 bg-white"><div class="font-medium text-gray-900">' + c.name + '</div></td>'
+                + '<td class="py-2 px-4 text-sm sticky left-0 z-10 bg-white"><div class="font-medium text-gray-900">' + name + '</div>'
+                + (name !== c.name ? '<div class="text-xs text-gray-400">' + c.name + '</div>' : '')
+                + '</td>'
                 + '<td class="py-2 px-3 text-xs text-gray-500">' + conc + '</td>'
                 + cells + '</tr>';
         }).join('');
@@ -805,7 +882,9 @@ def build_chart_page(chart, lang, all_charts):
         th_cols=th_cols, load_more=i['load_more'][lang], faq_h=i['faq_h'][lang],
         faq_html=faq_html, more_charts=i['more_charts'][lang],
         cross_links=cross_links, footer=i['footer'][lang],
-        mat_js=mat_js, shared_js=SHARED_JS, cf_beacon=CF_BEACON,
+        translations_script=('<script src="/js/chemical_translations_%s.js"></script>' % lang
+                              if lang != 'de' else ''),
+        mat_js=mat_js, shared_js=_shared_js(lang), cf_beacon=CF_BEACON,
     )
 
 
