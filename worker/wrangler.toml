@@ -1,0 +1,16 @@
+name = "chemicalresistance-redirects"
+main = "src/worker.js"
+compatibility_date = "2024-09-01"
+
+# Route: all requests to chemicalresistance.org go through this Worker
+# The Worker passes non-matching URLs through to origin (GitHub Pages)
+routes = [
+  { pattern = "chemicalresistance.org/*", zone_name = "chemicalresistance.org" }
+]
+
+# KV namespace for redirect mappings
+# After creating the namespace, replace the id below with your actual namespace ID.
+# Create it with:  npx wrangler kv namespace create REDIRECTS
+[[kv_namespaces]]
+binding = "REDIRECTS"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
