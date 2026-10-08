@@ -12,6 +12,7 @@ so that builds are reproducible.
 """
 
 import hashlib
+import html as html_mod
 import re
 
 import resistance_data as rd
@@ -232,8 +233,14 @@ def _det_hash(slug, mat_code):
     return int(h, 16)
 
 
+_classify_cache = {}
+
 def _classify_chemical(chem):
     """Return a list of matching categories for a chemical, ordered by priority."""
+    key = chem['name_de']
+    cached = _classify_cache.get(key)
+    if cached is not None:
+        return cached
     search = ' '.join([
         chem['name_de'].lower(), chem['name_en'].lower(),
         (chem.get('formula') or '').lower(),
@@ -252,7 +259,9 @@ def _classify_chemical(chem):
             cats.append('oxidizer')
         if chem.get('flammable'):
             cats.append('solvent')
-    return cats or ['salt']  # default fallback
+    result = cats or ['salt']  # default fallback
+    _classify_cache[key] = result
+    return result
 
 
 def _worst_rating(ratings_list):
@@ -306,10 +315,20 @@ def _conc_range_text(chem, mat, lang):
     return concs
 
 
+def _get_primary_variant():
+    """Lazy import to break circular dependency."""
+    global _primary_variant_fn
+    try:
+        return _primary_variant_fn
+    except NameError:
+        from build_chemical_pages import primary_variant
+        _primary_variant_fn = primary_variant
+        return _primary_variant_fn
+
+
 def _alternatives_rated_a(chem, mat):
     """Materials rated A for this chemical that are NOT the current material."""
-    from build_chemical_pages import primary_variant
-    pv = primary_variant(chem)
+    pv = _get_primary_variant()(chem)
     return [m for m, r in pv['ratings'].items()
             if r.get('w20') == 'A' and m != mat]
 
@@ -490,10 +509,14 @@ def _application_context(lang, chem, mat, chem_name, mat_short, slug):
 
     # Pick two distinct industries deterministically
     ind_list = industries.get(lang, industries['en'])
-    ind = ind_list[h % len(ind_list)]
-    ind2 = ind_list[(h // 7) % len(ind_list)]
-    while ind2 == ind and len(ind_list) > 1:
-        ind2 = ind_list[(h // 13) % len(ind_list)]
+    idx1 = h % len(ind_list)
+    idx2 = (h // 7) % len(ind_list)
+    if idx2 == idx1 and len(ind_list) > 1:
+        idx2 = (h // 13) % len(ind_list)
+        if idx2 == idx1:                       # avoid infinite loop
+            idx2 = (idx1 + 1) % len(ind_list)
+    ind = ind_list[idx1]
+    ind2 = ind_list[idx2]
 
     # Hazard context
     hazard = chem.get('hazard', '')
@@ -538,8 +561,7 @@ def _application_context(lang, chem, mat, chem_name, mat_short, slug):
 
 def _practical_recommendation(lang, chem, mat, chem_name, mat_short, slug):
     """§3: Practical recommendation based on overall rating."""
-    from build_chemical_pages import primary_variant
-    pv = primary_variant(chem)
+    pv = _get_primary_variant()(chem)
     r = pv['ratings'].get(mat)
     if not r:
         if lang == 'en':
@@ -856,7 +878,6 @@ def editorial_html(lang, slug, page, chem, mat):
     chem_name = page['names'][lang]
     mat_short = material_name(mat, lang)
 
-    import html as html_mod
     esc = lambda s: html_mod.escape(str(s), quote=True)
 
     p1 = _conc_guidance(lang, chem, mat, chem_name, mat_short, slug)
