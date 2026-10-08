@@ -42,7 +42,7 @@ from page_i18n import (INDEXED_LANGS, LANGS, conc_label, hazard_text, material_f
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://chemicalresistance.org'
-CONTENT_UPDATED = '2026-09-29'
+CONTENT_UPDATED = '2026-10-08'
 
 # Googlebot-only noindex: tells Google not to index a page while keeping
 # it visible to Bing, DuckDuckGo, Yahoo and other engines (which deliver
@@ -573,6 +573,145 @@ def corrections(lang, chem, only=None):
         esc(t('corrections_h', lang)), ''.join(rows), esc(t('source_scale', lang)))
 
 
+FAQ_STRINGS = {
+    'q_best_materials': {
+        'en': 'Which materials resist {chem} at high concentrations?',
+        'de': 'Welche Werkstoffe sind gegen {chem} bei hohen Konzentrationen beständig?',
+        'es': '¿Qué materiales resisten {chem} a altas concentraciones?',
+    },
+    'a_best_materials': {
+        'en': 'The materials with an A rating (resistant) for {chem} at 20 °C are: {mats}. These can generally be used in direct contact.',
+        'de': 'Die Werkstoffe mit einer Bewertung A (beständig) für {chem} bei 20 °C sind: {mats}. Diese können in der Regel im direkten Kontakt verwendet werden.',
+        'es': 'Los materiales con clasificación A (resistente) para {chem} a 20 °C son: {mats}. Estos pueden usarse en contacto directo.',
+    },
+    'q_avoid': {
+        'en': 'Which materials should be avoided with {chem}?',
+        'de': 'Welche Werkstoffe sollten bei {chem} vermieden werden?',
+        'es': '¿Qué materiales deben evitarse con {chem}?',
+    },
+    'a_avoid': {
+        'en': 'Materials rated D (not resistant) for {chem} are: {mats}. These should not be used in contact with {chem}.',
+        'de': 'Werkstoffe mit der Bewertung D (nicht beständig) für {chem} sind: {mats}. Diese sollten nicht in Kontakt mit {chem} verwendet werden.',
+        'es': 'Los materiales con clasificación D (no resistente) para {chem} son: {mats}. Estos no deben usarse en contacto con {chem}.',
+    },
+    'q_temp': {
+        'en': 'Does temperature affect chemical resistance to {chem}?',
+        'de': 'Beeinflusst die Temperatur die Beständigkeit gegenüber {chem}?',
+        'es': '¿Afecta la temperatura la resistencia química a {chem}?',
+    },
+    'a_temp_yes': {
+        'en': 'Yes. {n} of {total} tested materials show a worse rating at 50 °C than at 20 °C for {chem}. Materials affected include: {mats}.',
+        'de': 'Ja. {n} von {total} getesteten Werkstoffen zeigen bei 50 °C eine schlechtere Bewertung als bei 20 °C für {chem}. Betroffene Werkstoffe: {mats}.',
+        'es': 'Sí. {n} de {total} materiales ensayados muestran peor clasificación a 50 °C que a 20 °C para {chem}. Materiales afectados: {mats}.',
+    },
+    'a_temp_no': {
+        'en': 'For {chem}, all tested materials maintain the same rating at both 20 °C and 50 °C.',
+        'de': 'Für {chem} behalten alle getesteten Werkstoffe bei 20 °C und 50 °C die gleiche Bewertung.',
+        'es': 'Para {chem}, todos los materiales ensayados mantienen la misma clasificación a 20 °C y 50 °C.',
+    },
+    'q_best_mat': {
+        'en': 'Is {mat} safe for {chem}?',
+        'de': 'Ist {mat} sicher für {chem}?',
+        'es': '¿Es {mat} seguro para {chem}?',
+    },
+    'a_best_mat': {
+        'en': '{mat} is rated {grade} for {chem} at 20 °C{extra}. A rating of A means resistant, B means limited resistance, C means partly resistant, and D means not resistant.',
+        'de': '{mat} wird für {chem} bei 20 °C mit {grade} bewertet{extra}. A bedeutet beständig, B eingeschränkt beständig, C teilweise beständig und D nicht beständig.',
+        'es': '{mat} tiene clasificación {grade} para {chem} a 20 °C{extra}. A significa resistente, B resistencia limitada, C parcialmente resistente y D no resistente.',
+    },
+    'q_conc': {
+        'en': 'Does concentration affect chemical resistance to {chem}?',
+        'de': 'Beeinflusst die Konzentration die Beständigkeit gegenüber {chem}?',
+        'es': '¿Afecta la concentración la resistencia química a {chem}?',
+    },
+    'a_conc': {
+        'en': 'Yes. {chem} is tested at {k} concentrations ({concs}). Some materials change their rating depending on the concentration.',
+        'de': 'Ja. {chem} wird bei {k} Konzentrationen getestet ({concs}). Einige Werkstoffe ändern ihre Bewertung je nach Konzentration.',
+        'es': 'Sí. {chem} se ensaya a {k} concentraciones ({concs}). Algunos materiales cambian su clasificación según la concentración.',
+    },
+    'faq_h': {
+        'en': 'Frequently Asked Questions',
+        'de': 'Häufig gestellte Fragen',
+        'es': 'Preguntas frecuentes',
+    },
+}
+
+
+def chemical_faq(lang, name, chem, pv):
+    """Generate FAQ items from the ratings data. Returns (faq_items, faq_html).
+    faq_items is a list of (question, answer) for JSON-LD.
+    faq_html is the visible FAQ section."""
+    if lang not in ('en', 'de', 'es'):
+        return [], ''
+    ratings = pv['ratings']
+    sep = t('list_sep', lang)
+    faqs = []
+
+    # Q1: best materials (A-rated)
+    a_mats = by_priority([m for m, r in ratings.items() if r.get('w20') == 'A'])
+    if a_mats:
+        q = FAQ_STRINGS['q_best_materials'][lang].format(chem=name)
+        a = FAQ_STRINGS['a_best_materials'][lang].format(
+            chem=name, mats=sep.join(material_name(m, lang) for m in a_mats[:8]))
+        faqs.append((q, a))
+
+    # Q2: materials to avoid (D-rated)
+    d_mats = by_priority([m for m, r in ratings.items() if r.get('w20') == 'D'])
+    if d_mats:
+        q = FAQ_STRINGS['q_avoid'][lang].format(chem=name)
+        a = FAQ_STRINGS['a_avoid'][lang].format(
+            chem=name, mats=sep.join(material_name(m, lang) for m in d_mats[:8]))
+        faqs.append((q, a))
+
+    # Q3: temperature effect
+    worse = by_priority([m for m, r in ratings.items() if r.get('w20') and r.get('w50')
+                         and rd.GRADE_RANK[r['w50']] > rd.GRADE_RANK[r['w20']]])
+    total_both = sum(1 for r in ratings.values() if r.get('w20') and r.get('w50'))
+    if total_both:
+        q = FAQ_STRINGS['q_temp'][lang].format(chem=name)
+        if worse:
+            a = FAQ_STRINGS['a_temp_yes'][lang].format(
+                chem=name, n=len(worse), total=total_both,
+                mats=sep.join(material_name(m, lang) for m in worse[:6]))
+        else:
+            a = FAQ_STRINGS['a_temp_no'][lang].format(chem=name)
+        faqs.append((q, a))
+
+    # Q4: best-rated common material
+    for m in ['PTFE', 'HDPE', 'PP', 'PVDF', 'EPDM', 'V4A']:
+        r = ratings.get(m)
+        if r and r.get('w20'):
+            q = FAQ_STRINGS['q_best_mat'][lang].format(mat=material_name(m, lang), chem=name)
+            extra = ''
+            if r.get('w50') and r['w50'] != r['w20']:
+                extra = ' (%s %s)' % (r['w50'], t('at50', lang))
+            a = FAQ_STRINGS['a_best_mat'][lang].format(
+                mat=material_name(m, lang), chem=name, grade=r['w20'], extra=extra)
+            faqs.append((q, a))
+            break
+
+    # Q5: concentration effect (only if multiple variants)
+    if len(chem['variants']) > 1:
+        concs = sep.join(variant_label(v, lang) for v in chem['variants'])
+        q = FAQ_STRINGS['q_conc'][lang].format(chem=name)
+        a = FAQ_STRINGS['a_conc'][lang].format(chem=name, k=len(chem['variants']), concs=concs)
+        faqs.append((q, a))
+
+    if not faqs:
+        return [], ''
+
+    # Build visible HTML
+    html_items = []
+    for q, a in faqs:
+        html_items.append(
+            '<details><summary style="cursor:pointer;font-weight:600;color:#111827;padding:.5rem 0">'
+            '%s</summary><p style="color:#374151;padding:0 0 .75rem;margin:0">%s</p></details>'
+            % (esc(q), esc(a)))
+    faq_html = ('<section class="cr-card"><h2>%s</h2>%s</section>'
+                % (esc(FAQ_STRINGS['faq_h'][lang]), '\n'.join(html_items)))
+    return faqs, faq_html
+
+
 def chemical_page(lang, slug, page, chem, chrome, similar, pages):
     name = page['names'][lang]
     pv = primary_variant(chem)
@@ -610,6 +749,14 @@ def chemical_page(lang, slug, page, chem, chrome, similar, pages):
                           'publisher': {'@type': 'Organization', 'name': 'Bürkle GmbH',
                                         'url': 'https://www.buerkle.de'}},
         })
+    faq_items, faq_html = chemical_faq(lang, name, chem, pv)
+    if faq_items:
+        ld.append({
+            '@context': 'https://schema.org', '@type': 'FAQPage',
+            'mainEntity': [{'@type': 'Question', 'name': q,
+                            'acceptedAnswer': {'@type': 'Answer', 'text': a}}
+                           for q, a in faq_items],
+        })
     header, footer = chrome[lang]
 
     lead = t('lead_chem', lang, n=n_mats)
@@ -641,6 +788,8 @@ def chemical_page(lang, slug, page, chem, chrome, similar, pages):
         out.append(variant_table(lang, slug, name, chem, v, i + 1, i == 0))
     out.append('<section class="cr-card"><h2>%s</h2>%s</section>' % (esc(t('legend_h', lang)), legend(lang)))
     out.append(corrections(lang, chem))
+    if faq_html:
+        out.append(faq_html)
     out.append('<section class="cr-card"><h2>%s</h2><p>%s</p><p>%s</p></section>' % (
         esc(t('about_h', lang)), esc(t('about_p1', lang)), esc(t('about_p2', lang))))
     sim = similar.get(slug, [])
@@ -693,8 +842,16 @@ def pair_page(lang, slug, page, chem, mat, chrome):
         robots = ''                       # substantial content → fully indexed
     crumbs = [(t('home', lang), home_url(lang)), (t('chemicals', lang), chem_base(lang)),
               (name, chem_url(lang, slug)), (mname, pair_url(lang, slug, mat))]
+    pair_ld = [breadcrumb_ld(crumbs), {
+        '@context': 'https://schema.org', '@type': 'WebPage',
+        'name': t('h1_pair', lang, mat=mname, chem=name),
+        'description': desc, 'url': url,
+        'inLanguage': 'zh-Hans' if lang == 'zh' else lang,
+        'dateModified': CONTENT_UPDATED,
+        'isPartOf': {'@type': 'WebSite', 'name': 'ChemicalResistance.org', 'url': SITE + '/'},
+    }]
     header, footer = chrome[lang]
-    out = [head(lang, title, desc, url, robots, [], [breadcrumb_ld(crumbs)]), header]
+    out = [head(lang, title, desc, url, robots, [], pair_ld), header]
     out.append('''
     <section class="bg-gradient-to-b from-emerald-50 to-white px-4 py-8">
         <div class="max-w-4xl mx-auto">

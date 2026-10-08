@@ -28,7 +28,7 @@ from page_i18n import conc_label, material_full, material_name, material_note, t
 from redirect_stub import stub
 
 LANGS = ['en', 'de', 'es']
-CONTENT_UPDATED = '2026-09-29'
+CONTENT_UPDATED = '2026-10-08'
 MAX_DIFF_ROWS = 40
 
 # (material a, material b, {lang: slug}); slugs of the four older pages are kept
@@ -159,6 +159,110 @@ def class_gaps(pa, pb):
     return out
 
 
+COMPARE_FAQ = {
+    'q_more_resistant': {
+        'en': 'Is {a} or {b} more chemical-resistant?',
+        'de': 'Ist {a} oder {b} chemisch beständiger?',
+        'es': '¿Es más resistente químicamente {a} o {b}?',
+    },
+    'a_more_resistant': {
+        'en': 'Of {n} chemicals rated for both materials at 20 °C, {a} and {b} share the same rating in {same} rows ({p} %). {a} is rated better in {ka} rows and {b} in {kb} rows.',
+        'de': 'Von {n} Chemikalien, die bei 20 °C für beide Werkstoffe bewertet sind, haben {a} und {b} in {same} Zeilen ({p} %) die gleiche Bewertung. {a} ist in {ka} Zeilen besser, {b} in {kb}.',
+        'es': 'De {n} productos químicos clasificados para ambos materiales a 20 °C, {a} y {b} comparten la misma clasificación en {same} filas ({p} %). {a} tiene mejor clasificación en {ka} filas y {b} en {kb}.',
+    },
+    'q_acids': {
+        'en': 'Which material is better for acids, {a} or {b}?',
+        'de': 'Welcher Werkstoff ist besser für Säuren, {a} oder {b}?',
+        'es': '¿Qué material es mejor para ácidos, {a} o {b}?',
+    },
+    'q_solvents': {
+        'en': 'Which material is better for solvents, {a} or {b}?',
+        'de': 'Welcher Werkstoff ist besser für Lösungsmittel, {a} oder {b}?',
+        'es': '¿Qué material es mejor para disolventes, {a} o {b}?',
+    },
+    'a_class_lead': {
+        'en': 'For {cls}, {winner} has a higher share of A/B ratings: {wp} % rated A or B ({wn} rows) vs {lp} % for {loser} ({ln} rows).',
+        'de': 'Bei {cls} hat {winner} einen höheren Anteil an A/B-Bewertungen: {wp} % mit A oder B ({wn} Zeilen) gegenüber {lp} % für {loser} ({ln} Zeilen).',
+        'es': 'Para {cls}, {winner} tiene mayor proporción de clasificaciones A/B: {wp} % con A o B ({wn} filas) frente a {lp} % para {loser} ({ln} filas).',
+    },
+    'a_class_close': {
+        'en': 'For {cls}, both materials perform similarly — the difference in A/B rated rows is 10 percentage points or less.',
+        'de': 'Bei {cls} sind beide Werkstoffe vergleichbar – der Unterschied bei den A/B-Bewertungen beträgt höchstens 10 Prozentpunkte.',
+        'es': 'Para {cls}, ambos materiales se comportan de forma similar: la diferencia en filas con clasificación A/B es de 10 puntos porcentuales o menos.',
+    },
+    'q_compare': {
+        'en': 'How do {a} and {b} compare for chemical resistance?',
+        'de': 'Wie vergleichen sich {a} und {b} bei der chemischen Beständigkeit?',
+        'es': '¿Cómo se comparan {a} y {b} en resistencia química?',
+    },
+    'a_compare': {
+        'en': 'Based on {n} chemicals tested for both: {a} is rated better with {a_classes}. {b} is rated better with {b_classes}. They perform similarly with {close_classes}.',
+        'de': 'Basierend auf {n} Chemikalien, die für beide getestet wurden: {a} ist besser bei {a_classes}. {b} ist besser bei {b_classes}. Vergleichbar sind sie bei {close_classes}.',
+        'es': 'Según {n} productos químicos ensayados para ambos: {a} es mejor con {a_classes}. {b} es mejor con {b_classes}. Similares con {close_classes}.',
+    },
+    'faq_h': {
+        'en': 'Frequently Asked Questions',
+        'de': 'Häufig gestellte Fragen',
+        'es': 'Preguntas frecuentes',
+    },
+}
+
+
+def compare_faq(lang, na, nb, st, pa, pb, gaps, a_leads, b_leads, close_list):
+    """Generate FAQ items for a comparison page. Returns (faq_items, faq_html)."""
+    faqs = []
+    pct = round(100 * st['same'] / st['n']) if st['n'] else 0
+
+    # Q1: Which is more resistant?
+    q = COMPARE_FAQ['q_more_resistant'][lang].format(a=na, b=nb)
+    a = COMPARE_FAQ['a_more_resistant'][lang].format(
+        a=na, b=nb, n=st['n'], same=st['same'], p=pct,
+        ka=st['a_better'], kb=st['b_better'])
+    faqs.append((q, a))
+
+    # Q2: Which is better for acids?
+    acid_classes = [c for c in ['inorganic_acid', 'organic_acid'] if c in {g[1] for g in gaps}]
+    for cls_key, q_key in [('inorganic_acid', 'q_acids'), ('organic_solvent', 'q_solvents')]:
+        cls_gaps = [g for g in gaps if g[1] == cls_key]
+        if cls_gaps:
+            g = cls_gaps[0]
+            q = COMPARE_FAQ[q_key][lang].format(a=na, b=nb)
+            prof_a, prof_b = pa[cls_key], pb[cls_key]
+            if abs(g[0]) <= 10:
+                a = COMPARE_FAQ['a_class_close'][lang].format(cls=cs.class_name(cls_key, lang))
+            else:
+                winner, loser = (na, nb) if g[0] > 0 else (nb, na)
+                wp_prof, lp_prof = (prof_a, prof_b) if g[0] > 0 else (prof_b, prof_a)
+                a = COMPARE_FAQ['a_class_lead'][lang].format(
+                    cls=cs.class_name(cls_key, lang), winner=winner, loser=loser,
+                    wp=round(100 * cs.good_share(wp_prof)), wn=wp_prof['n'],
+                    lp=round(100 * cs.good_share(lp_prof)), ln=lp_prof['n'])
+            faqs.append((q, a))
+
+    # Q3: Overall comparison
+    if a_leads or b_leads or close_list:
+        q = COMPARE_FAQ['q_compare'][lang].format(a=na, b=nb)
+        a_cls = ', '.join(cs.class_name(c, lang) for _, c in a_leads[:4]) if a_leads else '–'
+        b_cls = ', '.join(cs.class_name(c, lang) for _, c in b_leads[:4]) if b_leads else '–'
+        c_cls = ', '.join(cs.class_name(c, lang) for c in close_list[:4]) if close_list else '–'
+        a = COMPARE_FAQ['a_compare'][lang].format(
+            n=st['n'], a=na, b=nb, a_classes=a_cls, b_classes=b_cls, close_classes=c_cls)
+        faqs.append((q, a))
+
+    if not faqs:
+        return [], ''
+
+    html_items = []
+    for q, a in faqs:
+        html_items.append(
+            '<details><summary style="cursor:pointer;font-weight:600;color:#111827;padding:.5rem 0">'
+            '%s</summary><p style="color:#374151;padding:0 0 .75rem;margin:0">%s</p></details>'
+            % (esc(q), esc(a)))
+    faq_html = ('<section class="cr-card"><h2>%s</h2>%s</section>'
+                % (esc(COMPARE_FAQ['faq_h'][lang]), '\n'.join(html_items)))
+    return faqs, faq_html
+
+
 def page(pair, lang, header, footer, links, trans):
     a, b, _ = pair
     na, nb = material_name(a, lang), material_name(b, lang)
@@ -188,6 +292,14 @@ def page(pair, lang, header, footer, links, trans):
         'description': desc, 'url': url, 'inLanguage': lang, 'dateModified': CONTENT_UPDATED,
         'isPartOf': {'@type': 'WebSite', 'name': 'ChemicalResistance.org', 'url': SITE + '/'},
     }]
+    faq_items, faq_html = compare_faq(lang, na, nb, st, pa, pb, gaps, a_leads, b_leads, close)
+    if faq_items:
+        ld.append({
+            '@context': 'https://schema.org', '@type': 'FAQPage',
+            'mainEntity': [{'@type': 'Question', 'name': q,
+                            'acceptedAnswer': {'@type': 'Answer', 'text': a}}
+                           for q, a in faq_items],
+        })
     diagrams.reset_ids()
     out = [head(lang, title, desc, url, '', alternates, ld), header]
     out.append('''
@@ -303,6 +415,8 @@ def page(pair, lang, header, footer, links, trans):
         for p in related)
     out.append('<section class="cr-card"><h2>%s</h2><div class="cr-links">%s</div></section>' % (
         esc(s('more_h', lang)), more))
+    if faq_html:
+        out.append(faq_html)
     out.append('<section class="cr-card"><h2>%s</h2><p>%s</p><p>%s</p></section>' % (
         esc(t('about_h', lang)), esc(t('about_p1', lang)), esc(t('about_p2', lang))))
     out.append('\n    </main>\n    %s\n</body>\n</html>\n' % footer)

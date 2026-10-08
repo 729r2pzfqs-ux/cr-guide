@@ -270,6 +270,19 @@ def patch(path, lang, code, chems, links, trans):
     if at > 0:
         page = page[:at] + fingerprint_block(code, lang) + page[at:]
 
+    # dateModified on the WebPage JSON-LD (only the block containing "WebPage")
+    def _add_date_modified(m):
+        try:
+            obj = json.loads(m.group(1))
+            if obj.get('@type') == 'WebPage' and 'dateModified' not in obj:
+                obj['dateModified'] = '2026-10-08'
+                return '<script type="application/ld+json">%s</script>' % json.dumps(obj, ensure_ascii=False, separators=(',', ':'))
+        except (json.JSONDecodeError, KeyError):
+            pass
+        return m.group(0)
+    page = re.sub(r'<script type="application/ld\+json">(\{[^<]*"WebPage"[^<]*\})</script>',
+                  _add_date_modified, page, count=1)
+
     # "1,650+ chemicals" -> what is really rated for this material
     page = re.sub(r'1[,.\u00a0\u202f ]?65[01]\+', str(rated), page)
     # a title that ended in "| 1,650+" would now end in a bare number

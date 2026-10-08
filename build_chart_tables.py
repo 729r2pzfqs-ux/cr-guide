@@ -15,6 +15,7 @@ the source lists under three names is not shown three times. Idempotent.
 """
 
 import html
+import json
 import os
 import re
 import sys
@@ -27,9 +28,11 @@ from page_i18n import material_name, t
 from build_material_tables import load_translations
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+SITE = 'https://chemicalresistance.org'
 LANGS = ['en', 'de', 'es', 'fr', 'pt', 'zh']
 CHART_ROWS = 80
 COMPARE_ROWS = 30
+CONTENT_UPDATED = '2026-10-08'
 ALIAS_FILTER = 'data = data.filter(function (c) { return !c.alias_of; });'
 
 
@@ -140,7 +143,48 @@ def group_block(mats, lang):
             '<!-- group-figures:end -->\n    ') % (FIG_STYLE, figs, esc(t('class_note', lang)))
 
 
-def patch(page, lang, chems, trans):
+def inject_chart_ld(page, lang, mats, total, rel_path):
+    """Add Dataset and WebPage JSON-LD to a chart page if not already present."""
+    if 'cr-dataset' in page:
+        return page  # already injected
+    # Extract title and description from existing meta tags
+    title_m = re.search(r'<title>(.*?)</title>', page)
+    desc_m = re.search(r'<meta name="description" content="(.*?)"', page)
+    title = title_m.group(1) if title_m else 'Chemical Resistance Chart'
+    desc = desc_m.group(1) if desc_m else ''
+    # Build the canonical URL from the path
+    slug = rel_path.rstrip('/').rsplit('/', 1)[-1] if '/' in rel_path else rel_path
+    # Reconstruct canonical from the page itself
+    canon_m = re.search(r'<link rel="canonical" href="(.*?)"', page)
+    url = canon_m.group(1) if canon_m else SITE + '/' + rel_path.rstrip('index.html').rstrip('/')  + '/'
+    mat_names = ', '.join(material_name(m, lang) for m in mats)
+    dataset_ld = {
+        '@context': 'https://schema.org', '@type': 'Dataset',
+        'name': title, 'url': url, 'inLanguage': lang,
+        'description': 'Chemical resistance ratings of %s compared across %d chemicals at 20 °C. Ratings A to D, from the chemical resistance list of Bürkle GmbH.' % (mat_names, total),
+        'dateModified': CONTENT_UPDATED,
+        'variableMeasured': ['Resistance rating at 20 °C'],
+        'creator': {'@type': 'Organization', 'name': 'ChemicalResistance.org', 'url': SITE + '/'},
+        'license': 'https://creativecommons.org/licenses/by-nc/4.0/',
+        'isBasedOn': {'@type': 'CreativeWork', 'name': 'Beständigkeitsliste (chemical resistance list)',
+                      'publisher': {'@type': 'Organization', 'name': 'Bürkle GmbH',
+                                    'url': 'https://www.buerkle.de'}},
+    }
+    webpage_ld = {
+        '@context': 'https://schema.org', '@type': 'WebPage',
+        'name': title, 'description': desc, 'url': url, 'inLanguage': lang,
+        'dateModified': CONTENT_UPDATED,
+        'isPartOf': {'@type': 'WebSite', 'name': 'ChemicalResistance.org', 'url': SITE + '/'},
+    }
+    tags = ('<script type="application/ld+json" id="cr-dataset">%s</script>\n'
+            '<script type="application/ld+json" id="cr-webpage">%s</script>\n'
+            % (json.dumps(dataset_ld, ensure_ascii=False, separators=(',', ':')),
+               json.dumps(webpage_ld, ensure_ascii=False, separators=(',', ':'))))
+    page = page.replace('</head>', tags + '</head>', 1)
+    return page
+
+
+def patch(page, lang, chems, trans, rel_path=''):
     total = None
     if 'id="chartTable"' in page:
         m = re.search(r'MATS\s*=\s*\[(.*?)\];', page, re.S)
@@ -156,6 +200,7 @@ def patch(page, lang, chems, trans):
         page = center_hero(page)
         page = re.sub(r'(<tbody id="chartTable"[^>]*>)[\s\S]*?(</tbody>)',
                       lambda x: x.group(1) + '\n' + '\n'.join(rows) + '\n' + x.group(2), page, count=1)
+        page = inject_chart_ld(page, lang, mats, total, rel_path)
     elif 'id="compareTable"' in page:
         a = re.search(r'MAT_A\s*=\s*["\'](\w+)["\']', page)
         b = re.search(r'MAT_B\s*=\s*["\'](\w+)["\']', page)
@@ -191,7 +236,8 @@ def main():
                     page = f.read()
                 if 'http-equiv="refresh"' in page[:600]:
                     continue
-                new = patch(page, lang, chems, trans)
+                rel = os.path.relpath(path, ROOT)
+                new = patch(page, lang, chems, trans, rel_path=rel)
                 seen += 1
                 if new != page:
                     changed += 1
