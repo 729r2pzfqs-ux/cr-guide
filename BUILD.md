@@ -31,6 +31,7 @@ python3 fix_page_quality.py         # badge colours and structured data on patch
 python3 fix_internal_links.py       # run twice if it reports changes
 python3 noindex_french.py           # keeps French out of the index, see below
 python3 build_sitemap.py            # always last
+python3 ping_indexnow.py            # optional: notify search engines of changes
 ```
 
 Every script takes `--check` and is idempotent. `fix_cross_language.py`,
