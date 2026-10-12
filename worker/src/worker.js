@@ -17,7 +17,7 @@ export default {
     // Look up in KV
     const destination = await env.REDIRECTS.get(lookupPath);
 
-    if (destination) {
+    if (destination && destination !== lookupPath) {
       // Build absolute redirect URL preserving the original scheme and host
       const redirectUrl = new URL(destination, url.origin);
       // Preserve query string if any

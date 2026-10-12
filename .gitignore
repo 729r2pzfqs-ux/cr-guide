@@ -1,3 +1,5 @@
 __pycache__/
 .venv/
 .claude/settings.local.json
+redirects_301.csv
+redirects_broken.csv
