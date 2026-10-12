@@ -13,4 +13,4 @@ routes = [
 # Create it with:  npx wrangler kv namespace create REDIRECTS
 [[kv_namespaces]]
 binding = "REDIRECTS"
-id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+id = "f288161c412b48dfa385f43046d13548"
