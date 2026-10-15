@@ -25585,6 +25585,7 @@ chemicals/sodium-carbonate.html
 chemicals/sodium-chloride.html
 chemicals/sodium-cyanide.html
 chemicals/sodium-hydroxide-caustic-soda.html
+chemicals/sodium-hydroxide/index.html
 chemicals/sodium-nitrate.html
 chemicals/sodium-sulfate.html
 chemicals/sodium-sulfide.html
@@ -30045,6 +30046,9 @@ chemicals/ölsäure/ss316/index.html
 chemicals/ölsäure/stainless-steel-304/index.html
 chemicals/ölsäure/viton/index.html
 de-about.html
+de.html
+de/storage-compatibility.html
+de/viscosity.html
 ectfe-etfe/acetic-acid.html
 ectfe-etfe/acetone.html
 ectfe-etfe/acetonitrile.html
@@ -30178,6 +30182,7 @@ epdm/hydrochloric-acid.html
 epdm/hydrofluoric-acid.html
 epdm/hydrogen-peroxide.html
 epdm/hydrogen-sulfide.html
+epdm/index.html
 epdm/iodine-pentafluoride.html
 epdm/isopropanol.html
 epdm/kerosene.html
@@ -30369,6 +30374,7 @@ hdpe/hydrochloric-acid.html
 hdpe/hydrofluoric-acid.html
 hdpe/hydrogen-peroxide.html
 hdpe/hydrogen-sulfide.html
+hdpe/index.html
 hdpe/iodine-pentafluoride.html
 hdpe/isopropanol.html
 hdpe/kerosene.html
@@ -30418,6 +30424,7 @@ hdpe/white-spirit.html
 hdpe/white-spirit/index.html
 hdpe/xylene.html
 hdpe/zinc-chloride.html
+index/index.html
 ldpe/acetic-acid.html
 ldpe/acetone.html
 ldpe/acetonitrile.html
@@ -30518,7 +30525,10 @@ materials/de/silicone.html
 materials/de/ss316.html
 materials/ectfe-etfe.html
 materials/epdm.html
+materials/es/hdpe.html
 materials/fep.html
+materials/fr/ldpe.html
+materials/fr/pvdf.html
 materials/hdpe.html
 materials/nbr.html
 materials/nylon-pa.html
@@ -30528,6 +30538,9 @@ materials/polycarbonate.html
 materials/polystyrene.html
 materials/polysulfone.html
 materials/pp.html
+materials/pt/pp.html
+materials/pt/pvdf.html
+materials/pt/silicone.html
 materials/pvc-flexible.html
 materials/pvc-rigid.html
 materials/san.html
@@ -31215,6 +31228,7 @@ pp/hydrochloric-acid.html
 pp/hydrofluoric-acid.html
 pp/hydrogen-peroxide.html
 pp/hydrogen-sulfide.html
+pp/index.html
 pp/iodine-pentafluoride.html
 pp/isopropanol.html
 pp/kerosene.html
@@ -31267,6 +31281,7 @@ pp/zinc-chloride.html
 pt-about.html
 pt/sds-decoder.html
 pt/storage-compatibility.html
+pt/viscosity.html
 ptfe/acetic-acid.html
 ptfe/acetone.html
 ptfe/acetonitrile.html
@@ -31309,6 +31324,7 @@ ptfe/hydrochloric-acid.html
 ptfe/hydrofluoric-acid.html
 ptfe/hydrogen-peroxide.html
 ptfe/hydrogen-sulfide.html
+ptfe/index.html
 ptfe/iodine-pentafluoride.html
 ptfe/isopropanol.html
 ptfe/kerosene.html
@@ -31722,6 +31738,7 @@ san/white-spirit.html
 san/white-spirit/index.html
 san/xylene.html
 san/zinc-chloride.html
+sds-decoder.html
 silicone/acetic-acid.html
 silicone/acetone.html
 silicone/acetonitrile.html
@@ -31995,6 +32012,7 @@ stainless-steel-304/white-spirit.html
 stainless-steel-304/white-spirit/index.html
 stainless-steel-304/xylene.html
 stainless-steel-304/zinc-chloride.html
+storage-compatibility.html
 viton/acetic-acid.html
 viton/acetone.html
 viton/acetonitrile.html

@@ -3,3 +3,4 @@ __pycache__/
 .claude/settings.local.json
 redirects_301.csv
 redirects_broken.csv
+worker/.wrangler/

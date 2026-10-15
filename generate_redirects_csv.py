@@ -5,6 +5,12 @@ Uses the same redirect-resolution logic as generate_redirect_stubs.py but
 writes a CSV instead of HTML stubs.  Self-redirects (source == destination)
 are excluded — they cause infinite loops in the Worker.
 
+The Worker appends a trailing slash to the request path before the KV lookup,
+so a flat legacy page such as about.html is requested as /about.html and looked
+up as /about.html/.  Every non-index .html path therefore gets two keys: the
+literal one (/about.html/) and the directory form (/about/), the latter only
+when it is not itself the live target.
+
     python3 generate_redirects_csv.py            # write redirects_301.csv
     python3 generate_redirects_csv.py --check    # dry-run, report only
 """
@@ -32,9 +38,11 @@ SLUG_ALIASES = {
     'formaldehyde-solution': 'formaldehyde',
     'n-heptane': 'heptane',
     'n-hexane': 'hexane',
+    'sodium-hydroxide': 'sodium-hydroxide-caustic-soda',
 }
 
 MISC_TARGETS = {
+    'index/index.html': '/',
     'ghs-symbols.html': '/sds-decoder/',
     'materials/ss304.html': '/materials/stainless-steel-304/',
     'charts/hdpe-compatibility-chart/index.html': '/materials/hdpe/',
@@ -103,6 +111,8 @@ def classify(path):
             return 'pair', seg[2], seg[1]
         return 'misc', None, None
     if seg[0] in MATS:
+        if len(seg) == 2 and seg[1] == 'index.html':
+            return 'mat_index', None, seg[0]
         if len(seg) == 2:
             return 'pair', seg[1][:-5], seg[0]
         if len(seg) == 3 and seg[2] == 'index.html':
@@ -131,6 +141,14 @@ def resolve_target(path, en_dirs, chem_map):
     if is_live_page(f'{base}/index.html'):
         return f'/{base}/'
     return MISC_TARGETS.get(path)
+
+
+def html_kv_key(file_path):
+    """KV key for the literal .html request (/about.html -> /about.html/), or
+    None for index.html and non-HTML paths."""
+    if file_path.endswith('.html') and not file_path.endswith('index.html'):
+        return '/' + file_path + '/'
+    return None
 
 
 def path_to_kv_key(file_path):
@@ -177,6 +195,9 @@ def main():
         if not target:
             unmapped += 1
             continue
+        html_key = html_kv_key(path)
+        if html_key:
+            redirects[html_key] = target
         key = path_to_kv_key(path)
         if key == target:
             skipped_self += 1
