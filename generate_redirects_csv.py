@@ -126,9 +126,39 @@ def classify(path):
     return 'misc', None, None
 
 
+LANGS = ('de', 'es', 'fr', 'pt', 'zh')
+
+
+def is_noindexed(target):
+    f = target.lstrip('/') + 'index.html'
+    try:
+        with open(f, encoding='utf-8', errors='replace') as fh:
+            head = fh.read(4000)
+    except OSError:
+        return False
+    return bool(re.search(r'<meta name="(?:googlebot|robots)" content="[^"]*noindex', head))
+
+
+def english_counterpart(target):
+    """/materials/pt/nbr/ -> /materials/nbr/, /pt/ -> /, /pt/viscosity/ -> /viscosity/"""
+    parts = ['about' if p in {f'{l}-about' for l in LANGS} else p
+             for p in target.strip('/').split('/') if p not in LANGS]
+    return '/' + '/'.join(parts) + '/' if parts else '/'
+
+
 def resolve_target(path, en_dirs, chem_map):
     if path in OVERRIDES:
         return OVERRIDES[path]
+    target = _resolve_target(path, en_dirs, chem_map)
+    # a legacy language URL should not land on a noindexed page when an English one exists
+    is_lang = any(f'/{l}/' in '/' + path or path in (f'{l}.html', f'{l}-about.html') for l in LANGS)
+    if (target and is_noindexed(target) and is_lang
+            and is_live_page(english_counterpart(target).lstrip('/') + 'index.html')):
+        return english_counterpart(target)
+    return target
+
+
+def _resolve_target(path, en_dirs, chem_map):
     kind, chem, mat = classify(path)
     if chem:
         chem = chem if chem in en_dirs else chem_map.get(chem)
