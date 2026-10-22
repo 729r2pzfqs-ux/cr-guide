@@ -41,6 +41,12 @@ SLUG_ALIASES = {
     'sodium-hydroxide': 'sodium-hydroxide-caustic-soda',
 }
 
+# Legacy paths whose same-language counterpart is noindexed (FR) go to the English page instead.
+OVERRIDES = {
+    'fr.html': '/',
+    'materials/fr/nbr.html': '/materials/nbr/',
+}
+
 MISC_TARGETS = {
     'index/index.html': '/',
     'ghs-symbols.html': '/sds-decoder/',
@@ -121,6 +127,8 @@ def classify(path):
 
 
 def resolve_target(path, en_dirs, chem_map):
+    if path in OVERRIDES:
+        return OVERRIDES[path]
     kind, chem, mat = classify(path)
     if chem:
         chem = chem if chem in en_dirs else chem_map.get(chem)
@@ -201,6 +209,10 @@ def main():
         key = path_to_kv_key(path)
         if key == target:
             skipped_self += 1
+            continue
+        if is_live_page(key.lstrip('/') + 'index.html'):
+            # /fr.html -> / must not also turn the live /fr/ page into a redirect
+            skipped_live += 1
             continue
         redirects[key] = target
 

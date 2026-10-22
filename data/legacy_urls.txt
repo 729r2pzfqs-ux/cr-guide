@@ -32104,3 +32104,10 @@ viton/white-spirit.html
 viton/white-spirit/index.html
 viton/xylene.html
 viton/zinc-chloride.html
+es.html
+fr.html
+materials/de/epdm.html
+materials/es/epdm.html
+materials/es/nbr.html
+materials/es/viton.html
+materials/fr/nbr.html
