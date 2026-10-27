@@ -64,6 +64,15 @@ DATASET_DESC = {
     'es': 'Clasificaciones de resistencia química de {n} plásticos, elastómeros y metales frente a {chem} a 20 °C y 50 °C, para {k} concentración(es). Clasificaciones de A a D, de la lista de resistencia química de Bürkle GmbH.',
 }
 
+# Google requires Dataset descriptions of 50-5000 characters; the meta
+# description of a pair page is often shorter, so the Dataset block gets
+# its own text in every indexed language.
+DATASET_PAIR_DESC = {
+    'en': 'Chemical resistance rating of {mat} against {chem} at 20 °C and 50 °C, for {k} concentration(s). Ratings A to D, from the chemical resistance list of Bürkle GmbH.',
+    'de': 'Beständigkeitsbewertung von {mat} gegenüber {chem} bei 20 °C und 50 °C, für {k} Konzentration(en). Bewertungen A bis D aus der Beständigkeitsliste der Bürkle GmbH.',
+    'es': 'Clasificación de resistencia química de {mat} frente a {chem} a 20 °C y 50 °C, para {k} concentración(es). Clasificaciones de A a D, de la lista de resistencia química de Bürkle GmbH.',
+}
+
 STYLE = '''<style>
 *{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}body{background:#f8fafc}
 .cr-card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem;margin-bottom:1.5rem}
@@ -858,9 +867,7 @@ def pair_page(lang, slug, page, chem, mat, chrome):
             'name': '%s resistance of %s' % (name, mname) if lang == 'en'
                     else t('h1_pair', lang, mat=mname, chem=name),
             'url': url, 'inLanguage': lang,
-            'description': 'Chemical resistance rating of %s against %s at 20 °C and 50 °C for %d concentration(s).' % (
-                mname, name, n_concs) if lang == 'en'
-                else desc,
+            'description': DATASET_PAIR_DESC[lang].format(mat=mname, chem=name, k=n_concs),
             'dateModified': CONTENT_UPDATED,
             'variableMeasured': ['Resistance rating at 20 °C', 'Resistance rating at 50 °C'],
             'creator': {'@type': 'Organization', 'name': 'ChemicalResistance.org', 'url': SITE + '/'},
