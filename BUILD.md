@@ -38,6 +38,15 @@ Every script takes `--check` and is idempotent. `fix_cross_language.py`,
 `fix_consent_order.py` and `patch_generators.py` still apply; run the `build_*`
 scripts again after `fix_cross_language.py`.
 
+The meta-description and title templates from the Ahrefs fixes (commit
+`5c3e82dfd2`, October 2026) live in the generators: `expand_pair_desc` and
+the `AHREFS_*` constants in `build_chemical_pages.py`, and `ahrefs_title` in
+`page_i18n.py`. Redirect stubs are no longer written — the Cloudflare Worker
+serves those URLs as 301s (`worker/`, commit `dfedd271e2`). The industry
+chart pages under `charts/` are written whole by `build_industry_charts.py`
+and are skipped by `build_chart_tables.py` and left alone by
+`fix_page_quality.py`.
+
 ## Index policy
 
 | Pages | Robots | Sitemap |
@@ -48,7 +57,7 @@ scripts again after `fix_cross_language.py`.
 | Pair pages en, de, es with a rating | `googlebot: noindex,follow` | no |
 | Pair pages without a rating | `robots: noindex,follow` | no |
 | Everything fr, pt, zh | `robots: noindex,follow`, no hreflang pointing at it | no |
-| Redirect stubs | `robots: noindex,follow`, no ad or analytics tags | no |
+| Legacy/redirect URLs | 301 from the Cloudflare Worker, no HTML on disk | no |
 
 French was taken out of the index on 2026-09-28 (`noindex_french.py`), so only
 English, German and Spanish are indexed.

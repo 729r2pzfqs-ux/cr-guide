@@ -30,6 +30,7 @@ the data.
 import html
 import json
 import os
+import re
 import sys
 from collections import OrderedDict
 
@@ -37,9 +38,8 @@ import analytics_head
 import diagrams
 import editorial_content
 import resistance_data as rd
-from redirect_stub import stub
-from page_i18n import (INDEXED_LANGS, LANGS, conc_label, hazard_text, material_full,
-                       material_name, material_note, t)
+from page_i18n import (INDEXED_LANGS, LANGS, ahrefs_title, conc_label, hazard_text,
+                       material_full, material_name, material_note, t)
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://chemicalresistance.org'
@@ -72,6 +72,48 @@ DATASET_PAIR_DESC = {
     'de': 'Beständigkeitsbewertung von {mat} gegenüber {chem} bei 20 °C und 50 °C, für {k} Konzentration(en). Bewertungen A bis D aus der Beständigkeitsliste der Bürkle GmbH.',
     'es': 'Clasificación de resistencia química de {mat} frente a {chem} a 20 °C y 50 °C, para {k} concentración(es). Clasificaciones de A a D, de la lista de resistencia química de Bürkle GmbH.',
 }
+
+# Commit 5c3e82dfd2 ("Fix Ahrefs issues") expanded every meta description
+# under 70 characters with these templates, editing the published HTML in
+# place. Applied here at generation time so a rebuild keeps the expanded
+# text. %(mc)s is "material + chemical", %(R)s the rating extracted from
+# the short description.
+AHREFS_SHORT_DESC = 70
+AHREFS_PAIR_DESC = {
+    'en': '%(mc)s: rated %(R)s. Chemical resistance data at 20 °C and 50 °C with concentration details on ChemicalResistance.org.',
+    'de': '%(mc)s: Beständigkeit %(R)s. Chemische Beständigkeitsdaten bei 20 °C und 50 °C mit Konzentrationsangaben.',
+    'es': '%(mc)s: resistencia %(R)s. Datos de resistencia química a 20 °C y 50 °C con detalles de concentración.',
+    'fr': '%(mc)s: résistance %(R)s. Données de résistance chimique à 20 °C et 50 °C avec détails de concentration.',
+    'pt': '%(mc)s: resistência %(R)s. Dados de resistência química a 20 °C e 50 °C com detalhes de concentração.',
+    'zh': '%(mat)s与%(chem)s的耐化学性等级为%(R)s。本页提供20°C和50°C条件下的详细兼容性数据、浓度影响分析及材料选择建议，帮助您做出安全可靠的材料决策。',
+}
+AHREFS_PAIR_NODATA_ZH = '%(mc)s：耐化学性等级 %(orig)s。包含 20 °C 和 50 °C 条件下的浓度数据与材料兼容性分析。'
+AHREFS_HUB_ZH = '%s 耐化学性耐化学性数据表——覆盖所有测试材料在20°C和50°C条件下的A至D等级评定，包含塑料、金属和弹性体的兼容性信息。'
+
+
+def expand_pair_desc(desc, lang, mname, name):
+    """Expand a pair-page description under 70 characters the way commit
+    5c3e82dfd2 expanded it in the published HTML: keep the "mat + chem"
+    lead, name the rating of the first listed concentration (the last one
+    for zh, whose patch read the text after the final colon), and append a
+    fixed sentence per language."""
+    if len(desc) >= AHREFS_SHORT_DESC:
+        return desc
+    mc = '%s + %s' % (mname, name)
+    if lang == 'zh':
+        if not desc.startswith(mc + ': '):      # the no-data wording
+            return AHREFS_PAIR_NODATA_ZH % {'mc': mc, 'orig': desc}
+        rest = desc[len(mc) + 2:-1]
+        r = rest.rsplit(': ', 1)[-1]
+        return AHREFS_PAIR_DESC['zh'] % {'mat': mname, 'chem': name, 'R': r}
+    if not desc.startswith(mc + ': '):
+        return desc                             # no-data wording stays as is
+    rest = desc[len(mc) + 2:-1]
+    first = rest.split(';')[0].strip()
+    val = re.sub(r'^(?:[^:]*:\s*)*(?=[A-DK–])', '', first)
+    r = val[0] if val[:1] in 'ABCDK' and (len(val) == 1 or not val[1].isalnum()) else val
+    return AHREFS_PAIR_DESC[lang] % {'mc': mc, 'R': r}
+
 
 STYLE = '''<style>
 *{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}body{background:#f8fafc}
@@ -729,7 +771,10 @@ def chemical_page(lang, slug, page, chem, chrome, similar, pages):
     title = t('title_chem', lang, chem=name, n=n_mats)
     if len(title) > 62:
         title = t('title_chem_short', lang, chem=name)
+    title = ahrefs_title(title)
     desc = description(lang, name, pv, n_mats)
+    if lang == 'zh' and len(desc) < AHREFS_SHORT_DESC:
+        desc = AHREFS_HUB_ZH % name
     url = SITE + chem_url(lang, slug)
     indexed = lang in INDEXED_LANGS
     alternates = []
@@ -823,6 +868,7 @@ def pair_page(lang, slug, page, chem, mat, chrome):
     title = t('title_pair', lang, mat=mname, chem=name)
     if len(title) > 62:
         title = t('h1_pair', lang, mat=mname, chem=name)
+    title = ahrefs_title(title)
 
     if rated:
         bits = []
@@ -841,6 +887,7 @@ def pair_page(lang, slug, page, chem, mat, chrome):
             desc = '%s + %s: %s …' % (mname, name, '; '.join(bits)[:120].rsplit(';', 1)[0])
     else:
         desc = t('desc_pair_nodata', lang, mat=mname, chem=name, n=len(rd.MATERIALS) - 1)
+    desc = expand_pair_desc(desc, lang, mname, name)
 
     if not rated:
         robots = NOINDEX_GOOGLEBOT        # no data → noindex for Google
@@ -1039,7 +1086,6 @@ def main():
         registry = json.load(f)['pages']
     chems, stats = rd.load()
     pages = OrderedDict((s, p) for s, p in registry.items() if 'redirect_to' not in p)
-    redirects = {s: p['redirect_to'] for s, p in registry.items() if 'redirect_to' in p}
     for slug, p in pages.items():
         if p['source'] not in chems:
             sys.exit('data/chemical_pages.json: %s points at unknown source %r' % (slug, p['source']))
@@ -1047,7 +1093,7 @@ def main():
     similar = similar_chemicals(pages, chems)
 
     changed = []
-    counts = {'hub': 0, 'pair': 0, 'stub': 0}
+    counts = {'hub': 0, 'pair': 0}
     patch_about(pages, chems, changed, check)
     for lang in LANGS:
         patch_index(lang, pages, chems, changed, check)
@@ -1060,15 +1106,10 @@ def main():
                 write(pair_url(lang, slug, mat).lstrip('/') + 'index.html',
                       pair_page(lang, slug, page, chem, mat, chrome), changed, check)
                 counts['pair'] += 1
-        for slug, target in redirects.items():
-            write(chem_url(lang, slug).lstrip('/') + 'index.html', stub(chem_url(lang, target)),
-                  changed, check)
-            counts['stub'] += 1
-            for mat in rd.MATERIALS:
-                write(pair_url(lang, slug, mat).lstrip('/') + 'index.html',
-                      stub(pair_url(lang, target, mat)), changed, check)
-                counts['stub'] += 1
-    print('chemical pages %(hub)d, pair pages %(pair)d, redirect stubs %(stub)d' % counts)
+    # The redirect slugs in chemical_pages.json are served as 301s by the
+    # Cloudflare Worker; commit dfedd271e2 deleted their meta-refresh stub
+    # files, so no stubs are written here any more.
+    print('chemical pages %(hub)d, pair pages %(pair)d' % counts)
     print('%s %d files' % ('would change' if check else 'wrote', len(changed)))
 
 

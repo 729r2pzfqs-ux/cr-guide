@@ -717,3 +717,35 @@ MATERIAL_NOTES = {
 def material_note(code, lang):
     """Note on a material, or None where it has not been translated."""
     return MATERIAL_NOTES.get(lang, {}).get(code)
+
+
+def ahrefs_title(title):
+    """Shorten a page title to at most 60 characters, the way commit
+    5c3e82dfd2 ("Fix Ahrefs issues") shortened them in the published HTML:
+    drop a trailing ' Rating', then drop parenthetical qualifiers of 15 or
+    more characters, then cut at a word boundary and add an ellipsis.
+    Applied at generation time so a rebuild keeps the shortened titles.
+    (The in-place patch broke on nested parentheses and left a stray ')';
+    this version removes the whole group.)"""
+    if len(title) <= 60:
+        return title
+    if title.endswith(' Rating') and len(title) - len(' Rating') <= 60:
+        return title[:-len(' Rating')]
+    out = []
+    i = 0
+    while i < len(title):
+        if title[i] == '(' and out and out[-1] == ' ':
+            depth, j = 1, i + 1
+            while j < len(title) and depth:
+                depth += {'(': 1, ')': -1}.get(title[j], 0)
+                j += 1
+            if depth == 0 and j - i - 2 >= 15:
+                out.pop()
+                i = j
+                continue
+        out.append(title[i])
+        i += 1
+    t = ''.join(out)
+    if len(t) <= 60:
+        return t
+    return t[:57].rsplit(' ', 1)[0] + '…'

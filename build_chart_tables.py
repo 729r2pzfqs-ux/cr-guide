@@ -35,6 +35,12 @@ COMPARE_ROWS = 30
 CONTENT_UPDATED = '2026-10-08'
 ALIAS_FILTER = 'data = data.filter(function (c) { return !c.alias_of; });'
 
+# The industry chart pages (Phase 4) are written whole by
+# build_industry_charts.py, with their own layout, FAQPage markup and no
+# group figures; patching them here would restyle them and duplicate markup.
+from build_industry_charts import INDUSTRY_CHARTS
+INDUSTRY_SLUGS = {s for c in INDUSTRY_CHARTS for s in c['slug'].values()}
+
 
 def esc(s):
     return html.escape(str(s), quote=True)
@@ -229,6 +235,8 @@ def main():
             if not os.path.isdir(base):
                 continue
             for d in sorted(os.listdir(base)):
+                if d in INDUSTRY_SLUGS:
+                    continue
                 path = os.path.join(base, d, 'index.html')
                 if not os.path.isfile(path):
                     continue

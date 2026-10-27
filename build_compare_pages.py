@@ -25,7 +25,7 @@ import diagrams
 import resistance_data as rd
 from build_chemical_pages import (ROOT, SITE, breadcrumb_ld, esc, grade_span, head, home_url,
                                   legend, material_url, variant_label, write)
-from page_i18n import conc_label, material_full, material_name, material_note, t
+from page_i18n import ahrefs_title, conc_label, material_full, material_name, material_note, t
 from redirect_stub import stub
 
 LANGS = ['en', 'de', 'es']
@@ -311,7 +311,7 @@ def page(pair, lang, header, footer, links, trans):
     close = [g[1] for g in gaps if abs(g[0]) <= 10]
     pct = round(100 * st['same'] / st['n']) if st['n'] else 0
 
-    title = s('title', lang, a=na, b=nb)
+    title = ahrefs_title(s('title', lang, a=na, b=nb))
     desc = s('desc_lead', lang, a=na, b=nb, same=st['same'], n=st['n'])
     for m, lead in ((na, a_leads), (nb, b_leads)):
         if lead:
@@ -479,7 +479,10 @@ def patch_index(lang, changed, check):
     rel = base(lang).lstrip('/') + 'index.html'
     with open(os.path.join(ROOT, rel), encoding='utf-8') as f:
         text = f.read()
-    m = re.search(r'(<a href="[^"]*-vs-[^"]*"[^>]*>[\s\S]*?</a>\s*)+', text)
+    # Also swallow the </div> + <details> browse list a previous run wrote,
+    # or a rerun duplicates it after the cards.
+    m = re.search(r'(<a href="[^"]*-vs-[^"]*"[^>]*>[\s\S]*?</a>\s*)+'
+                  r'(</div>\s*<details class="mt-8">[\s\S]*?</details>\s*)?', text)
     if not m:
         print('no comparison list in', rel)
         return

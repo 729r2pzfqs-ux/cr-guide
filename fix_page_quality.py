@@ -7,10 +7,11 @@
   * Rating badges get the colours the generated pages and the diagrams use.
     White on the old light green, amber and red failed WCAG contrast, and the
     old amber and red were hard to tell apart for colour-blind readers.
-  * FAQPage markup is removed. The questions stay on the page; the markup no
-    longer earns a rich result and was on every page type.
-  * Pages without a BreadcrumbList get one, built from their URL and <h1>.
-  * Material pages get Dataset markup that names Bürkle as the source.
+  * Material pages without a BreadcrumbList get one, built from their URL
+    and <h1>, and Dataset markup that names Bürkle as the source.
+    (FAQPage markup is deliberate — Phase 2/4 put it on chemical, compare
+    and industry chart pages — and is left alone. Chart-page Dataset and
+    WebPage markup belongs to build_chart_tables.py and is left alone too.)
   * dateModified in existing markup of material and chart pages is set to the
     date their content last changed.
 
@@ -31,7 +32,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://chemicalresistance.org'
 SKIP_DIRS = {'.git', '.venv', '__pycache__', 'node_modules', 'data'}
 LANGS = ('de', 'es', 'fr', 'pt', 'zh')
-CONTENT_UPDATED = '2026-09-29'
+CONTENT_UPDATED = '2026-10-08'
 
 BADGE = {
     'A': 'background:#15803d;color:#fff', 'B': 'background:#1d4ed8;color:#fff',
@@ -102,14 +103,11 @@ def fix(rel, page, counts, rated):
     if TAILWIND_BADGE.search(page) and 'id="cr-badge-contrast"' not in page:
         page = page.replace('</head>', TAILWIND_FIX + '\n</head>', 1)
 
-    # FAQPage markup
-    def drop_faq(m):
-        return '' if re.search(r'"@type"\s*:\s*"FAQPage"', m.group(0)) else m.group(0)
-    page = re.sub(r'[ \t]*<script type="application/ld\+json"[^>]*>[\s\S]*?</script>[ \t]*\n?', drop_faq, page)
-
     st = structure(rel)
     generated = 'class="cr-card' in page
-    if st and not generated:
+    is_material = (st and not generated and len(st[1]) == 2 and st[1][0] == 'materials'
+                   and st[1][1] in rd.SLUG_TO_CODE)
+    if is_material:
         lang, parts = st
         url = SITE + '/' + rel[:-len('index.html')]
         h1 = re.search(r'<h1[^>]*>([\s\S]*?)</h1>', page)
@@ -147,8 +145,11 @@ def fix(rel, page, counts, rated):
             }, 'cr-dataset'))
         if extra:
             page = page.replace('</head>', '\n'.join(extra) + '\n</head>', 1)
-        if parts and parts[0] in ('materials', 'charts'):
-            page = re.sub(r'("dateModified"\s*:\s*")\d{4}-\d{2}-\d{2}(?=")', r'\g<1>' + CONTENT_UPDATED, page)
+
+    # dateModified sweep on material and chart pages (generated pages carry
+    # their own CONTENT_UPDATED)
+    if st and not generated and st[1] and st[1][0] in ('materials', 'charts'):
+        page = re.sub(r'("dateModified"\s*:\s*")\d{4}-\d{2}-\d{2}(?=")', r'\g<1>' + CONTENT_UPDATED, page)
 
     if page != orig:
         counts['pages'] += 1
