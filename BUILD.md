@@ -24,6 +24,7 @@ python3 resistance_data.py          # summary only, checks that overrides apply
 python3 export_frontend_data.py     # data for homepage lookup, compare, charts
 python3 build_chemical_pages.py     # chemical pages, pair pages, chemicals index, About corrections list
 python3 build_material_tables.py    # tables inside the material pages
+python3 build_polyurethane_pages.py # polyurethane pages (external data, not in Bürkle)
 python3 build_chart_tables.py       # static rows and group figures in chart pages
 python3 build_compare_pages.py      # comparison pages (en, de, es) and the compare index
 python3 build_tool_pages.py         # viscosity, storage, index pages, silicone notice
