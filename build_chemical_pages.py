@@ -30,7 +30,6 @@ the data.
 import html
 import json
 import os
-import re
 import sys
 from collections import OrderedDict
 
@@ -38,6 +37,7 @@ import analytics_head
 import diagrams
 import editorial_content
 import resistance_data as rd
+from meta_text import MAX_LEN, fit
 from page_i18n import (INDEXED_LANGS, LANGS, ahrefs_title, conc_label, hazard_text,
                        material_full, material_name, material_note, t)
 
@@ -72,48 +72,6 @@ DATASET_PAIR_DESC = {
     'de': 'Beständigkeitsbewertung von {mat} gegenüber {chem} bei 20 °C und 50 °C, für {k} Konzentration(en). Bewertungen A bis D aus der Beständigkeitsliste der Bürkle GmbH.',
     'es': 'Clasificación de resistencia química de {mat} frente a {chem} a 20 °C y 50 °C, para {k} concentración(es). Clasificaciones de A a D, de la lista de resistencia química de Bürkle GmbH.',
 }
-
-# Commit 5c3e82dfd2 ("Fix Ahrefs issues") expanded every meta description
-# under 70 characters with these templates, editing the published HTML in
-# place. Applied here at generation time so a rebuild keeps the expanded
-# text. %(mc)s is "material + chemical", %(R)s the rating extracted from
-# the short description.
-AHREFS_SHORT_DESC = 70
-AHREFS_PAIR_DESC = {
-    'en': '%(mc)s: rated %(R)s. Chemical resistance data at 20 °C and 50 °C with concentration details on ChemicalResistance.org.',
-    'de': '%(mc)s: Beständigkeit %(R)s. Chemische Beständigkeitsdaten bei 20 °C und 50 °C mit Konzentrationsangaben.',
-    'es': '%(mc)s: resistencia %(R)s. Datos de resistencia química a 20 °C y 50 °C con detalles de concentración.',
-    'fr': '%(mc)s: résistance %(R)s. Données de résistance chimique à 20 °C et 50 °C avec détails de concentration.',
-    'pt': '%(mc)s: resistência %(R)s. Dados de resistência química a 20 °C e 50 °C com detalhes de concentração.',
-    'zh': '%(mat)s与%(chem)s的耐化学性等级为%(R)s。本页提供20°C和50°C条件下的详细兼容性数据、浓度影响分析及材料选择建议，帮助您做出安全可靠的材料决策。',
-}
-AHREFS_PAIR_NODATA_ZH = '%(mc)s：耐化学性等级 %(orig)s。包含 20 °C 和 50 °C 条件下的浓度数据与材料兼容性分析。'
-AHREFS_HUB_ZH = '%s 耐化学性耐化学性数据表——覆盖所有测试材料在20°C和50°C条件下的A至D等级评定，包含塑料、金属和弹性体的兼容性信息。'
-
-
-def expand_pair_desc(desc, lang, mname, name):
-    """Expand a pair-page description under 70 characters the way commit
-    5c3e82dfd2 expanded it in the published HTML: keep the "mat + chem"
-    lead, name the rating of the first listed concentration (the last one
-    for zh, whose patch read the text after the final colon), and append a
-    fixed sentence per language."""
-    if len(desc) >= AHREFS_SHORT_DESC:
-        return desc
-    mc = '%s + %s' % (mname, name)
-    if lang == 'zh':
-        if not desc.startswith(mc + ': '):      # the no-data wording
-            return AHREFS_PAIR_NODATA_ZH % {'mc': mc, 'orig': desc}
-        rest = desc[len(mc) + 2:-1]
-        r = rest.rsplit(': ', 1)[-1]
-        return AHREFS_PAIR_DESC['zh'] % {'mat': mname, 'chem': name, 'R': r}
-    if not desc.startswith(mc + ': '):
-        return desc                             # no-data wording stays as is
-    rest = desc[len(mc) + 2:-1]
-    first = rest.split(';')[0].strip()
-    val = re.sub(r'^(?:[^:]*:\s*)*(?=[A-DK–])', '', first)
-    r = val[0] if val[:1] in 'ABCDK' and (len(val) == 1 or not val[1].isalnum()) else val
-    return AHREFS_PAIR_DESC[lang] % {'mc': mc, 'R': r}
-
 
 STYLE = '''<style>
 *{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}body{background:#f8fafc}
@@ -404,32 +362,91 @@ def breadcrumb_ld(items):
     }
 
 
-def description(lang, name, variant, n_mats, limit=155):
+def desc_punct(lang):
+    """Colon, full stop and sentence separator of a meta description."""
+    return ('：', '。', '') if lang == 'zh' else (': ', '.', ' ')
+
+
+def rated_list(lang, label, codes, n):
+    """'<label>: PTFE, HDPE +3.' with the first n of codes."""
+    colon, stop, _ = desc_punct(lang)
+    more = ' +%d' % (len(codes) - n) if len(codes) > n else ''
+    names = t('list_sep', lang).join(material_name(m, lang) for m in codes[:n])
+    return '%s%s%s%s%s' % (label, colon, names, more, stop)
+
+
+def description(lang, name, variant, n_mats):
     """Answer first: which materials are rated A and which D."""
     ratings = variant['ratings']
-    a = by_priority([m for m, r in ratings.items() if r.get('w20') == 'A'])
-    d = by_priority([m for m, r in ratings.items() if r.get('w20') == 'D'])
+    _, stop, sep = desc_punct(lang)
+    a, b, d = (by_priority([m for m, r in ratings.items() if r.get('w20') == g]) for g in 'ABD')
     conc = conc_label(variant['conc'], lang)
-    lead = '%s, %s' % (name, conc) if conc else name
-    tail = '%d %s, 20 °C / 50 °C.' % (n_mats, t('materials_word', lang))
-    sep = t('list_sep', lang)
+    lead = ('%s%s%s' % (name, '，' if lang == 'zh' else ', ', conc) if conc else name).rstrip('.') + stop
+    tail = '%d %s, 20 °C / 50 °C%s' % (n_mats, t('materials_word', lang), stop)
 
-    def build(na, nd):
-        parts = [lead + '.']
+    def body(na, nd):
+        parts = []
         if a:
-            more = ' +%d' % (len(a) - na) if len(a) > na else ''
-            parts.append('%s: %s%s.' % (t('rated', lang, g='A'), sep.join(material_name(m, lang) for m in a[:na]), more))
+            parts.append(rated_list(lang, t('rated', lang, g='A'), a, min(na, len(a))))
         if d:
-            more = ' +%d' % (len(d) - nd) if len(d) > nd else ''
-            parts.append('%s: %s%s.' % (t('rated', lang, g='D'), sep.join(material_name(m, lang) for m in d[:nd]), more))
-        parts.append(tail)
-        return ' '.join(parts)
+            parts.append(rated_list(lang, t('rated', lang, g='D'), d, min(nd, len(d))))
+        return sep.join(parts)
 
-    for na, nd in ((6, 5), (5, 4), (4, 4), (4, 3), (3, 3), (3, 2), (2, 2), (2, 1), (1, 1)):
-        s = build(min(na, len(a)), min(nd, len(d)))
-        if len(s) <= limit:
-            return s
-    return build(min(1, len(a)), min(1, len(d)))[:limit]
+    middles = [body(na, nd) for na, nd in ((8, 6), (7, 6), (6, 5), (5, 4), (4, 4), (4, 3), (3, 3),
+                                           (3, 2), (2, 2), (2, 1), (1, 1))]
+    extras = [rated_list(lang, t('rated', lang, g='B'), b, min(4, len(b))) if b else '', tail,
+              t('desc_hub_detail', lang), t('desc_source', lang), t('desc_source_short', lang)]
+    return fit(lead, middles, extras, sep)
+
+
+def pair_description(lang, name, mname, mat, rated, pv):
+    """The rating of this pair first, then what a reader does next: the
+    materials rated A instead, the ones to avoid, what the grades mean."""
+    _, stop, sep = desc_punct(lang)
+    n_other = len(rd.MATERIALS) - 1
+    if rated:
+        bits, grades = [], []
+        for v in rated:
+            r = v['ratings'][mat]
+            if r.get('k'):
+                val = 'K'
+                grades.append('K')
+            elif r.get('single'):
+                val = '%s (%s)' % (r['c20'], t('est' if r.get('est') else 'no_temp', lang))
+                grades.append(r['w20'])
+            else:
+                val = '%s %s, %s %s' % (r['c20'] or '–', t('at20', lang), r['c50'] or '–', t('at50', lang))
+                grades += [r['w20'], r['w50']]
+            c = conc_label(v['conc'], lang)
+            bits.append('%s: %s' % (c, val) if c else val)
+        lead = '%s + %s: %s%s' % (mname, name, '; '.join(bits), stop)
+        # Leave room for the source note: es and pt can share every other word.
+        room = MAX_LEN - 16
+        if len(lead) > (room if lang == 'pt' else MAX_LEN):
+            k = len(bits) - 1
+            lead = '%s + %s: %s …' % (mname, name, '; '.join(bits[:k]))
+            while k > 1 and len(lead) > room:
+                k -= 1
+                lead = '%s + %s: %s …' % (mname, name, '; '.join(bits[:k]))
+        meanings = '; '.join('%s: %s' % (g, t('k_value' if g == 'K' else 'g_' + g, lang))
+                             for g in sorted({g for g in grades if g}, key='ABCDK'.index))
+        first_extra = meanings + stop
+    else:
+        lead = t('desc_pair_nodata', lang, mat=mname, chem=name)
+        first_extra = t('desc_untested', lang)
+
+    conc = conc_label(pv['conc'], lang)
+    basis = ' (%s)' % conc if conc else ''
+
+    def label(g):
+        return '%s %s%s' % (t('rated', lang, g=g), t('at20', lang), basis)
+
+    a = by_priority([m for m, r in pv['ratings'].items() if r.get('w20') == 'A' and m != mat])
+    d = by_priority([m for m, r in pv['ratings'].items() if r.get('w20') == 'D' and m != mat])
+    middles = [rated_list(lang, label('A'), a, n) for n in range(min(6, len(a)), 0, -1)] + ['']
+    return fit(lead, middles, [first_extra, rated_list(lang, label('D'), d, min(3, len(d))) if d else '',
+                               t('desc_source', lang), t('desc_pair_detail', lang, n=n_other),
+                               t('desc_source_short', lang)], sep)
 
 
 # --- chemical page ----------------------------------------------------------
@@ -773,8 +790,6 @@ def chemical_page(lang, slug, page, chem, chrome, similar, pages):
         title = t('title_chem_short', lang, chem=name)
     title = ahrefs_title(title)
     desc = description(lang, name, pv, n_mats)
-    if lang == 'zh' and len(desc) < AHREFS_SHORT_DESC:
-        desc = AHREFS_HUB_ZH % name
     url = SITE + chem_url(lang, slug)
     indexed = lang in INDEXED_LANGS
     alternates = []
@@ -870,24 +885,7 @@ def pair_page(lang, slug, page, chem, mat, chrome):
         title = t('h1_pair', lang, mat=mname, chem=name)
     title = ahrefs_title(title)
 
-    if rated:
-        bits = []
-        for v in rated:
-            r = v['ratings'][mat]
-            if r.get('k'):
-                val = 'K'
-            elif r.get('single'):
-                val = '%s (%s)' % (r['c20'], t('est' if r.get('est') else 'no_temp', lang))
-            else:
-                val = '%s %s, %s %s' % (r['c20'] or '–', t('at20', lang), r['c50'] or '–', t('at50', lang))
-            c = conc_label(v['conc'], lang)
-            bits.append('%s: %s' % (c, val) if c else val)
-        desc = '%s + %s: %s.' % (mname, name, '; '.join(bits))
-        if len(desc) > 155:
-            desc = '%s + %s: %s …' % (mname, name, '; '.join(bits)[:120].rsplit(';', 1)[0])
-    else:
-        desc = t('desc_pair_nodata', lang, mat=mname, chem=name, n=len(rd.MATERIALS) - 1)
-    desc = expand_pair_desc(desc, lang, mname, name)
+    desc = pair_description(lang, name, mname, mat, rated, pv)
 
     if not rated:
         robots = NOINDEX_GOOGLEBOT        # no data → noindex for Google

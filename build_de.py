@@ -43,7 +43,7 @@ def get_de_header(active=None):
         ('storage',   '/de/storage-compatibility/', 'Lagerung'),
         ('sds',       '/de/sds-decoder/', 'SDB'),
         ('viscosity', '/de/viscosity/',  'Viskosität'),
-        ('about',     '/de/about/',      'Über uns'),
+        ('about',     '/de-about/',      'Über uns'),
     ]
 
     desktop_links = []
@@ -63,7 +63,7 @@ def get_de_header(active=None):
         ('storage',   '/de/storage-compatibility/', 'Lagerkompatibilität'),
         ('sds',       '/de/sds-decoder/', 'SDB-Decoder'),
         ('viscosity', '/de/viscosity/',  'Viskosität'),
-        ('about',     '/de/about/',      'Über uns'),
+        ('about',     '/de-about/',      'Über uns'),
     ]
     mobile_links = []
     for key, href, label in mobile_items:

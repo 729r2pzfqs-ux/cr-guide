@@ -225,9 +225,9 @@ INDUSTRY_CHARTS = [
             'es': 'Materiales aptos para alimentos',
         },
         'desc': {
-            'en': 'Compare chemical resistance of HDPE, PP, PTFE, PVDF, Stainless Steel 316 and Silicone — common food-contact materials — across 900+ chemicals at 20 °C and 50 °C.',
-            'de': 'Vergleichen Sie die chemische Beständigkeit von HDPE, PP, PTFE, PVDF, Edelstahl 316 und Silikon — gängige Lebensmittelkontaktmaterialien — bei über 900 Chemikalien.',
-            'es': 'Compare la resistencia química de HDPE, PP, PTFE, PVDF, acero inoxidable 316 y silicona — materiales comunes en contacto con alimentos — en más de 900 sustancias.',
+            'en': 'PTFE rates A or B in 100 % of rows, SS 316 in 94 %, PVDF in 88 %, HDPE in 85 % and PP in 77 %. Silicone has only 23 rated rows. Common food-contact materials.',
+            'de': 'PTFE ist in 100 % der Zeilen mit A oder B bewertet, Edelstahl 316 in 94 %, PVDF in 88 %, HDPE in 85 %, PP in 77 %. Silikon hat nur 23 bewertete Zeilen.',
+            'es': 'PTFE obtiene A o B en el 100 % de las filas, acero 316 en el 94 %, PVDF en el 88 %, HDPE en el 85 % y PP en el 77 %. Silicona solo tiene 23 filas.',
         },
         'intro': {
             'en': 'Materials used in food and beverage processing must resist cleaning agents, acids, and food-grade chemicals without contaminating the product. This chart compares the most common FDA/EU food-contact approved materials.',
@@ -271,9 +271,9 @@ INDUSTRY_CHARTS = [
             'es': 'Materiales resistentes a combustibles y aceites',
         },
         'desc': {
-            'en': 'Compare chemical resistance of HDPE, PP, PTFE, FEP, PVDF, Viton and NBR to gasoline, diesel, motor oils, hydraulic fluids, and other petroleum products.',
-            'de': 'Vergleichen Sie die Beständigkeit von HDPE, PP, PTFE, FEP, PVDF, Viton und NBR gegen Benzin, Diesel, Motoröle und andere Mineralölprodukte.',
-            'es': 'Compare la resistencia de HDPE, PP, PTFE, FEP, PVDF, Viton y NBR a gasolina, diésel, aceites de motor y otros productos derivados del petróleo.',
+            'en': 'For fuels and oils, PTFE and FEP rate A or B in 100 % of rows, PVDF in 97 %, Viton in 90 %, HDPE in 79 %, PP in 63 % and NBR in 59 %.',
+            'de': 'Bei Kraftstoffen und Ölen sind PTFE und FEP in 100 % der Zeilen mit A oder B bewertet, PVDF in 97 %, Viton in 90 %, HDPE in 79 %, PP in 63 %, NBR in 59 %.',
+            'es': 'Con combustibles y aceites, PTFE y FEP obtienen A o B en el 100 % de las filas, PVDF en el 97 %, Viton en el 90 %, HDPE en el 79 % y PP en el 63 %.',
         },
         'intro': {
             'en': 'Fuel systems, storage tanks, and oil-handling equipment need materials that resist hydrocarbons, additives, and biofuel blends. This chart compares materials commonly used in fuel infrastructure.',
@@ -317,9 +317,9 @@ INDUSTRY_CHARTS = [
             'es': 'Comparación de materiales resistentes a ácidos',
         },
         'desc': {
-            'en': 'Compare chemical resistance of PTFE, FEP, PVDF, ECTFE, HDPE, PP and Viton to hydrochloric acid, sulfuric acid, nitric acid, phosphoric acid and other strong acids.',
-            'de': 'Vergleichen Sie die Beständigkeit von PTFE, FEP, PVDF, ECTFE, HDPE, PP und Viton gegen Salzsäure, Schwefelsäure, Salpetersäure und andere starke Säuren.',
-            'es': 'Compare la resistencia de PTFE, FEP, PVDF, ECTFE, HDPE, PP y Viton al ácido clorhídrico, sulfúrico, nítrico y otros ácidos fuertes.',
+            'en': 'For inorganic acids, PTFE, FEP and ECTFE/ETFE rate A or B in 100 % of rows, PVDF in 87 %, Viton in 83 %, HDPE in 79 % and PP in 70 %.',
+            'de': 'Bei anorganischen Säuren sind PTFE, FEP und ECTFE/ETFE in 100 % der Zeilen mit A oder B bewertet, PVDF in 87 %, Viton in 83 %, HDPE in 79 %, PP in 70 %.',
+            'es': 'Con ácidos inorgánicos, PTFE, FEP y ECTFE/ETFE obtienen A o B en el 100 % de las filas, PVDF en el 87 %, Viton en el 83 %, HDPE en el 79 % y PP en el 70 %.',
         },
         'intro': {
             'en': 'Handling strong mineral acids requires materials that can withstand highly corrosive environments. This chart compares the top acid-resistant plastics, fluoropolymers, and elastomers at 20 °C and 50 °C.',
@@ -363,9 +363,9 @@ INDUSTRY_CHARTS = [
             'es': 'Comparación de materiales resistentes a disolventes',
         },
         'desc': {
-            'en': 'Compare chemical resistance of PTFE, FEP, PVDF, HDPE, PP, PMP and Viton to acetone, MEK, toluene, xylene, THF, dichloromethane, and other organic solvents.',
-            'de': 'Vergleichen Sie die Beständigkeit von PTFE, FEP, PVDF, HDPE, PP, PMP und Viton gegen Aceton, MEK, Toluol, Xylol, THF und andere organische Lösemittel.',
-            'es': 'Compare la resistencia de PTFE, FEP, PVDF, HDPE, PP, PMP y Viton a acetona, MEK, tolueno, xileno, THF y otros disolventes orgánicos.',
+            'en': 'PTFE rates A or B in 100 % of solvent rows; FEP drops to 90 % with halogenated solvents. Viton reaches 6 % with ketones and aldehydes, PP 14 % with aromatics.',
+            'de': 'PTFE ist bei Lösemitteln zu 100 % mit A oder B bewertet, FEP bei halogenierten zu 90 %. Viton erreicht bei Ketonen und Aldehyden 6 %, PP bei Aromaten 14 %.',
+            'es': 'PTFE obtiene A o B en el 100 % de las filas de disolventes; FEP baja al 90 % con halogenados. Viton llega al 6 % con cetonas, PP al 14 % con aromáticos.',
         },
         'intro': {
             'en': 'Organic solvents attack most plastics and elastomers. Choosing the wrong material leads to swelling, cracking, or dissolution. This chart helps you select materials for solvent contact applications.',
@@ -409,9 +409,9 @@ INDUSTRY_CHARTS = [
             'es': 'Materiales para alta temperatura',
         },
         'desc': {
-            'en': 'Compare chemical resistance at 50 °C+ for PTFE, FEP, PVDF, ECTFE, Viton, SS 316 and EPDM. Find which materials maintain their ratings at elevated temperatures.',
-            'de': 'Vergleichen Sie die chemische Beständigkeit bei 50 °C+ für PTFE, FEP, PVDF, ECTFE, Viton, V4A und EPDM. Welche Werkstoffe behalten ihre Bewertung bei erhöhter Temperatur?',
-            'es': 'Compare la resistencia química a 50 °C+ de PTFE, FEP, PVDF, ECTFE, Viton, acero 316 y EPDM. ¿Qué materiales mantienen sus clasificaciones a temperaturas elevadas?',
+            'en': 'At 50 °C, PTFE rates A or B in 100 % of rows, FEP in 99 %, ECTFE in 93 %, SS 316 in 84 %, PVDF in 83 %, Viton in 55 % and EPDM in 19 %.',
+            'de': 'Bei 50 °C ist PTFE in 100 % der Zeilen mit A oder B bewertet, FEP in 99 %, ECTFE in 93 %, V4A in 84 %, PVDF in 83 %, Viton in 55 % und EPDM in 19 %.',
+            'es': 'A 50 °C, PTFE obtiene A o B en el 100 % de las filas, FEP en el 99 %, ECTFE en el 93 %, acero 316 en el 84 %, PVDF en el 83 %, Viton en el 55 %.',
         },
         'intro': {
             'en': 'Many materials degrade when temperatures rise above ambient. This chart focuses on materials that maintain chemical resistance at 50 °C and above — critical for steam cleaning, hot process streams, and heat exchangers.',
@@ -445,7 +445,7 @@ INDUSTRY_CHARTS = [
         'slug': {'en': 'water-wastewater-materials', 'de': 'wasser-abwasser-materialien',
                  'es': 'materiales-agua-residual'},
         'title': {
-            'en': 'Water & Wastewater Treatment Materials: Chemical Resistance Chart',
+            'en': 'Water &amp; Wastewater Treatment Materials: Chemical…',
             'de': 'Wasser- und Abwassermaterialien: Beständigkeitsvergleich',
             'es': 'Materiales para agua y aguas residuales: resistencia química',
         },
@@ -455,9 +455,9 @@ INDUSTRY_CHARTS = [
             'es': 'Materiales para tratamiento de agua',
         },
         'desc': {
-            'en': 'Compare chemical resistance of PVC, HDPE, PP, PVDF, SS 316, EPDM and PTFE to chlorine, sodium hypochlorite, ozone, alum and other water treatment chemicals.',
-            'de': 'Vergleichen Sie die Beständigkeit von PVC, HDPE, PP, PVDF, V4A, EPDM und PTFE gegen Chlor, Natriumhypochlorit, Ozon und andere Wasseraufbereitungschemikalien.',
-            'es': 'Compare la resistencia de PVC, HDPE, PP, PVDF, acero 316, EPDM y PTFE al cloro, hipoclorito de sodio, ozono y otros químicos de tratamiento de agua.',
+            'en': 'Against oxidizers such as chlorine, PTFE rates A or B in 100 % of rows, PVDF in 87 %, PVC in 85 %, SS 316 in 79 %, HDPE in 78 %, PP in 72 % and EPDM in 65 %.',
+            'de': 'Bei Oxidationsmitteln wie Chlor ist PTFE in 100 % der Zeilen mit A oder B bewertet, PVDF in 87 %, PVC in 85 %, V4A in 79 %, HDPE in 78 %, PP in 72 %.',
+            'es': 'Con oxidantes como el cloro, PTFE obtiene A o B en el 100 % de las filas, PVDF en el 87 %, PVC en el 85 %, acero 316 en el 79 %, HDPE en el 78 %, PP en el 72 %.',
         },
         'intro': {
             'en': 'Water and wastewater treatment uses oxidising disinfectants, pH-adjustment chemicals, and coagulants that attack many materials. This chart compares materials commonly used in treatment plant piping, tanks, and seals.',
@@ -518,7 +518,7 @@ def _header(lang, active='charts'):
             ('/de/storage-compatibility/', 'Lagerung', False),
             ('/de/sds-decoder/', 'SDB', False),
             ('/de/viscosity/', 'Viskosität', False),
-            ('/de/about/', 'Über uns', False),
+            ('/de-about/', 'Über uns', False),
         ]
         home_href, home_label = '/de/', 'ChemicalResistance.org'
         sub = 'Chemische Beständigkeitsdatenbank'
@@ -531,7 +531,7 @@ def _header(lang, active='charts'):
             ('/es/storage-compatibility/', 'Almacenamiento', False),
             ('/es/sds-decoder/', 'FDS', False),
             ('/es/viscosity/', 'Viscosidad', False),
-            ('/es/about/', 'Acerca de', False),
+            ('/es-about/', 'Acerca de', False),
         ]
         home_href, home_label = '/es/', 'ChemicalResistance.org'
         sub = 'Base de datos de compatibilidad química'
@@ -659,6 +659,7 @@ def build_chart_page(chart, lang, all_charts):
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <meta property="og:title" content="%(title)s">
     <meta property="og:description" content="%(desc)s">
+    <meta property="og:url" content="%(canonical)s">
     <meta property="og:type" content="article">
     <meta property="og:image" content="%(site)s/og-image.png">
     <link rel="stylesheet" href="/css/tailwind.min.css">

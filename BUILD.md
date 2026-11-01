@@ -15,6 +15,7 @@ layer. Do not edit ratings, titles or descriptions in the HTML by hand.
 | `data/chemical_pages.json` | Which chemicals have a page, the source row group each page shows, names in six languages, redirects. |
 | `data/chemical_classes.json` | Chemical class of each chemical, assigned by hand. Read through `class_stats.py`. |
 | `data/rating_overrides.json` | Corrected and disputed values, each with a reason and references. |
+| `data/meta_descriptions.json` | Descriptions of hand-maintained pages, 120-160 characters. Read by `apply_meta_descriptions.py`. |
 | `data/chemicals_burkle_full.json` | OUTPUT for the in-browser tools. Written by `export_frontend_data.py`. |
 
 ## Build, in this order
@@ -25,6 +26,8 @@ python3 export_frontend_data.py     # data for homepage lookup, compare, charts
 python3 build_chemical_pages.py     # chemical pages, pair pages, chemicals index, About corrections list
 python3 build_material_tables.py    # tables inside the material pages
 python3 build_polyurethane_pages.py # polyurethane pages (external data, not in Bürkle)
+python3 build_industry_charts.py    # the 18 industry chart pages
+python3 apply_meta_descriptions.py  # descriptions of pages no generator owns
 python3 build_chart_tables.py       # static rows and group figures in chart pages
 python3 build_compare_pages.py      # comparison pages (en, de, es) and the compare index
 python3 build_tool_pages.py         # viscosity, storage, index pages, silicone notice
@@ -39,10 +42,17 @@ Every script takes `--check` and is idempotent. `fix_cross_language.py`,
 `fix_consent_order.py` and `patch_generators.py` still apply; run the `build_*`
 scripts again after `fix_cross_language.py`.
 
-The meta-description and title templates from the Ahrefs fixes (commit
-`5c3e82dfd2`, October 2026) live in the generators: `expand_pair_desc` and
-the `AHREFS_*` constants in `build_chemical_pages.py`, and `ahrefs_title` in
-`page_i18n.py`. Redirect stubs are no longer written — the Cloudflare Worker
+Meta descriptions are 120-160 characters, answer first, unique per page.
+`meta_text.fit()` holds the window and stops the build when a page cannot meet
+it. `description` and `pair_description` in `build_chemical_pages.py` and `page`
+in `build_compare_pages.py` build them from the data; industry charts and
+polyurethane keep theirs in `build_industry_charts.py` and
+`build_polyurethane_pages.py`; every other page is listed in
+`data/meta_descriptions.json`. Percentages in those hand-written texts are the
+share of rows rated A or B at 20 °C, from `class_stats`, and do not update when
+the data changes. The title template from the Ahrefs fixes (commit `5c3e82dfd2`,
+October 2026) is `ahrefs_title` in `page_i18n.py`.
+Redirect stubs are no longer written — the Cloudflare Worker
 serves those URLs as 301s (`worker/`, commit `dfedd271e2`). The industry
 chart pages under `charts/` are written whole by `build_industry_charts.py`
 and are skipped by `build_chart_tables.py` and left alone by

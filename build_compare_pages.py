@@ -25,6 +25,7 @@ import diagrams
 import resistance_data as rd
 from build_chemical_pages import (ROOT, SITE, breadcrumb_ld, esc, grade_span, head, home_url,
                                   legend, material_url, variant_label, write)
+from meta_text import fit
 from page_i18n import ahrefs_title, conc_label, material_full, material_name, material_note, t
 from redirect_stub import stub
 
@@ -110,6 +111,15 @@ S = {
                     'es': '{m} resiste mejor: {c}.'},
     'desc_tail': {'en': 'By chemical class, 20 °C.', 'de': 'Nach Chemikalienklasse, 20 °C.',
                   'es': 'Por clase química, 20 °C.'},
+    'desc_rows': {'en': '{a} is rated better in {ka} rows, {b} in {kb}.',
+                  'de': '{a} ist in {ka} Zeilen besser bewertet, {b} in {kb}.',
+                  'es': '{a} obtiene mejor clasificación en {ka} filas y {b} en {kb}.'},
+    'desc_good': {'en': 'Rated A or B: {a} {pa} %, {b} {pb} %.',
+                  'de': 'Bewertung A oder B: {a} {pa} %, {b} {pb} %.',
+                  'es': 'Clasificación A o B: {a} {pa} %, {b} {pb} %.'},
+    'desc_source': {'en': 'Ratings A to D from the Bürkle chemical resistance list.',
+                    'de': 'Bewertungen A bis D aus der Beständigkeitsliste der Bürkle GmbH.',
+                    'es': 'Clasificaciones de A a D de la lista de resistencia química de Bürkle.'},
     'summary_h': {'en': 'Summary', 'de': 'Zusammenfassung', 'es': 'Resumen'},
     'leads': {'en': '{m} is rated better with', 'de': '{m} ist besser bewertet bei',
               'es': '{m} tiene mejor clasificación con'},
@@ -312,14 +322,16 @@ def page(pair, lang, header, footer, links, trans):
     pct = round(100 * st['same'] / st['n']) if st['n'] else 0
 
     title = ahrefs_title(s('title', lang, a=na, b=nb))
-    desc = s('desc_lead', lang, a=na, b=nb, same=st['same'], n=st['n'])
-    for m, lead in ((na, a_leads), (nb, b_leads)):
-        if lead:
-            add = ' ' + s('desc_better', lang, m=m, c=(cs.class_name(lead[0][1], lang, short=True) if lang == 'de'
-                                                    else cs.class_name(lead[0][1], lang, short=True).lower()))
-            if len(desc) + len(add) <= 140:
-                desc += add
-    desc += ' ' + s('desc_tail', lang)
+    better = [s('desc_better', lang, m=m, c=(cs.class_name(lead[0][1], lang, short=True) if lang == 'de'
+                                             else cs.class_name(lead[0][1], lang, short=True).lower()))
+              for m, lead in ((na, a_leads), (nb, b_leads)) if lead]
+    share_a, share_b = cs.good_share(pa['all']), cs.good_share(pb['all'])
+    desc = fit(s('desc_lead', lang, a=na, b=nb, same=st['same'], n=st['n']),
+               [' '.join(better), ''] + better[:1] + better[1:],
+               [s('desc_rows', lang, a=na, b=nb, ka=st['a_better'], kb=st['b_better'])
+                if st['a_better'] or st['b_better'] else '',
+                s('desc_good', lang, a=na, b=nb, pa=round(100 * share_a), pb=round(100 * share_b)),
+                s('desc_tail', lang), s('desc_source', lang)])
     url = SITE + url_of(pair, lang)
     alternates = [('x-default', SITE + url_of(pair, 'en'))] + [(l, SITE + url_of(pair, l)) for l in LANGS]
     crumbs = [(t('home', lang), home_url(lang)), (s('compare', lang), base(lang)),

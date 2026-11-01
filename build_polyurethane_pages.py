@@ -41,11 +41,11 @@ TITLE = {
 
 DESC = {
     'en': 'Polyurethane (PU) resists oils, greases, fuels &amp; dilute acids. Poor against ketones, chlorinated solvents &amp; strong acids. A-D chart for {n} chemicals at 20 °C.',
-    'de': 'Polyurethan (PU) beständig gegen Öle, Fette, Kraftstoffe &amp; verdünnte Säuren. Unbeständig gegen Ketone, chlorierte Lösemittel &amp; starke Säuren. A-D-Tabelle für {n} Chemikalien.',
-    'es': 'Poliuretano (PU) resiste aceites, grasas, combustibles y ácidos diluidos. No resiste cetonas, disolventes clorados ni ácidos fuertes. Tabla A-D para {n} químicos.',
-    'fr': 'Le polyuréthane (PU) résiste aux huiles, graisses, carburants et acides dilués. Faible résistance aux cétones, solvants chlorés et acides forts. Tableau A-D pour {n} produits.',
-    'pt': 'Poliuretano (PU) resiste a óleos, graxas, combustíveis e ácidos diluídos. Fraco contra cetonas, solventes clorados e ácidos fortes. Tabela A-D para {n} químicos.',
-    'zh': '聚氨酯 (PU) 耐油脂、燃料和稀酸。不耐酮类、氯化溶剂和强酸。{n} 种化学品 A-D 等级表。',
+    'de': 'Polyurethan (PU) ist beständig gegen Öle, Fette, Kraftstoffe &amp; verdünnte Säuren, nicht gegen Ketone, chlorierte Lösemittel &amp; starke Säuren. Tabelle: {n} Stoffe.',
+    'es': 'Poliuretano (PU) resiste aceites, grasas, combustibles y ácidos diluidos. No resiste cetonas, disolventes clorados ni ácidos fuertes. Tabla para {n} químicos.',
+    'fr': 'Le polyuréthane (PU) résiste aux huiles, graisses, carburants et acides dilués, mais peu aux cétones, solvants chlorés et acides forts. Tableau : {n} produits.',
+    'pt': 'Poliuretano (PU) resiste a óleos, graxas, combustíveis e ácidos diluídos. Fraco contra cetonas, solventes clorados e ácidos fortes. Tabela para {n} químicos.',
+    'zh': '聚氨酯 (PU) 耐油脂、燃料和稀酸，但不耐酮类、氯化溶剂和强酸。性能随配方而异，聚酯型和聚醚型的耐受性差别明显，选型时请确认具体牌号。本页提供 {n} 种化学品的 A 至 D 等级表，可按名称搜索并按等级筛选，帮助您为密封件、软管和衬里选择合适的材料。',
 }
 
 HERO_TEXT = {
